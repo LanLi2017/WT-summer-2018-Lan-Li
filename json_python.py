@@ -1,18 +1,21 @@
 # @begin OpenRefine2YW
-# @in data_path @as json_path @uri:data.json
-
+# @in data_path @as json_path @uri file:data.json
+# @out operation @as operation_dictionary
 
 import json
 from pprint import pprint
 
 # @begin import_json
-# @in json_path @uri data.json
+# @in json_path
 # @out data @as raw_json_file
 with open('data.json') as json_data:
     data=json.load(json_data)
 
 # @end import_json
 
+# @begin extract_operation @desc Output a dictionary to store the operation name, method and target in details
+# @in raw_json_file
+# @out operation_dictionary
 operation={}
 operation['operation_name']=[]
 operation['method_name']=[]
@@ -37,8 +40,7 @@ for e in edits:
 
 pprint(operation)
 
-# df=pd.DataFrame(data=operation)
-# print(df)
+# @end extract_operation
 
 
 # @end OpenRefine2YW
