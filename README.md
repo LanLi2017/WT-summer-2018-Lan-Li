@@ -5,4 +5,4 @@
 3. Using Python to extract the operation history.
 4. Using *  [YesWorkflow](https://github.com/yesworkflow-org/yw-prototypes)
 5. Run OpenRefine on the WholeTale *  [The WholeTale](https://dashboard.dev.wholetale.org/) 
-6. *  [Google_Doc](https://docs.google.com/document/d/1pwA2Hwe46a5Nxe5yvC5KjpBrkExdp82Pj2YbhuQM3fA/edit)
+6. [Google_Doc](https://docs.google.com/document/d/1pwA2Hwe46a5Nxe5yvC5KjpBrkExdp82Pj2YbhuQM3fA/edit)
