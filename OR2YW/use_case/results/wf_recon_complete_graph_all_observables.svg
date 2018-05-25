@@ -106,7 +106,7 @@
 <path fill="#ffe4b5" stroke="black" d="M178.696,-367.5C178.696,-367.5 219.304,-367.5 219.304,-367.5 225.304,-367.5 231.304,-373.5 231.304,-379.5 231.304,-379.5 231.304,-391.5 231.304,-391.5 231.304,-397.5 225.304,-403.5 219.304,-403.5 219.304,-403.5 178.696,-403.5 178.696,-403.5 172.696,-403.5 166.696,-397.5 166.696,-391.5 166.696,-391.5 166.696,-379.5 166.696,-379.5 166.696,-373.5 172.696,-367.5 178.696,-367.5"/>
 <text text-anchor="middle" x="199" y="-391.8" font-family="Courier,monospace" font-weight="bold" font-size="9.00">json_path</text>
 <polyline fill="none" stroke="black" points="166.696,-385.5 231.304,-385.5 "/>
-<text text-anchor="middle" x="199" y="-373.8" font-family="Courier,monospace" font-weight="bold" font-size="9.00"> </text>
+<text text-anchor="start" x="174.696" y="-373.8" font-family="Courier,monospace" font-weight="bold" font-size="9.00">data.json</text>
 </g>
 <!-- json_path&#45;&gt;import_json -->
 <g id="edge1" class="edge">

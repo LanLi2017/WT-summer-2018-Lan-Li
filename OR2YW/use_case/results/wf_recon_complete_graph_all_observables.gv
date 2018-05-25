@@ -10,7 +10,7 @@ import_json
 extract_operation
 node[shape=box style="filled" fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
 node[shape=box style="rounded,filled" fillcolor="#FFE4B5" peripheries=1 fontname="Courier-Bold" fontsize=9]
-json_path[shape=record rankdir=LR label="{<f0> json_path |<f1>}"]
+json_path[shape=record rankdir=LR label="{<f0> json_path |<f1>data.json\l}"]
 node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
 raw_json_file
 node[shape=box style="rounded,filled" fillcolor="#FFE4B5" peripheries=1 fontname="Courier-Bold" fontsize=9]

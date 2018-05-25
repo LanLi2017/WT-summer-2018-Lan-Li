@@ -7,7 +7,7 @@ import json
 from pprint import pprint
 
 # @begin import_json
-# @in json_path
+# @in json_path @uri file:data.json
 # @out data @as raw_json_file
 with open('data.json') as json_data:
     data=json.load(json_data)
