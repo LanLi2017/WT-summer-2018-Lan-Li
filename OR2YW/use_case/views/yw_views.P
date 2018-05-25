@@ -1,0 +1,125 @@
+
+
+%---------------------------------------------------------------------------------------------------
+% FACT: yw_source_file(SourceId, SourceFile).
+%...................................................................................................
+yw_source_file(1,'./script/json_python.py').
+
+
+%---------------------------------------------------------------------------------------------------
+% FACT: yw_workflow_script(WorkflowId, WorkflowName, SourceId, SourceFile).
+%...................................................................................................
+yw_workflow_script(1,'OpenRefine2YW',1,'./script/json_python.py').
+
+
+%---------------------------------------------------------------------------------------------------
+% FACT: yw_program(WorkflowId, ProgramName, WorkflowId, SourceId, BeginLine, EndLine).
+%...................................................................................................
+yw_program(1,'OpenRefine2YW',nil,1,1,49).
+yw_program(2,import_json,1,1,9,15).
+yw_program(3,extract_operation,1,1,17,46).
+
+
+%---------------------------------------------------------------------------------------------------
+% FACT: yw_workflow(WorkflowId, WorkflowName, ParentWorkflowId, SourceId, BeginLine, EndLine).
+%...................................................................................................
+yw_workflow(1,'OpenRefine2YW',nil,1,1,49).
+
+
+%---------------------------------------------------------------------------------------------------
+% FACT: yw_workflow_step(StepId, StepName, WorkflowId, SourceId, BeginLine, EndLine).
+%...................................................................................................
+yw_workflow_step(2,import_json,1,1,9,15).
+yw_workflow_step(3,extract_operation,1,1,17,46).
+
+
+%---------------------------------------------------------------------------------------------------
+% FACT: yw_function(FunctionId, FunctionName, ParentWorkflowId, SourceId, BeginLine, EndLine).
+%...................................................................................................
+
+
+%---------------------------------------------------------------------------------------------------
+% FACT: yw_data(DataId, DataName, WorkflowId, WorkflowName).
+%...................................................................................................
+yw_data(1,json_path,nil,nil).
+yw_data(2,operation_name,nil,nil).
+yw_data(3,operation_method_name,nil,nil).
+yw_data(4,operation_target,nil,nil).
+yw_data(5,json_path,1,'OpenRefine2YW').
+yw_data(6,raw_json_file,1,'OpenRefine2YW').
+yw_data(7,operation_name,1,'OpenRefine2YW').
+yw_data(8,operation_method_name,1,'OpenRefine2YW').
+yw_data(9,operation_target,1,'OpenRefine2YW').
+
+
+%---------------------------------------------------------------------------------------------------
+% FACT: yw_step_input(ProgramId, ProgramName, PortType, PortId, PortName, DataId, DataName).
+%...................................................................................................
+yw_step_input(3,extract_operation,in,7,raw_json_file,6,raw_json_file).
+yw_step_input(2,import_json,in,5,json_path,5,json_path).
+yw_step_input(1,'OpenRefine2YW',in,1,data_path,1,json_path).
+
+
+%---------------------------------------------------------------------------------------------------
+% FACT: yw_step_output(ProgramId, ProgramName, PortType, PortId, PortName, DataId, DataName).
+%...................................................................................................
+yw_step_output(1,'OpenRefine2YW',out,2,operation_name,2,operation_name).
+yw_step_output(1,'OpenRefine2YW',out,3,operation_method_name,3,operation_method_name).
+yw_step_output(1,'OpenRefine2YW',out,4,operation_target,4,operation_target).
+yw_step_output(2,import_json,out,6,data,6,raw_json_file).
+yw_step_output(3,extract_operation,out,8,operation_name,7,operation_name).
+yw_step_output(3,extract_operation,out,9,operation_method_name,8,operation_method_name).
+yw_step_output(3,extract_operation,out,10,operation_target,9,operation_target).
+
+
+%---------------------------------------------------------------------------------------------------
+% FACT: yw_inflow(WorkflowId, WorkflowName, DataId, DataName, ProgramId, ProgramName).
+%...................................................................................................
+yw_inflow(1,'OpenRefine2YW',5,json_path,2,import_json).
+
+
+%---------------------------------------------------------------------------------------------------
+% FACT: yw_flow(SourceProgramId, SourceProgramName, SourcePortId, SourcePortName, DataId, DataName, SinkPortId, SinkPortName, SinkProgramId, SinkProgramName).
+%...................................................................................................
+yw_flow(2,import_json,6,data,6,raw_json_file,7,raw_json_file,3,extract_operation).
+
+
+%---------------------------------------------------------------------------------------------------
+% FACT: yw_outflow(StepId, StepName, StepOutDataId, StepOutDataName, WorkflowId, WorkflowName, WorkflowOutDataId, WorkflowOutDataName).
+%...................................................................................................
+yw_outflow(3,extract_operation,7,operation_name,1,'OpenRefine2YW',2,operation_name).
+yw_outflow(3,extract_operation,8,operation_method_name,1,'OpenRefine2YW',3,operation_method_name).
+yw_outflow(3,extract_operation,9,operation_target,1,'OpenRefine2YW',4,operation_target).
+
+
+%---------------------------------------------------------------------------------------------------
+% FACT: yw_qualified_name(EntityType, Id, QualifiedName).
+%...................................................................................................
+yw_qualified_name(program,1,'OpenRefine2YW').
+yw_qualified_name(program,2,'OpenRefine2YW/import_json').
+yw_qualified_name(program,3,'OpenRefine2YW/extract_operation').
+yw_qualified_name(port,1,'OpenRefine2YW<-data_path').
+yw_qualified_name(port,2,'OpenRefine2YW->operation_name').
+yw_qualified_name(port,3,'OpenRefine2YW->operation_method_name').
+yw_qualified_name(port,4,'OpenRefine2YW->operation_target').
+yw_qualified_name(port,5,'OpenRefine2YW/import_json<-json_path').
+yw_qualified_name(port,6,'OpenRefine2YW/import_json->data').
+yw_qualified_name(port,7,'OpenRefine2YW/extract_operation<-raw_json_file').
+yw_qualified_name(port,8,'OpenRefine2YW/extract_operation->operation_name').
+yw_qualified_name(port,9,'OpenRefine2YW/extract_operation->operation_method_name').
+yw_qualified_name(port,10,'OpenRefine2YW/extract_operation->operation_target').
+yw_qualified_name(data,1,json_path).
+yw_qualified_name(data,2,operation_name).
+yw_qualified_name(data,3,operation_method_name).
+yw_qualified_name(data,4,operation_target).
+yw_qualified_name(data,5,'OpenRefine2YW.json_path').
+yw_qualified_name(data,6,'OpenRefine2YW.raw_json_file').
+yw_qualified_name(data,7,'OpenRefine2YW.operation_name').
+yw_qualified_name(data,8,'OpenRefine2YW.operation_method_name').
+yw_qualified_name(data,9,'OpenRefine2YW.operation_target').
+
+
+%---------------------------------------------------------------------------------------------------
+% FACT: yw_description(EntityType, Id, Name, Description)).
+%...................................................................................................
+yw_description(program,3,extract_operation,'Output a dictionary to store the operation name, method and target in details').
