@@ -33,6 +33,8 @@ Data wrangling/cleaning case studies implemented in the WholeTale environment
 Final project presentation (poster or talk)
 
 
-# Primary Mentor: Bertram Ludäscher, iSchool & NCSA, University of Illinois, Urbana-Champaign
+# Primary Mentor:
+Bertram Ludäscher, iSchool & NCSA, University of Illinois, Urbana-Champaign
 
-# Secondary Mentor: Kacper Kowalik, NCSA, University of Illinois, Urbana-Champaign
+# Secondary Mentor: 
+Kacper Kowalik, NCSA, University of Illinois, Urbana-Champaign
