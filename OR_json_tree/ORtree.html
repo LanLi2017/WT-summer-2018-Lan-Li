@@ -41,17 +41,17 @@ null==d?void 0:d))},attrHooks:{type:{set:function(a,b){if(!o.radioValue&&"radio"
     </script>
     <script type="text/javascript">
         const tree = new G6.Tree({
-            id: 'myTreeMap', // 容器ID
+            id: 'myTreeMap', // container ID
             height: window.innerHeight || document.body.clientHeight,
             fitView: "autoZoom",
             layoutFn: G6.Layouts.CompactBoxTree,
             layoutCfg: {
-                direction: "LR", // 方向（LR/RL/H/TB/BT/V）
+                direction: "LR", // （LR/RL/H/TB/BT/V）
                 indent: 40,
-                getHGap: function( /* d */ ) { // 横向间距
+                getHGap: function( /* d */ ) { 
                     return 100;
                 },
-                getVGap: function( /* d */ ) { // 横向间距
+                getVGap: function( /* d */ ) { 
                     return 10;
                 },
             },
