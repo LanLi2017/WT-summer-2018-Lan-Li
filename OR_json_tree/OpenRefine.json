@@ -1,321 +1,137 @@
 {
-    "children": [
-        {
-            "children": [
-                {
-                    "children":[],
-                    "name": "Text facet"
-                },
-                {
-                    "children":[],
-                    "name": "Numeric facet"
-                },
-                {
-                    "children":[],
-                    "name": "Timeline facet"
-                },
-                {
-                    "children":[],
-                    "name": "Scattlerplot facet"
-                },
-                {
-                    "children":[],
-                    "name": "Custom text facet"
-                },
-                {
-                    "children":[],
-                    "name": "Custom Numeric facet"
-                },
-                {
-                    "children":[
+    "OpenRefine": {
+        "children": [
+            {
+                "Facet": {
+                    "children": [
+                        "Text facet",
+                        "Numeric facet",
+                        "Timeline facet",
+                        "Scattlerplot facet",
+                        "Custom text facet",
+                        "Custom Numeric facet",
                         {
-                            "children":[],
-                            "name": "Word facet"
-                         },
-                        {
-                            "children":[],
-                            "name": "Duplicates facet"
-                         },
-                        {
-                            "children":[],
-                            "name": "Numeric log facet"
-                         },
-                        {
-                            "children":[],
-                            "name": "1-bounded numeric log facet"
-                         },
-                        {
-                            "children":[],
-                            "name": "Text length facet"
-                         },
-                        {
-                            "children":[],
-                            "name": "Log of text length facet"
-                         },
-                        {
-                            "children":[],
-                            "name": "Unicode char-code facet"
-                         },
-                        {
-                            "children":[],
-                            "name": "Facet by error"
-                         },
-                        {
-                            "children":[],
-                            "name": "Facet by blank"
-                         }
-                        ],
-                    "name": "Customized facets"
-                }
-            ],
-            "name": "Facet"
-        },
-        {
-            "children":[],
-            "name": "Text filter"
-        },
-        {
-            "children":[
-                {
-                    "children":[],
-                    "name": "Transform"
-                },
-                {
-                    "children":[
-                        {
-                            "children":[],
-                            "name": "Trim leading and trailing whitespace"
-                        },
-                        {
-                            "children":[],
-                            "name": "Collapse Consecutive whitespace"
-                        },
-                        {
-                            "children":[],
-                            "name": "To titlecase"
-                        },
-                        {
-                            "children":[],
-                            "name": "To lowercase"
-                        },
-                        {
-                            "children":[],
-                            "name": "To number"
-                        },
-                        {
-                            "children":[],
-                            "name": "To date"
-                        },
-                        {
-                            "children":[],
-                            "name": "Blank out cells"
+                            "Customized facets": {
+                                "children": [
+                                    "Word facet",
+                                    "Duplicates facet",
+                                    "Numeric log facet",
+                                    "1-bounded numeric log facet",
+                                    "Text length facet",
+                                    "Log of text length facet",
+                                    "Unicode char-code facet",
+                                    "Facet by error",
+                                    "Facet by blank"
+                                ]
+                            }
                         }
-                    ],
-                    "name":"Common transforms"
-                },
-                {
-                    "children":[],
-                    "name":"Fill down"
-                },
-                {
-                    "children":[],
-                    "name":"Blank down"
-                },
-                {
-                    "children":[],
-                    "name":"Split multi-valued cells"
-                },
-                {
-                    "children":[],
-                    "name":"Join multi-valued cells"
-                },
-                {
-                    "children":[],
-                    "name":"Cluster and edit"
+                    ]
                 }
-                
-            ],
-            "name": "Edit cells"
-        },
-        {
-            "children":[
-                {
-                    "children":[],
-                    "name":"Split into several columns"
-                },
-                {
-                    "children":[],
-                    "name":"Add column based on this column"
-                },
-                {
-                    "children":[],
-                    "name":"Add column by fetching URLs"
-                },
-                {
-                    "children":[],
-                    "name":"Add columns from reconciled values"
-                },
-                {
-                    "children":[],
-                    "name":"Rename this column"
-                },
-                {
-                    "children":[],
-                    "name":"Remove this column"
-                },
-                {
-                    "children":[],
-                    "name":"Move column to beginning"
-                },
-                {
-                    "children":[],
-                    "name":"Move column to end"
-                },
-                {
-                    "children":[],
-                    "name":"Move column left"
-                },
-                {
-                    "children":[],
-                    "name":"Move column right"
+            },
+            "Text filter",
+            {
+                "Edit cells": {
+                    "children": [
+                        "Transform",
+                        {
+                            "Common transforms": {
+                                "children": [
+                                    "Trim leading and trailing whitespace",
+                                    "Collapse Consecutive whitespace",
+                                    "To titlecase",
+                                    "To lowercase",
+                                    "To number",
+                                    "To date",
+                                    "Blank out cells"
+                                ]
+                            }
+                        },
+                        "Fill down",
+                        "Blank down",
+                        "Split multi-valued cells",
+                        "Join multi-valued cells",
+                        "Cluster and edit"
+                    ]
                 }
-            ],
-            "name": "Edit column"
-        },
-        {
-            "children":[
-                {
-                    "children":[],
-                    "name":"Transpose cells across columns into rows"
-                },
-                {
-                    "children":[],
-                    "name":"Transpose cells in rows into columns"
-                },
-                {
-                    "children":[],
-                    "name":"Columnize by key/value columns"
+            },
+            {
+                "Edit column": {
+                    "children": [
+                        "Split into several columns",
+                        "Add column based on this column",
+                        "Add column by fetching URLs",
+                        "Add columns from reconciled values",
+                        "Rename this column",
+                        "Remove this column",
+                        "Move column to beginning",
+                        "Move column to end",
+                        "Move column left",
+                        "Move column right"
+                    ]
                 }
-            ],
-            "name": "Transpose"
-        },
-        {
-            "children":[],
-            "name": "Sort"
-        },
-        {
-            "children":[
-                {
-                    "children":[],
-                    "name":"Collapse this column"
-                },
-                {
-                    "children":[],
-                    "name":"Collapse all other columns"
-                },
-                {
-                    "children":[],
-                    "name":"Collapse all columns to left"
-                },
-                {
-                    "children":[],
-                    "name":"Collapse all columns to right"
+            },
+            {
+                "Transpose": {
+                    "children": [
+                        "Transpose cells across columns into rows",
+                        "Transpose cells in rows into columns",
+                        "Columnize by key/value columns"
+                    ]
                 }
-            ],
-            "name":"View"
-        },
-        {
-            "children":[
-                {
-                    "children":[],
-                    "name":"Start reconciling"
-                },
-                {
-                    "children":[
-                        {
-                            "children":[],
-                            "name":"By judgment"
-                        },
-                        {
-                            "children":[],
-                            "name":"Best candidate's score"
-                        },
-                        {
-                            "children":[],
-                            "name":"Best candidate's type match"
-                        },
-                        {
-                            "children":[],
-                            "name":"Best candidate's name match"
-                        },
-                        {
-                            "children":[],
-                            "name":"Best candidate's name edit distance"
-                        },
-                        {
-                            "children":[],
-                            "name":"Best candidate's name word similarity"
-                        },
-                        {
-                            "children":[],
-                            "name":"Best candidate's types"
-                        }
-                    ],
-                    "name":"Facets"
-                },
-                {
-                    "children":[
-                        {
-                            "children":[],
-                            "name":"QA results"
-                        },
-                        {
-                            "children":[],
-                            "name":"Judgment actions"
-                        },
-                        {
-                            "children":[],
-                            "name":"Judgment history entries"
-                        }
-                    ],
-                    "name":"QA facets"
-                },
-                {
-                    "children":[
-                        {
-                            "children":[],
-                            "name": "Match each cell to its best candidate"
-                        },
-                        {
-                            "children":[],
-                            "name": "Create a new item for each cell"
-                        },
-                        {
-                            "children":[],
-                            "name": "Create one new item for similar cells"
-                        },
-                        {
-                            "children":[],
-                            "name": "Match all filered cells to"
-                        },
-                        {
-                            "children":[],
-                            "name": "Discard reconciliation judgments"
-                        },
-                        {
-                            "children":[],
-                            "name": "Clear reconciliation data"
-                        }
-                    ],
-                    "name":"Actions"
-                },
-                {
-                    "children":[],
-                    "name":"Copy reconciliation data"
+            },
+            "Sort",
+            {
+                "View": {
+                    "children": [
+                        "Collapse this column",
+                        "Collapse all other columns",
+                        "Collapse all columns to left",
+                        "Collapse all columns to right"
+                    ]
                 }
-            ],
-            "name": "Reconcile"
-        }
-    ],
-    "name": "OpenRefine"
+            },
+            {
+                "Reconcile": {
+                    "children": [
+                        "Start reconciling",
+                        {
+                            "Facets": {
+                                "children": [
+                                    "By judgment",
+                                    "Best candidate's score",
+                                    "Best candidate's type match",
+                                    "Best candidate's name match",
+                                    "Best candidate's name edit distance",
+                                    "Best candidate's name word similarity",
+                                    "Best candidate's types"
+                                ]
+                            }
+                        },
+                        {
+                            "QA facets": {
+                                "children": [
+                                    "QA results",
+                                    "Judgment actions",
+                                    "Judgment history entries"
+                                ]
+                            }
+                        },
+                        {
+                            "Actions": {
+                                "children": [
+                                    "Match each cell to its best candidate",
+                                    "Create a new item for each cell",
+                                    "Create one new item for similar cells",
+                                    "Match all filtered cells to",
+                                    "Discard reconciliation judgments",
+                                    "Clear reconciliation data"
+                                ]
+                            }
+                        },
+                        "Copy reconciliation data"
+                    ]
+                }
+            }
+        ]
+    }
 }

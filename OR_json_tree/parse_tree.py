@@ -5,10 +5,13 @@ import sys
 
 data=open('OpenRefine.json').read()
 data=json.loads(data)
-print(json.dumps(data, indent=4), file=sys.stderr)
+# print(json.dumps(data, indent=4), file=sys.stderr)
 
 # extract tree edges from the dict
 edges=[]
+
+name=next(iter(data.keys()))
+
 
 def get_edges(treedict, parent=None):
     name=next(iter(treedict.keys()))
