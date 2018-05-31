@@ -1,0 +1,162 @@
+// The OpenRefine Table
+digraph {
+	A [label=OpenRefine]
+	1 [label=Facet]
+	2 [label="Text filter"]
+	3 [label="Edit cells"]
+	4 [label="Edit column"]
+	5 [label=Transpose]
+	6 [label=Sort]
+	7 [label=View]
+	8 [label=Reconcile]
+	A -> 1
+	A -> 2
+	A -> 3
+	A -> 4
+	A -> 5
+	A -> 6
+	A -> 7
+	A -> 8
+	a [label="Text facet"]
+	b [label="Numeric facet"]
+	c [label="Timeline facet"]
+	d [label="Scatterplot facet"]
+	e [label="Custom text facet"]
+	f [label="Custom Numeric Facet"]
+	g [label="Customized facets"]
+	1 -> a
+	1 -> b
+	1 -> c
+	1 -> d
+	1 -> e
+	1 -> f
+	1 -> g
+	h [label="Word facet"]
+	i [label="Duplicate facet"]
+	j [label="Numeric log facet"]
+	k [label="1-bounded numeric log facet"]
+	l [label="Text length facet"]
+	m [label="Log of text length facet"]
+	n [label="Unicode char-code facet"]
+	o [label="Facet by error"]
+	p [label="Facet by blank"]
+	g -> h
+	g -> i
+	g -> j
+	g -> k
+	g -> l
+	g -> m
+	g -> n
+	g -> o
+	g -> p
+	r [label=Transform]
+	s [label="Common transforms"]
+	t [label="Fill down"]
+	u [label="Blank down"]
+	v [label="Split multi-valued cells"]
+	w [label="Join multi-valued cells"]
+	x [label="Cluster and edit"]
+	3 -> r
+	3 -> s
+	3 -> t
+	3 -> u
+	3 -> v
+	3 -> w
+	3 -> x
+	"@" [label="Trim leading and trailing whitespace"]
+	"#" [label="Collapse consecutive whitespace"]
+	"$" [label="Unescape HTML entities"]
+	"%" [label="To titlecase"]
+	"^" [label="To uppercase"]
+	"&" [label="To lowercase"]
+	"*" [label="To number"]
+	"(" [label="To date"]
+	")" [label="To text"]
+	"[" [label="Blank out cells"]
+	s -> "@"
+	s -> "#"
+	s -> "$"
+	s -> "%"
+	s -> "^"
+	s -> "&"
+	s -> "*"
+	s -> "("
+	s -> ")"
+	s -> "["
+	B [label="Split into several columns"]
+	C [label="Add column based on this column"]
+	E [label="Add column by fetching URLs"]
+	F [label="Add columns from reconciled values"]
+	G [label="Rename this column"]
+	H [label="Remove this column"]
+	I [label="Move column to beginning"]
+	J [label="Move column to end"]
+	K [label="Move column left"]
+	L [label="Move column right"]
+	4 -> B
+	4 -> C
+	4 -> E
+	4 -> F
+	4 -> G
+	4 -> H
+	4 -> I
+	4 -> J
+	4 -> K
+	4 -> L
+	M [label="Transpose cells across columns into rows"]
+	N [label="Transpose cells in rows into columns"]
+	O [label="Columnize by key/value columns"]
+	5 -> M
+	5 -> N
+	5 -> O
+	P [label="Collapse this column"]
+	Q [label="Collapse all other columns"]
+	R [label="Collapse all columns to left"]
+	S [label="Collapse all columns to right"]
+	7 -> P
+	7 -> Q
+	7 -> R
+	7 -> S
+	T [label="Start reconciling"]
+	U [label=Facets]
+	V [label="QA facets"]
+	W [label=Actions]
+	X [label="Copy reconciliation data"]
+	8 -> T
+	8 -> U
+	8 -> V
+	8 -> W
+	8 -> X
+	"一" [label="By judgment"]
+	"二" [label="Best candidate score"]
+	"三" [label="Best candidate type match"]
+	"四" [label="Best candidate name match"]
+	"五" [label="Best candidate name edit distance"]
+	"六" [label="Best candidate name word similarity"]
+	"七" [label="Best candidate types"]
+	U -> "一"
+	U -> "二"
+	U -> "三"
+	U -> "四"
+	U -> "五"
+	U -> "六"
+	U -> "七"
+	Y [label="QA results"]
+	Z [label="Judgment actions"]
+	q [label="Judgment history entries"]
+	V -> Y
+	V -> Z
+	V -> q
+	"|" [label="Match each cell to its best candidate"]
+	";" [label="Create a new item for each cell"]
+	"\"" [label="Create one new item for similar cells"]
+	"/" [label="Match all filtered cells to"]
+	"?" [label="Discard reconciliation judgments"]
+	">" [label="Clear reconciliatioin data"]
+	W -> "|"
+	W -> ";"
+	W -> "\""
+	W -> "/"
+	W -> "?"
+	W -> ">"
+}
