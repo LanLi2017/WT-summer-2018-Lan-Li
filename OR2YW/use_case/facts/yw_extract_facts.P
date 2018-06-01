@@ -1,0 +1,30 @@
+% FACT: extract_source(source_id, source_path).
+extract_source(1, './script/json_python.py').
+% FACT: annotation(annotation_id, source_id, line_number, tag, keyword, value).
+annotation(1, 1, 1, 'begin', '@begin', 'OpenRefine2YW').
+annotation(2, 1, 2, 'in', '@in', 'data_path').
+annotation(3, 1, 2, 'as', '@as', 'json_path').
+annotation(4, 1, 2, 'uri', '@uri', 'file:data.json').
+annotation(5, 1, 3, 'out', '@out', 'operation_name').
+annotation(6, 1, 4, 'out', '@out', 'operation_method_name').
+annotation(7, 1, 5, 'out', '@out', 'operation_target').
+annotation(8, 1, 9, 'begin', '@begin', 'import_json').
+annotation(9, 1, 10, 'in', '@in', 'json_path').
+annotation(10, 1, 10, 'uri', '@uri', 'file:data.json').
+annotation(11, 1, 11, 'out', '@out', 'data').
+annotation(12, 1, 11, 'as', '@as', 'raw_json_file').
+annotation(13, 1, 15, 'end', '@end', 'import_json').
+annotation(14, 1, 17, 'begin', '@begin', 'extract_operation').
+annotation(15, 1, 17, 'desc', '@desc', 'Output a dictionary to store the operation name, method and target in details').
+annotation(16, 1, 18, 'in', '@in', 'raw_json_file').
+annotation(17, 1, 19, 'out', '@out', 'operation_name').
+annotation(18, 1, 20, 'out', '@out', 'operation_method_name').
+annotation(19, 1, 21, 'out', '@out', 'operation_target').
+annotation(20, 1, 46, 'end', '@end', 'extract_operation').
+annotation(21, 1, 49, 'end', '@end', 'OpenRefine2YW').
+% FACT: annotation_qualifies(qualifying_annotation_id, primary_annotation_id).
+annotation_qualifies(3, 2).
+annotation_qualifies(4, 2).
+annotation_qualifies(10, 9).
+annotation_qualifies(12, 11).
+annotation_qualifies(15, 14).
