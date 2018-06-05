@@ -1,0 +1,24 @@
+[
+// @begin Edit_cells @desc core/text-transform: Text transform on cells in column place using expression grel: value.toLowercase()
+// @in columnName:"place"
+// @in engineConfig
+// @in expression
+// @in onError
+// @in repeat
+// @in repeatCount
+// @out column_place_toLowercase
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column place using expression grel:value.toLowercase()",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "place",
+    "expression": "grel:value.toLowercase()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  }
+// @end Edit_cells
+]

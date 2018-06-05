@@ -1,0 +1,29 @@
+[
+// @begin Edit_column  @desc core/column-split: Split column call_number by separator
+// @in columnName:"call_number"
+// @in engineConfig
+// @in separator
+// @in guessCellType
+// @in removeOriginalColumn
+// @in mode
+// @in regex
+// @in maxColumns
+// @out columnName:"call_number1"
+// @out columnName:"call_number2"
+  {
+    "op": "core/column-split",
+    "description": "Split column call_number by separator",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "call_number",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "-",
+    "regex": false,
+    "maxColumns": 0
+  }
+]
+// @end Edit_column

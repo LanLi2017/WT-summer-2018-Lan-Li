@@ -1,0 +1,29 @@
+digraph Workflow {
+rankdir=LR
+fontname=Helvetica; fontsize=18; labelloc=t
+label=Text_facet
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; penwidth=0
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Helvetica]
+Edits
+edge[fontname=Helvetica]
+}}
+subgraph cluster_input_ports_group_outer { label=""; penwidth=0
+subgraph cluster_input_ports_group_inner { label=""; penwidth=0
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+"columnName:\"name\"_input_port" [label=""]
+Method_input_port [label=""]
+KeyingFunction_input_port [label=""]
+}}
+subgraph cluster_output_ports_group_outer { label=""; penwidth=0
+subgraph cluster_output_ports_group_inner { label=""; penwidth=0
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+edits_to_output_port [label=""]
+}}
+edge[fontname=Helvetica]
+"columnName:\"name\"_input_port" -> Edits [label="columnName:\"name\""]
+Method_input_port -> Edits [label=Method]
+KeyingFunction_input_port -> Edits [label=KeyingFunction]
+edge[fontname=Helvetica]
+Edits -> edits_to_output_port [label=edits_to]
+}

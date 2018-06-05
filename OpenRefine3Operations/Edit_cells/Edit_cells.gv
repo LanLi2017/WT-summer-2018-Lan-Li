@@ -1,0 +1,35 @@
+digraph Workflow {
+rankdir=LR
+fontname=Helvetica; fontsize=18; labelloc=t
+label=Edit_cells
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; penwidth=0
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Helvetica]
+Edit_cells [shape=record rankdir=LR label="{{<f0> Edit_cells |<f1> core/text-transform\: Text transform on cells in column place using expression grel\: value.toLowercase()}}"];
+edge[fontname=Helvetica]
+}}
+subgraph cluster_input_ports_group_outer { label=""; penwidth=0
+subgraph cluster_input_ports_group_inner { label=""; penwidth=0
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+"columnName:\"place\"_input_port" [label=""]
+engineConfig_input_port [label=""]
+expression_input_port [label=""]
+onError_input_port [label=""]
+repeat_input_port [label=""]
+repeatCount_input_port [label=""]
+}}
+subgraph cluster_output_ports_group_outer { label=""; penwidth=0
+subgraph cluster_output_ports_group_inner { label=""; penwidth=0
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+column_place_toLowercase_output_port [label=""]
+}}
+edge[fontname=Helvetica]
+"columnName:\"place\"_input_port" -> Edit_cells [label="columnName:\"place\""]
+engineConfig_input_port -> Edit_cells [label=engineConfig]
+expression_input_port -> Edit_cells [label=expression]
+onError_input_port -> Edit_cells [label=onError]
+repeat_input_port -> Edit_cells [label=repeat]
+repeatCount_input_port -> Edit_cells [label=repeatCount]
+edge[fontname=Helvetica]
+Edit_cells -> column_place_toLowercase_output_port [label=column_place_toLowercase]
+}
