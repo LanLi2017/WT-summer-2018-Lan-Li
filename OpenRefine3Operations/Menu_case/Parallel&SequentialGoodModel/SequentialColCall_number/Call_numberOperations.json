@@ -1,0 +1,39 @@
+[
+// @begin OperationsColCall_number @desc OpenRefine operations on column call_number
+// @in table1
+// @in operation_name:"core/multivalued-celll-split"
+// @in columnName:"call_number"
+// @in separator:"_"
+// @in separator:" "
+// @in keyColumnName:"id"
+// @out table4
+
+// @begin SplitCellsColCall_number @desc Split multi-valued cells in column call_number
+// @in table1
+// @in operation_name:"core/multivalued-celll-split"
+// @in columnName:"call_number"
+// @in separator:"_"
+// @in separator:" "
+// @in keyColumnName:"id"
+// @out table4
+  {
+    "op": "core/multivalued-cell-split",
+    "description": "Split multi-valued cells in column call_number",
+    "columnName": "call_number",
+    "keyColumnName": "id",
+    "mode": "separator",
+    "separator": "_",
+    "regex": false
+  },
+  {
+    "op": "core/multivalued-cell-split",
+    "description": "Split multi-valued cells in column call_number",
+    "columnName": "call_number",
+    "keyColumnName": "id",
+    "mode": "separator",
+    "separator": " ",
+    "regex": false
+  }
+// @end SplitCellsColCall_number
+// @end OperationsColCall_number
+]

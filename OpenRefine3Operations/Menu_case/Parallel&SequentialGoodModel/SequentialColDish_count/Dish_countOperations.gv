@@ -1,0 +1,29 @@
+digraph Workflow {
+rankdir=LR
+fontname=Helvetica; fontsize=18; labelloc=t
+label=OperationsColDish_count
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; penwidth=0
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Helvetica]
+ToNumberColDish_count [shape=record rankdir=LR label="{{<f0> ToNumberColDish_count |<f1> Text transform on cells in column dish_count using expression value.toNumber()}}"];
+edge[fontname=Helvetica]
+}}
+subgraph cluster_input_ports_group_outer { label=""; penwidth=0
+subgraph cluster_input_ports_group_inner { label=""; penwidth=0
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+table1_input_port [label=""]
+"operation_name:\"core/text-transform\"_input_port" [label=""]
+"columnName:\"dish_count\"_input_port" [label=""]
+}}
+subgraph cluster_output_ports_group_outer { label=""; penwidth=0
+subgraph cluster_output_ports_group_inner { label=""; penwidth=0
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+table5_output_port [label=""]
+}}
+edge[fontname=Helvetica]
+table1_input_port -> ToNumberColDish_count [label=table1]
+"operation_name:\"core/text-transform\"_input_port" -> ToNumberColDish_count [label="operation_name:\"core/text-transform\""]
+"columnName:\"dish_count\"_input_port" -> ToNumberColDish_count [label="columnName:\"dish_count\""]
+edge[fontname=Helvetica]
+ToNumberColDish_count -> table5_output_port [label=table5]
+}
