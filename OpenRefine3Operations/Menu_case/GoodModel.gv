@@ -1,0 +1,76 @@
+digraph Workflow {
+rankdir=LR
+fontname=Helvetica; fontsize=18; labelloc=t
+label="Parallel&SequentialModel"
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; penwidth=0
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Helvetica]
+RemovalColumn [shape=record rankdir=LR label="{{<f0> RemovalColumn |<f1> Remove column Column}}"];
+MergeColOperations
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=2 fontname=Helvetica]
+OperationsColSponsor [shape=record rankdir=LR label="{{<f0> OperationsColSponsor |<f1> OpenRefine operations on column sponsor}}"];
+OperationsColEvent [shape=record rankdir=LR label="{{<f0> OperationsColEvent |<f1> OpenRefine operations on column event}}"];
+OperationsColCall_number [shape=record rankdir=LR label="{{<f0> OperationsColCall_number |<f1> OpenRefine operations on column call_number}}"];
+OperationsColDish_count [shape=record rankdir=LR label="{{<f0> OperationsColDish_count |<f1> OpenRefine operations on column dish_count}}"];
+edge[fontname=Helvetica]
+RemovalColumn -> OperationsColSponsor [label=table1]
+RemovalColumn -> OperationsColEvent [label=table1]
+RemovalColumn -> OperationsColCall_number [label=table1]
+RemovalColumn -> OperationsColDish_count [label=table1]
+OperationsColSponsor -> MergeColOperations [label=table2]
+OperationsColEvent -> MergeColOperations [label=table3]
+OperationsColCall_number -> MergeColOperations [label=table4]
+OperationsColDish_count -> MergeColOperations [label=table5]
+}}
+subgraph cluster_input_ports_group_outer { label=""; penwidth=0
+subgraph cluster_input_ports_group_inner { label=""; penwidth=0
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+"Menu-train.csv_input_port" [label=""]
+"columnName:\"Column\"_input_port" [label=""]
+"columnName:\"sponsor\"_input_port" [label=""]
+"columnName:\"event\"_input_port" [label=""]
+"columnName:\"call_number\"_input_port" [label=""]
+"columnName:\"dish_count\"_input_port" [label=""]
+"operation_name:\"core/column-removal\"_input_port" [label=""]
+"operation_name:\"core/mass-edit\"_input_port" [label=""]
+"operation_name:\"core/text-transform\"_input_port" [label=""]
+"operation_name:\"core/multivalued-celll-split\"_input_port" [label=""]
+"separator:\"_\"_input_port" [label=""]
+"separator:\"_input_port" [label=""]
+"keyColumnName:\"id\"_input_port" [label=""]
+"Method:\"key_input_port" [label=""]
+"Keyingfunction:\"fingerprint\"_input_port" [label=""]
+"Method:\"nearest_input_port" [label=""]
+"Distancefunction:\"PPM\"_input_port" [label=""]
+"Distancefunction:\"levenshetin\"_input_port" [label=""]
+}}
+subgraph cluster_output_ports_group_outer { label=""; penwidth=0
+subgraph cluster_output_ports_group_inner { label=""; penwidth=0
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+CleanMenuCSV_output_port [label=""]
+}}
+edge[fontname=Helvetica]
+"Menu-train.csv_input_port" -> RemovalColumn [label="Menu-train.csv"]
+"operation_name:\"core/column-removal\"_input_port" -> RemovalColumn [label="operation_name:\"core/column-removal\""]
+"columnName:\"Column\"_input_port" -> RemovalColumn [label="columnName:\"Column\""]
+"operation_name:\"core/mass-edit\"_input_port" -> OperationsColSponsor [label="operation_name:\"core/mass-edit\""]
+"operation_name:\"core/mass-edit\"_input_port" -> OperationsColEvent [label="operation_name:\"core/mass-edit\""]
+"Method:\"nearest_input_port" -> OperationsColSponsor [label="Method:\"nearest"]
+"Method:\"nearest_input_port" -> OperationsColEvent [label="Method:\"nearest"]
+"Distancefunction:\"levenshetin\"_input_port" -> OperationsColSponsor [label="Distancefunction:\"levenshetin\""]
+"columnName:\"sponsor\"_input_port" -> OperationsColSponsor [label="columnName:\"sponsor\""]
+"Method:\"key_input_port" -> OperationsColSponsor [label="Method:\"key"]
+"Keyingfunction:\"fingerprint\"_input_port" -> OperationsColSponsor [label="Keyingfunction:\"fingerprint\""]
+"operation_name:\"core/text-transform\"_input_port" -> OperationsColEvent [label="operation_name:\"core/text-transform\""]
+"operation_name:\"core/text-transform\"_input_port" -> OperationsColDish_count [label="operation_name:\"core/text-transform\""]
+"columnName:\"event\"_input_port" -> OperationsColEvent [label="columnName:\"event\""]
+"Distancefunction:\"PPM\"_input_port" -> OperationsColEvent [label="Distancefunction:\"PPM\""]
+"operation_name:\"core/multivalued-celll-split\"_input_port" -> OperationsColCall_number [label="operation_name:\"core/multivalued-celll-split\""]
+"columnName:\"call_number\"_input_port" -> OperationsColCall_number [label="columnName:\"call_number\""]
+"separator:\"_\"_input_port" -> OperationsColCall_number [label="separator:\"_\""]
+"separator:\"_input_port" -> OperationsColCall_number [label="separator:\""]
+"keyColumnName:\"id\"_input_port" -> OperationsColCall_number [label="keyColumnName:\"id\""]
+"columnName:\"dish_count\"_input_port" -> OperationsColDish_count [label="columnName:\"dish_count\""]
+edge[fontname=Helvetica]
+MergeColOperations -> CleanMenuCSV_output_port [label=CleanMenuCSV]
+}

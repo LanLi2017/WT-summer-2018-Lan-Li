@@ -1,9 +1,62 @@
+// @begin Parallel&SequentialModel
+// @in Menu-train.csv
+
+// @in columnName:"Column"
+// @in columnName:"sponsor"
+// @in columnName:"event"
+// @in columnName:"call_number"
+// @in columnName:"dish_count"
+
+// @in operation_name:"core/column-removal"
+// @in operation_name:"core/mass-edit"
+// @in operation_name:"core/text-transform"
+// @in operation_name:"core/multivalued-celll-split"
+
+// @in separator:"_"
+// @in separator:" "
+// @in keyColumnName:"id"
+
+// @in Method:"key collision"
+// @in Keyingfunction:"fingerprint"
+// @in Method:"nearest neighbor"
+// @in Distancefunction:"PPM"
+// @in Distancefunction:"levenshetin"
+
+// @out CleanMenuCSV
+
+
+// @begin RemovalColumn @desc Remove column Column
+// @in Menu-train.csv
+// @in operation_name:"core/column-removal"
+// @in columnName:"Column"
+// @out table1
 [
   {
     "op": "core/column-removal",
     "description": "Remove column Column",
     "columnName": "Column"
   },
+// @end RemovalColumn
+
+// @begin OperationsColSponsor @desc OpenRefine operations on column sponsor
+// @in table1
+// @in operation_name:"core/mass-edit"
+// @in Method:"nearest neighbor"
+// @in Distancefunction:"levenshetin"
+// @in columnName:"sponsor"
+// @in Method:"key collision"
+// @in Keyingfunction:"fingerprint"
+
+// @out table2
+
+// @begin Cluster&EditColSponsor @desc Mass edit cells in column sponsor
+// @in table1
+// @in operation_name:"core/mass-edit"
+// @in operation_name:"core/text-transform"
+// @in columnName:"sponsor"
+// @in Method:"key collision"
+// @in Keyingfunction:"fingerprint"
+// @out t2
   {
     "op": "core/mass-edit",
     "description": "Mass edit cells in column sponsor",
@@ -1669,6 +1722,13 @@
       }
     ]
   },
+// @end Cluster&EditColSponsor
+
+// @begin LowercaseColSponsor @desc text-transform: text transform on cells in column sponsor using expression value.toLowercase()
+// @in t2
+// @in operation_name:"core/text-transform"
+// @in columnName:"sponsor"
+// @out t3
   {
     "op": "core/text-transform",
     "description": "Text transform on cells in column sponsor using expression value.toLowercase()",
@@ -1682,6 +1742,13 @@
     "repeat": false,
     "repeatCount": 10
   },
+// @end LowercaseColSponsor
+
+// @begin TrimWhitespaceColSponsor @desc Text transform on cells in column sponsor using expression value.trim()
+// @in t3
+// @in operatioin_name:"core/text-transform"
+// @in columnName:"sponsor"
+// @out t4
   {
     "op": "core/text-transform",
     "description": "Text transform on cells in column sponsor using expression value.trim()",
@@ -1695,6 +1762,15 @@
     "repeat": false,
     "repeatCount": 10
   },
+// @end TrimWhitespaceColSponsor
+
+// @begin EditCells&ClusterColSponsor @desc Mass edit cells in column sponsor
+// @in t4
+// @in operation_name:"core/mass-edit"
+// @in columnName:"sponsor"
+// @in Method:"nearest neighbor"
+// @in Distancefunction:"levenshetin"
+// @out table2
   {
     "op": "core/mass-edit",
     "description": "Mass edit cells in column sponsor",
@@ -2616,6 +2692,28 @@
       }
     ]
   },
+// @end EditCells&ClusterColSponsor
+
+  // @end OperationsColSponsor
+
+
+// @begin OperationsColEvent @desc OpenRefine operations on column event
+// @in table1
+// @in operation_name:"core/mass-edit"
+// @in operation_name:"core/text-transform"
+// @in columnName:"event"
+// @in Method:"nearest neighbor"
+// @in Distancefunction:"PPM"
+
+// @out table3
+
+// @begin Cluster&EditColEvent @desc Mass edit cells in column event
+// @in table1
+// @in operation_name:"core/mass-edit"
+// @in columnName:"event"
+// @in Method:"nearest neighbor"
+// @in Distancefunction:"PPM"
+// @out t5
   {
     "op": "core/mass-edit",
     "description": "Mass edit cells in column event",
@@ -4251,6 +4349,13 @@
       }
     ]
   },
+// @end Cluster&EditColEvent
+
+// @begin LowercaseColEvent @desc Text transform on cells in column event using expressioin value.toLowercase()
+// @in operation_name:"core/text-transform"
+// @in columnName:"event"
+// @in t5
+// @out t6
   {
     "op": "core/text-transform",
     "description": "Text transform on cells in column event using expression value.toLowercase()",
@@ -4264,6 +4369,13 @@
     "repeat": false,
     "repeatCount": 10
   },
+// @end LowercaseColEvent
+
+// @begin TrimWhitespaceColEvent @desc Text transform on cells in column event using expression value.trim()
+// @in t6
+// @in operatioin_name:"core/text-transform"
+// @in columnName:"event"
+// @out table3
   {
     "op": "core/text-transform",
     "description": "Text transform on cells in column event using expression value.trim()",
@@ -4277,6 +4389,27 @@
     "repeat": false,
     "repeatCount": 10
   },
+// @end TrimWhitespaceColEvent
+// @end OperationsColEvent
+
+
+// @begin OperationsColCall_number @desc OpenRefine operations on column call_number
+// @in table1
+// @in operation_name:"core/multivalued-celll-split"
+// @in columnName:"call_number"
+// @in separator:"_"
+// @in separator:" "
+// @in keyColumnName:"id"
+// @out table4
+
+// @begin SplitCellsColCall_number @desc Split multi-valued cells in column call_number
+// @in table1
+// @in operation_name:"core/multivalued-celll-split"
+// @in columnName:"call_number"
+// @in separator:"_"
+// @in separator:" "
+// @in keyColumnName:"id"
+// @out table4
   {
     "op": "core/multivalued-cell-split",
     "description": "Split multi-valued cells in column call_number",
@@ -4295,6 +4428,20 @@
     "separator": " ",
     "regex": false
   },
+// @end SplitCellsColCall_number
+// @end OperationsColCall_number
+
+// @begin OperationsColDish_count @desc OpenRefine operations on column dish_count
+// @in table1
+// @in operation_name:"core/text-transform"
+// @in columnName:"dish_count"
+// @out table5
+
+// @begin ToNumberColDish_count @desc Text transform on cells in column dish_count using expression value.toNumber()
+// @in table1
+// @in operation_name:"core/text-transform"
+// @in columnName:"dish_count"
+// @out table5
   {
     "op": "core/text-transform",
     "description": "Text transform on cells in column dish_count using expression value.toNumber()",
@@ -4309,3 +4456,16 @@
     "repeatCount": 10
   }
 ]
+// @end ToNumberColDish_count
+// @end OperationsColDish_count
+
+// @begin MergeColOperations
+// @in table2
+// @in table3
+// @in table4
+// @in table5
+// @out CleanMenuCSV
+
+// @end mergeColOperations
+
+// @end Parallel&SequentialModel

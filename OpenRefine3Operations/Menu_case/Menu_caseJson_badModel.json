@@ -1,14 +1,52 @@
 
 // @begin linearModel
+// @in Menu-train.csv
+
+
+// @in columnName:"Column"
+// @in columnName:"sponsor"
+// @in columnName:"event"
+// @in columnName:"call_number"
+// @in columnName:"dish_count"
+
+// @in operation_name:"core/column-removal"
+// @in operation_name:"core/mass-edit"
+// @in operation_name:"core/text-transform"
+// @in operation_name:"core/multivalued-celll-split"
+
+// @in separator:"_"
+// @in separator:" "
+// @in keyColumnName:"id"
+
+// @in Method:"key collision"
+// @in Keyingfunction:"fingerprint"
+// @in Method:"nearest neighbor"
+// @in Distancefunction:"PPM"
+// @in Distancefunction:"levenshetin"
+
+// @out CleanMenuCSV
 
 [
-// @begin RemovalColumn
-
+// @begin RemovalColumn @desc Remove column Column
+// @in Menu-train.csv
+// @in operation_name:"core/column-removal"
+// @in columnName:"Column"
+// @out table1
   {
     "op": "core/column-removal",
     "description": "Remove column Column",
     "columnName": "Column"
   },
+// @end RemovalColumn
+
+
+// @begin Cluster&EditColSponsor @desc Mass edit cells in column sponsor
+// @in table1
+// @in operation_name:"core/mass-edit"
+// @in columnName:"sponsor"
+// @in Method:"key collision"
+// @in Keyingfunction:"fingerprint"
+// @out table2
   {
     "op": "core/mass-edit",
     "description": "Mass edit cells in column sponsor",
@@ -1674,6 +1712,13 @@
       }
     ]
   },
+// @end Cluster&EditColSponsor
+
+// @begin LowercaseColSponsor @desc text-transform: text transform on cells in column sponsor using expression value.toLowercase()
+// @in table2
+// @in operation_name:"core/text-transform"
+// @in columnName:"sponsor"
+// @out table3
   {
     "op": "core/text-transform",
     "description": "Text transform on cells in column sponsor using expression value.toLowercase()",
@@ -1687,6 +1732,13 @@
     "repeat": false,
     "repeatCount": 10
   },
+// @end LowercaseColSponsor
+
+// @begin TrimWhitespaceColSponsor @desc Text transform on cells in column sponsor using expression value.trim()
+// @in table3
+// @in operatioin_name:"core/text-transform"
+// @in columnName:"sponsor"
+// @out table4
   {
     "op": "core/text-transform",
     "description": "Text transform on cells in column sponsor using expression value.trim()",
@@ -1700,6 +1752,15 @@
     "repeat": false,
     "repeatCount": 10
   },
+// @end TrimWhitespaceColSponsor
+
+// @begin EditCells&ClusterColSponsor @desc Mass edit cells in column sponsor
+// @in table4
+// @in operation_name:"core/mass-edit"
+// @in columnName:"sponsor"
+// @in Method:"nearest neighbor"
+// @in Distancefunction:"levenshetin"
+// @out table5
   {
     "op": "core/mass-edit",
     "description": "Mass edit cells in column sponsor",
@@ -2621,6 +2682,15 @@
       }
     ]
   },
+// @end EditCells&ClusterColSponsor
+
+// @begin Cluster&EditColEvent @desc Mass edit cells in column event
+// @in table5
+// @in operation_name:"core/mass-edit"
+// @in columnName:"event"
+// @in Method:"nearest neighbor"
+// @in Distancefunction:"PPM"
+// @out table6
   {
     "op": "core/mass-edit",
     "description": "Mass edit cells in column event",
@@ -4256,6 +4326,13 @@
       }
     ]
   },
+// @end Cluster&EditColEvent
+
+// @begin LowercaseColEvent @desc Text transform on cells in column event using expressioin value.toLowercase()
+// @in operation_name:"core/text-transform"
+// @in columnName:"event"
+// @in table6
+// @out table7
   {
     "op": "core/text-transform",
     "description": "Text transform on cells in column event using expression value.toLowercase()",
@@ -4269,6 +4346,13 @@
     "repeat": false,
     "repeatCount": 10
   },
+// @end LowercaseColEvent
+
+// @begin TrimWhitespaceColEvent @desc Text transform on cells in column event using expression value.trim()
+// @in table7
+// @in operatioin_name:"core/text-transform"
+// @in columnName:"event"
+// @out table8
   {
     "op": "core/text-transform",
     "description": "Text transform on cells in column event using expression value.trim()",
@@ -4282,6 +4366,16 @@
     "repeat": false,
     "repeatCount": 10
   },
+// @end TrimWhitespaceColEvent
+
+// @begin SplitCellsColCall_number @desc Split multi-valued cells in column call_number
+// @in table8
+// @in operation_name:"core/multivalued-celll-split"
+// @in columnName:"call_number"
+// @in separator:"_"
+// @in separator:" "
+// @in keyColumnName:"id"
+// @out table9
   {
     "op": "core/multivalued-cell-split",
     "description": "Split multi-valued cells in column call_number",
@@ -4300,6 +4394,13 @@
     "separator": " ",
     "regex": false
   },
+// @end SplitCellsColCall_number
+
+// @begin ToNumberColDish_count @desc Text transform on cells in column dish_count using expression value.toNumber()
+// @in table9
+// @in operation_name:"core/text-transform"
+// @in columnName:"dish_count"
+// @out CleanMenuCSV
   {
     "op": "core/text-transform",
     "description": "Text transform on cells in column dish_count using expression value.toNumber()",
@@ -4314,5 +4415,6 @@
     "repeatCount": 10
   }
 ]
+// @end ToNumberColDish_count
 
 // @end linearModel

@@ -1,0 +1,87 @@
+digraph Workflow {
+rankdir=LR
+fontname=Helvetica; fontsize=18; labelloc=t
+label=linearModel
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; penwidth=0
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Helvetica]
+RemovalColumn [shape=record rankdir=LR label="{{<f0> RemovalColumn |<f1> Remove column Column}}"];
+"Cluster&EditColSponsor" [shape=record rankdir=LR label="{{<f0> Cluster&EditColSponsor |<f1> Mass edit cells in column sponsor}}"];
+LowercaseColSponsor [shape=record rankdir=LR label="{{<f0> LowercaseColSponsor |<f1> text-transform\: text transform on cells in column sponsor using expression value.toLowercase()}}"];
+TrimWhitespaceColSponsor [shape=record rankdir=LR label="{{<f0> TrimWhitespaceColSponsor |<f1> Text transform on cells in column sponsor using expression value.trim()}}"];
+"EditCells&ClusterColSponsor" [shape=record rankdir=LR label="{{<f0> EditCells&ClusterColSponsor |<f1> Mass edit cells in column sponsor}}"];
+"Cluster&EditColEvent" [shape=record rankdir=LR label="{{<f0> Cluster&EditColEvent |<f1> Mass edit cells in column event}}"];
+LowercaseColEvent [shape=record rankdir=LR label="{{<f0> LowercaseColEvent |<f1> Text transform on cells in column event using expressioin value.toLowercase()}}"];
+TrimWhitespaceColEvent [shape=record rankdir=LR label="{{<f0> TrimWhitespaceColEvent |<f1> Text transform on cells in column event using expression value.trim()}}"];
+SplitCellsColCall_number [shape=record rankdir=LR label="{{<f0> SplitCellsColCall_number |<f1> Split multi-valued cells in column call_number}}"];
+ToNumberColDish_count [shape=record rankdir=LR label="{{<f0> ToNumberColDish_count |<f1> Text transform on cells in column dish_count using expression value.toNumber()}}"];
+edge[fontname=Helvetica]
+RemovalColumn -> "Cluster&EditColSponsor" [label=table1]
+"Cluster&EditColSponsor" -> LowercaseColSponsor [label=table2]
+LowercaseColSponsor -> TrimWhitespaceColSponsor [label=table3]
+TrimWhitespaceColSponsor -> "EditCells&ClusterColSponsor" [label=table4]
+"EditCells&ClusterColSponsor" -> "Cluster&EditColEvent" [label=table5]
+"Cluster&EditColEvent" -> LowercaseColEvent [label=table6]
+LowercaseColEvent -> TrimWhitespaceColEvent [label=table7]
+TrimWhitespaceColEvent -> SplitCellsColCall_number [label=table8]
+SplitCellsColCall_number -> ToNumberColDish_count [label=table9]
+}}
+subgraph cluster_input_ports_group_outer { label=""; penwidth=0
+subgraph cluster_input_ports_group_inner { label=""; penwidth=0
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+"Menu-train.csv_input_port" [label=""]
+"columnName:\"Column\"_input_port" [label=""]
+"columnName:\"sponsor\"_input_port" [label=""]
+"columnName:\"event\"_input_port" [label=""]
+"columnName:\"call_number\"_input_port" [label=""]
+"columnName:\"dish_count\"_input_port" [label=""]
+"operation_name:\"core/column-removal\"_input_port" [label=""]
+"operation_name:\"core/mass-edit\"_input_port" [label=""]
+"operation_name:\"core/text-transform\"_input_port" [label=""]
+"operation_name:\"core/multivalued-celll-split\"_input_port" [label=""]
+"separator:\"_\"_input_port" [label=""]
+"separator:\"_input_port" [label=""]
+"keyColumnName:\"id\"_input_port" [label=""]
+"Method:\"key_input_port" [label=""]
+"Keyingfunction:\"fingerprint\"_input_port" [label=""]
+"Method:\"nearest_input_port" [label=""]
+"Distancefunction:\"PPM\"_input_port" [label=""]
+"Distancefunction:\"levenshetin\"_input_port" [label=""]
+}}
+subgraph cluster_output_ports_group_outer { label=""; penwidth=0
+subgraph cluster_output_ports_group_inner { label=""; penwidth=0
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+CleanMenuCSV_output_port [label=""]
+}}
+edge[fontname=Helvetica]
+"Menu-train.csv_input_port" -> RemovalColumn [label="Menu-train.csv"]
+"operation_name:\"core/column-removal\"_input_port" -> RemovalColumn [label="operation_name:\"core/column-removal\""]
+"columnName:\"Column\"_input_port" -> RemovalColumn [label="columnName:\"Column\""]
+"operation_name:\"core/mass-edit\"_input_port" -> "Cluster&EditColSponsor" [label="operation_name:\"core/mass-edit\""]
+"operation_name:\"core/mass-edit\"_input_port" -> "EditCells&ClusterColSponsor" [label="operation_name:\"core/mass-edit\""]
+"operation_name:\"core/mass-edit\"_input_port" -> "Cluster&EditColEvent" [label="operation_name:\"core/mass-edit\""]
+"columnName:\"sponsor\"_input_port" -> "Cluster&EditColSponsor" [label="columnName:\"sponsor\""]
+"columnName:\"sponsor\"_input_port" -> LowercaseColSponsor [label="columnName:\"sponsor\""]
+"columnName:\"sponsor\"_input_port" -> TrimWhitespaceColSponsor [label="columnName:\"sponsor\""]
+"columnName:\"sponsor\"_input_port" -> "EditCells&ClusterColSponsor" [label="columnName:\"sponsor\""]
+"Method:\"key_input_port" -> "Cluster&EditColSponsor" [label="Method:\"key"]
+"Keyingfunction:\"fingerprint\"_input_port" -> "Cluster&EditColSponsor" [label="Keyingfunction:\"fingerprint\""]
+"operation_name:\"core/text-transform\"_input_port" -> LowercaseColSponsor [label="operation_name:\"core/text-transform\""]
+"operation_name:\"core/text-transform\"_input_port" -> LowercaseColEvent [label="operation_name:\"core/text-transform\""]
+"operation_name:\"core/text-transform\"_input_port" -> ToNumberColDish_count [label="operation_name:\"core/text-transform\""]
+"Method:\"nearest_input_port" -> "EditCells&ClusterColSponsor" [label="Method:\"nearest"]
+"Method:\"nearest_input_port" -> "Cluster&EditColEvent" [label="Method:\"nearest"]
+"Distancefunction:\"levenshetin\"_input_port" -> "EditCells&ClusterColSponsor" [label="Distancefunction:\"levenshetin\""]
+"columnName:\"event\"_input_port" -> "Cluster&EditColEvent" [label="columnName:\"event\""]
+"columnName:\"event\"_input_port" -> LowercaseColEvent [label="columnName:\"event\""]
+"columnName:\"event\"_input_port" -> TrimWhitespaceColEvent [label="columnName:\"event\""]
+"Distancefunction:\"PPM\"_input_port" -> "Cluster&EditColEvent" [label="Distancefunction:\"PPM\""]
+"operation_name:\"core/multivalued-celll-split\"_input_port" -> SplitCellsColCall_number [label="operation_name:\"core/multivalued-celll-split\""]
+"columnName:\"call_number\"_input_port" -> SplitCellsColCall_number [label="columnName:\"call_number\""]
+"separator:\"_\"_input_port" -> SplitCellsColCall_number [label="separator:\"_\""]
+"separator:\"_input_port" -> SplitCellsColCall_number [label="separator:\""]
+"keyColumnName:\"id\"_input_port" -> SplitCellsColCall_number [label="keyColumnName:\"id\""]
+"columnName:\"dish_count\"_input_port" -> ToNumberColDish_count [label="columnName:\"dish_count\""]
+edge[fontname=Helvetica]
+ToNumberColDish_count -> CleanMenuCSV_output_port [label=CleanMenuCSV]
+}
