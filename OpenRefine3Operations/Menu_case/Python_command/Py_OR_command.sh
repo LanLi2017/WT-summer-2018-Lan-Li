@@ -27,6 +27,9 @@ python refine.py --create partTest.csv
 
 python -i refine.py
 
+import StringIO
+from google.refine import refine
+
 # @begin RenameColumn
 # @in projectID
 # @in column @as oldColumnName
