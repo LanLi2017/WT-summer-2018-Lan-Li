@@ -36,9 +36,9 @@
 # @in refinePythonFile @uri file: refine.py
 # @out projectID
 # @out projectNoRows
-from refine import refine_project
+import refine
+refine.myParser('--create partTest.csv')
 
-refine_project.call(['python', 'refine.py', '--create', 'partTest.csv'])
 # @end CreateProject
 
 
@@ -128,7 +128,7 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').text_transform('spon
 t3withcluster=refine.RefineProject(refine.RefineServer(),'2146520884101').compute_clusters('sponsor',clusterer_type='binning',function='ngram-fingerprint', params=20)
 # @end ComputeClusterColSponsor
 
-# @begin ChooseUniqueName2MassEdit @desc Choosing unique name for 'to' to mass_edit step
+# @begin ChooseUniqueName2MassEdit @desc Using Function getTovalue and getFromValue for edits, which is [{'from': ['foo'], 'to': 'bar'}, {...}]
 # @in t3withcluster
 # @in function:getToValue
 # @in function:getFromValue
@@ -190,7 +190,7 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').mass_edit('sponsor',
 table1withclusterColEvent=refine.RefineProject(refine.RefineServer(),'2146520884101').compute_clusters('event',clusterer_type='knn',function='PPM', params={ 'radius':1,'blocking-ngram-size':6})
 # @end ComputeClusterColEvent
 
-# @begin ChooseUniqueName2MassEdit @desc Choosing unique name for 'to' to mass_edit step
+# @begin ChooseUniqueName2MassEdit @desc Using Function getTovalue and getFromValue for edits, which is [{'from': ['foo'], 'to': 'bar'}, {...}]
 # @in table1withclusterColEvent
 # @in function:getToValue
 # @in function:getFromValue
@@ -302,7 +302,7 @@ table1withclusterColplace=refine.RefineProject(refine.RefineServer(),'2146520884
 #[[{'count': 4, 'value': u'Waldorf Astoria'}, {'count': 1, 'value': u'Waldorf-Astoria'}], [{'count': 1, 'value': u'Hamburg Amerika Line'}, {'count': 1, 'value': u'Hamburg Amerika Linie'}], [{'count': 5, 'value': u'Norddeutscher Lloyd Bremen'}, {'count': 2, 'value': u'Norddeutscher Lloyd  Bremen'}]]
 # @end ComputeClusterColPlace
 
-# @begin ChooseUniqueName2MassEdit @desc Choosing unique name for 'to' to mass_edit step
+# @begin ChooseUniqueName2MassEdit @desc Using Function getTovalue and getFromValue for edits, which is [{'from': ['foo'], 'to': 'bar'}, {...}]
 # @in table1withclusterColplace
 # @in function:getToValue
 # @in function:getFromValue
@@ -340,7 +340,8 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').mass_edit('place', E
 # @in newTable1
 # @in Json_History_id
 # @out outputFile @uri file: PartTest.tsv
-refine_project.call(['python', 'refine.py', '--export','2146520884101','--output=PartTest.tsv'])
+import refine
+refine.myParser('--export 2146520884101 --output=PartTest.tsv')
 # @end export project
 
 # @end Parallel&SequentialModel
