@@ -82,7 +82,7 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').text_transform('spon
 refine.RefineProject(refine.RefineServer(),'2146520884101').text_transform('sponsor','value.toLowercase()')
 # @end LowercaseColSponsor
 
-# @begin EditCells&ClusterColSponsor @desc Mass edit cells in column sponsor
+# @begin Cluster&EditCellsColSponsor @desc Mass edit cells in column sponsor
 # @in projectID
 # @in t3
 # @in columnName:"sponsor"
@@ -99,23 +99,31 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').text_transform('spon
 # @in clusterer_type:"binning"
 # @in function:"ngram-fingerprint"
 # @in params:"20"
-# @out from:['norddeutscher lloyd bremen','norddeutscher lloyd  bremen']
-# @out t4
+# @out from
+# @out t3withcluster
 refine.RefineProject(refine.RefineServer(),'2146520884101').compute_clusters('sponsor',clusterer_type='binning',function='ngram-fingerprint', params=20)
 # @end ComputeClusterColSponsor
 
+# @begin ChooseUniqueName2MassEdit @desc Choosing unique name for "to" to mass_edit step
+# @in t3withcluster
+# @in from
+# @out to
+
+# @end ChooseUniqueName2MassEdit
+
+
 # @begin MassEditColSponsor @desc Using clusters with mass edit
 # @in projectID
-# @in t4
+# @in t3withcluster
 # @in columnName:"sponsor"
-# @in from:['norddeutscher lloyd bremen','norddeutscher lloyd  bremen']
-# @in to:'norddeutscher lloyd bremen'
+# @in from
+# @in to
 # @out table1-Sponsor
 refine.RefineProject(refine.RefineServer(),'2146520884101').mass_edit('sponsor',[{'from': ['norddeutscher lloyd bremen','norddeutscher lloyd  bremen'], 'to': 'norddeutscher lloyd bremen'}])
 # @end MassEditColSponsor
 
 
-# @end EditCells&ClusterColSponsor
+# @end Cluster&EditCellsColSponsor
 
 # @end OperationColSponsor
 
@@ -133,7 +141,7 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').mass_edit('sponsor',
 # @in expression:"value.toLowercase()"
 # @out table1-Event
 
-# @begin EditCells&ClusterColEvent @desc Mass edit cells in column event
+# @begin Cluster&EditCellsColEvent @desc Mass edit cells in column event
 # @in projectID
 # @in table1
 # @in columnName:"event"
@@ -151,7 +159,7 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').mass_edit('sponsor',
 # @in function:"PPM"
 # @in params:{'radius':1,'blocking-ngram-size':6}
 # @out from:['THANKSGIVING DINNER','THANKSGIVING DAY DINNER']
-# @out t5
+# @out table1withcluster
 refine.RefineProject(refine.RefineServer(),'2146520884101').compute_clusters('event',clusterer_type='knn',function='PPM', params={ 'radius':1,'blocking-ngram-size':6})
 # @end ComputeClusterColEvent
 
@@ -159,13 +167,13 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').compute_clusters('ev
 # @in to:'THANKSGIVING DINNER'
 # @in projectID
 # @in columnName:"event"
-# @in t5
+# @in table1withcluster
 # @in from:['THANKSGIVING DINNER','THANKSGIVING DAY DINNER']
 # @out t6
 refine.RefineProject(refine.RefineServer(),'2146520884101').mass_edit('event',[{'from':['THANKSGIVING DINNER','THANKSGIVING DAY DINNER'],'to':'THANKSGIVING DINNER'}])
 # @end MassEditColEvent
 
-# @end EditCells&ClusterEvent
+# @end Cluster&EditCellsColEvent
 
 # @begin LowercaseColEvent @desc Invoke text_transform function and replace the expression with lowercase method
 # @in projectID
@@ -235,7 +243,7 @@ refine.RefineProject(refine.RefineServer(), '2146520884101').text_transform('dis
 # @in to:['Waldorf Astoria','Hamburg Amerika Linie','Norddeutscher Lloyd Bremen']
 # @out table1-Place
 
-# @begin EditCells&ClusterColPlace @desc Mass edit cells in column place
+# @begin Cluster&EditCellsColPlace @desc Mass edit cells in column place
 # @in projectID
 # @in table1
 # @in columnName:"place"
@@ -252,7 +260,7 @@ refine.RefineProject(refine.RefineServer(), '2146520884101').text_transform('dis
 # @in clusterer_type:"knn"
 # @in function:"levenshtein"
 # @out from:{['Waldorf Astoria','Waldorf-Astoria'],['Hamburg Amerika Line','Hamburg Amerika Linie'],['Norddeutscher Lloyd Bremen','Norddeutscher Lloyd  Bremen']}
-# @out t8
+# @out table1withclusterColplace
 
 refine.RefineProject(refine.RefineServer(),'2146520884101').compute_clusters('place',clusterer_type='knn',function='levenshtein')
 #[[{'count': 4, 'value': u'Waldorf Astoria'}, {'count': 1, 'value': u'Waldorf-Astoria'}], [{'count': 1, 'value': u'Hamburg Amerika Line'}, {'count': 1, 'value': u'Hamburg Amerika Linie'}], [{'count': 5, 'value': u'Norddeutscher Lloyd Bremen'}, {'count': 2, 'value': u'Norddeutscher Lloyd  Bremen'}]]
@@ -260,7 +268,7 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').compute_clusters('pl
 
 # @begin MassEditColPlace @desc Using clusters with mass edit
 # @in projectID
-# @in t8
+# @in table1withclusterColplace
 # @in columnName:"place"
 # @in from:{['Waldorf Astoria','Waldorf-Astoria'],['Hamburg Amerika Line','Hamburg Amerika Linie'],['Norddeutscher Lloyd Bremen','Norddeutscher Lloyd  Bremen']}
 # @in to:['Waldorf Astoria','Hamburg Amerika Linie','Norddeutscher Lloyd Bremen']
@@ -268,15 +276,22 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').compute_clusters('pl
 refine.RefineProject(refine.RefineServer(),'2146520884101').mass_edit('place',[{'from':['Waldorf Astoria','Waldorf-Astoria'],'to':'Waldorf Astoria'},{'from':['Hamburg Amerika Line','Hamburg Amerika Linie'],'to':'Hamburg Amerika Line'},{'from':['Norddeutscher Lloyd Bremen','Norddeutscher Lloyd  Bremen'],'to':'Norddeutscher Lloyd Bremen'}])
 # @end MassEditColPlace
 
-# @end EditCells&ClusterColPlace
+# @end Cluster&EditCellsColPlace
 # @end OperationsColPlace
 
-# @begin exportProject @desc Export the project
+# @begin MergeColumns @desc merge all columns after operations
 # @in table1-Sponsor
 # @in table1-Call_number
 # @in table1-Event
 # @in table1-Dish_count
 # @in table1-Place
+# @out newTable1
+
+# @end MergeColumns
+
+
+# @begin exportProject @desc Export the project
+# @in newTable1
 # @in Json_History_id
 # @out outputFile @uri file: PartTest.tsv
 python refine.py --export 2146520884101 --output=PartTest.tsv
