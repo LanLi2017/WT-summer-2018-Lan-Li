@@ -36,9 +36,9 @@
 # @in refinePythonFile @uri file: refine.py
 # @out projectID
 # @out projectNoRows
-import refine
-refine.myParser('--create partTest.csv')
-
+from google.refine import refine
+projectID=refine.Refine(refine.RefineServer()).new_project('partTest.csv','HalfMenuDataset','.csv')[1]
+# print(refine.myParser('--list'))
 # @end CreateProject
 
 
@@ -70,8 +70,7 @@ def getToValue(computeCluster):
 # @in oldColumnName
 # @in newColumnName
 # @out table1
-from google.refine import refine
-refine.RefineProject(refine.RefineServer(),'2146520884101').rename_column('Column','ColumnTag')
+refine.RefineProject(refine.RefineServer(),projectID).rename_column('notes','commands')
 # @end RenameColumn
 
 
@@ -94,7 +93,7 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').rename_column('Colum
 # @in expression:"value.trim()"
 # @in columnName:"sponsor"
 # @out t2
-refine.RefineProject(refine.RefineServer(),'2146520884101').text_transform('sponsor','value.trim()')
+refine.RefineProject(refine.RefineServer(),projectID).text_transform('sponsor','value.trim()')
 # @end TrimWhitespaceColSponsor
 
 # @begin LowercaseColSponsor @desc Invoke text_transform function and replace the expression with lowercase method
@@ -103,7 +102,7 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').text_transform('spon
 # @in expression:"value.toLowercase()"
 # @in columnName:"sponsor"
 # @out t3
-refine.RefineProject(refine.RefineServer(),'2146520884101').text_transform('sponsor','value.toLowercase()')
+refine.RefineProject(refine.RefineServer(),projectID).text_transform('sponsor','value.toLowercase()')
 # @end LowercaseColSponsor
 
 # @begin Cluster&EditCellsColSponsor @desc Mass edit cells in column sponsor
@@ -125,7 +124,7 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').text_transform('spon
 # @in function:"ngram-fingerprint"
 # @in params:"20"
 # @out t3withcluster
-t3withcluster=refine.RefineProject(refine.RefineServer(),'2146520884101').compute_clusters('sponsor',clusterer_type='binning',function='ngram-fingerprint', params=20)
+t3withcluster=refine.RefineProject(refine.RefineServer(),projectID).compute_clusters('sponsor',clusterer_type='binning',function='ngram-fingerprint', params=20)
 # @end ComputeClusterColSponsor
 
 # @begin ChooseUniqueName2MassEdit @desc Using Function getTovalue and getFromValue for edits, which is [{'from': ['foo'], 'to': 'bar'}, {...}]
@@ -144,7 +143,7 @@ EditsColSponsor=[{'from':f, 'to':t} for f,t in zip(fromlistSponsor, tolistSponso
 # @in columnName:"sponsor"
 # @in EditsColSponsor
 # @out table1-Sponsor
-refine.RefineProject(refine.RefineServer(),'2146520884101').mass_edit('sponsor',EditsColSponsor)
+refine.RefineProject(refine.RefineServer(),projectID).mass_edit('sponsor',EditsColSponsor)
 # @end MassEditColSponsor
 
 
@@ -187,7 +186,7 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').mass_edit('sponsor',
 # @in function:"PPM"
 # @in params:{'radius':1,'blocking-ngram-size':6}
 # @out table1withclusterColEvent
-table1withclusterColEvent=refine.RefineProject(refine.RefineServer(),'2146520884101').compute_clusters('event',clusterer_type='knn',function='PPM', params={ 'radius':1,'blocking-ngram-size':6})
+table1withclusterColEvent=refine.RefineProject(refine.RefineServer(),projectID).compute_clusters('event',clusterer_type='knn',function='PPM', params={ 'radius':1,'blocking-ngram-size':6})
 # @end ComputeClusterColEvent
 
 # @begin ChooseUniqueName2MassEdit @desc Using Function getTovalue and getFromValue for edits, which is [{'from': ['foo'], 'to': 'bar'}, {...}]
@@ -206,7 +205,7 @@ EditsColEvent=[{'from':f, 'to':t} for f,t in zip(fromlistEvent, tolistEvent)]
 # @in EditsColEvent
 # @in table1withclusterColEvent
 # @out t6
-refine.RefineProject(refine.RefineServer(),'2146520884101').mass_edit('event',EditsColEvent)
+refine.RefineProject(refine.RefineServer(),projectID).mass_edit('event',EditsColEvent)
 # @end MassEditColEvent
 
 # @end Cluster&EditCellsColEvent
@@ -217,7 +216,7 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').mass_edit('event',Ed
 # @in expression:"value.toLowercase()"
 # @in columnName:"event"
 # @out t7
-refine.RefineProject(refine.RefineServer(),'2146520884101').text_transform('event','value.toLowercase()')
+refine.RefineProject(refine.RefineServer(),projectID).text_transform('event','value.toLowercase()')
 # @end LowercaseColEvent
 
 # @begin TrimWhitespaceColEvent @desc Invoke text_transform function and replace the expression with trim method
@@ -226,7 +225,7 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').text_transform('even
 # @in expression:"value.trim()"
 # @in columnName:"event"
 # @out table1-Event
-refine.RefineProject(refine.RefineServer(),'2146520884101').text_transform('event','value.trim()')
+refine.RefineProject(refine.RefineServer(),projectID).text_transform('event','value.trim()')
 # @end TrimWhitespaceColEvent
 
 # @end OperationsColEvent
@@ -246,7 +245,7 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').text_transform('even
 # @in separator:"-"
 # @in mode:"separator"
 # @out table1-Call_number
-refine.RefineProject(refine.RefineServer(), '2146520884101').split_column('call_number', separator='-', mode='separator')
+refine.RefineProject(refine.RefineServer(), projectID).split_column('call_number', separator='-', mode='separator')
 # @end SplitCellsColCall_number
 
 # @end OperationsColCall_number
@@ -264,7 +263,7 @@ refine.RefineProject(refine.RefineServer(), '2146520884101').split_column('call_
 # @in columnName:"dish_count"
 # @in expression:"value.toNumber()"
 # @out table1-Dish_count
-refine.RefineProject(refine.RefineServer(), '2146520884101').text_transform('dish_count', 'value.toNumber()')
+refine.RefineProject(refine.RefineServer(), projectID).text_transform('dish_count', 'value.toNumber()')
 # @end ToNumberColDish_count
 
 # @end OperationsColDish_count
@@ -298,7 +297,7 @@ refine.RefineProject(refine.RefineServer(), '2146520884101').text_transform('dis
 # @in clusterer_type:"knn"
 # @in function:"levenshtein"
 # @out table1withclusterColplace
-table1withclusterColplace=refine.RefineProject(refine.RefineServer(),'2146520884101').compute_clusters('place',clusterer_type='knn',function='levenshtein')
+table1withclusterColplace=refine.RefineProject(refine.RefineServer(),projectID).compute_clusters('place',clusterer_type='knn',function='levenshtein')
 #[[{'count': 4, 'value': u'Waldorf Astoria'}, {'count': 1, 'value': u'Waldorf-Astoria'}], [{'count': 1, 'value': u'Hamburg Amerika Line'}, {'count': 1, 'value': u'Hamburg Amerika Linie'}], [{'count': 5, 'value': u'Norddeutscher Lloyd Bremen'}, {'count': 2, 'value': u'Norddeutscher Lloyd  Bremen'}]]
 # @end ComputeClusterColPlace
 
@@ -319,7 +318,7 @@ EditsColPlace=[{'from':f, 'to':t} for f,t in zip(fromlistPlace, tolistPlace)]
 # @in columnName:"place"
 # @in EditsColPlace
 # @out table1-Place
-refine.RefineProject(refine.RefineServer(),'2146520884101').mass_edit('place', EditsColPlace)
+refine.RefineProject(refine.RefineServer(),projectID).mass_edit('place', EditsColPlace)
 # @end MassEditColPlace
 
 # @end Cluster&EditCellsColPlace
@@ -340,8 +339,7 @@ refine.RefineProject(refine.RefineServer(),'2146520884101').mass_edit('place', E
 # @in newTable1
 # @in Json_History_id
 # @out outputFile @uri file: PartTest.tsv
-import refine
-refine.myParser('--export 2146520884101 --output=PartTest.tsv')
+refine.RefineProject(refine.RefineServer(),projectID).export('tsv')
 # @end export project
 
 # @end Parallel&SequentialModel

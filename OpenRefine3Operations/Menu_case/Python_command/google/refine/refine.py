@@ -184,7 +184,7 @@ class Refine:
             if rows > 0:
                 print('{0}: {1}'.format('id', project_id))
                 print('{0}: {1}'.format('rows', rows))
-                return RefineProject(self.server, project_id)
+                return RefineProject(self.server, project_id),project_id,rows
             else:
                 raise Exception('Project contains 0 rows. Please check --help for mandatory arguments for xml, json, xlsx and ods')
         else:
