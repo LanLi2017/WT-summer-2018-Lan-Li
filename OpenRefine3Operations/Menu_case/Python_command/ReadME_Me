@@ -2,12 +2,12 @@
 Reproducible OpenRefine Python Client Library
 ==============================================
 
-* 1. Edits:
+# 1. Edits:
 - google/refine/refine.py:
 line 33- import facet
 line 34- import history
 line 187- return projectID,rows
-* 2. getFromvalue and getToValue using function, and merge them to Edits
+# 2. getFromvalue and getToValue using function, and merge them to Edits
 - this step is for reproducible Mass-edit operations.
-* 3. outputJsonFile: 
+# 3. outputJsonFile: 
 - this is the generated json file after the script.
