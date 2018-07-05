@@ -1,3 +1,5 @@
+import csv
+
 import OpenRefinerecipe
 from OpenRefine3Operations.Menu_case.Python_command.google import refine
 
@@ -24,22 +26,24 @@ elif userChoice=='2':
     projectID=OpenRefinerecipe.create_project(userinputpath,userinputName)
     number_rows=raw_input("number of rows: You can choose 5/10/25/50")
     print("Show the first "+number_rows+" for this project:")
-    response=OpenRefinerecipe.get_models(projectID)
-    column_model = response['columnModel']
-    column_name = [column['name'] for column in column_model['columns']]
-    print(column_name)
-    column_index = {}   # map of column name to index into get_rows() data
-    column_order={}
-    for i, column in enumerate(column_model['columns']):
-        name = column['name']
-        column_order[name]=i
-        column_index[name] = column['cellIndex']
-    column_type={}
-    for name in column_name:
-        column_type['name']=name
-        column_type['type']=OpenRefinerecipe.get_num_rows(projectID)
-    print(column_type)
-    columnChange=raw_input("Enter the column Name:")
+
+    with open(userinputpath,'rb') as project:
+        content=tuple(project)
+        header, *data=content
+        for i in range(number_rows):
+            print content[i]
+    # response=OpenRefinerecipe.get_models(projectID)
+    # column_model = response['columnModel']
+    # column_name = [column['name'] for column in column_model['columns']]
+    # print(column_name)
+    print("Enter the column name you want to make change:")
+    userrenamechoice=input("Enter the column name you want to change, if there is no choice , please enter N: ")
+    while userrenamechoice!='N':
+        newcolumnname=input("Enter the new column name:")
+        OpenRefinerecipe.rename_column(projectID,userrenamechoice,newcolumnname)
+        userrenamechoice=input("Continue Enter the column name you want to change, if there is no choice, please Enter N: ")
+
+
     print("please choose operations:")
     print("0. rename the columnName --suggest")
     print("1. mass edit")
