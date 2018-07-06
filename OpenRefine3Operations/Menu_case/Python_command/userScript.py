@@ -60,10 +60,34 @@ elif userChoice=='2':
             if userFunction=='1':
                 params=raw_input("Enter the params:")
                 compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='binning',function='ngram-fingerprint',params=params)
+                print(compute_clusters)
+                userClusterinput=raw_input("Do you want to do manually edition for cluster? If not, input N; else input Y: ")
                 Edit_from=OpenRefinerecipe.getFromValue(compute_clusters)
                 Edit_to=OpenRefinerecipe.getToValue(compute_clusters)
-                edits=[{'from':f, 'to':t} for f,t in zip(Edit_from, Edit_to)]
-                OpenRefinerecipe.mass_edit(projectID,usercolumn,edits,expression='value')
+                if userClusterinput =='N':
+                    edits=[{'from':f, 'to':t} for f,t in zip(Edit_from, Edit_to)]
+                    OpenRefinerecipe.mass_edit(projectID,usercolumn,edits,expression='value')
+                elif userClusterinput=='Y':
+                    print("This is the original values in cluster: ")
+                    print(Edit_from)
+                    print("This is the values after the chosen cluster: ")
+                    print(Edit_to)
+                    Edit_new_to=[]
+                    for to in Edit_to:
+                        userinputTo=raw_input("Input the value you want to make change, if not, input N")
+                        if userinputTo!='N':
+                            to=userinputTo
+                            Edit_new_to.append(to)
+                        else:
+                            to=to
+                            Edit_new_to.append(to)
+                    print(Edit_new_to)
+                    mannually_edits=[{'from':f, 'to':t} for f,t in zip(Edit_from, Edit_new_to)]
+                    OpenRefinerecipe.mass_edit(projectID,usercolumn,mannually_edits,expression='value')
+
+
+
+
 
 
 
