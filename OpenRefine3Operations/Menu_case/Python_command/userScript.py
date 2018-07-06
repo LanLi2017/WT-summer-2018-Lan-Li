@@ -25,27 +25,26 @@ elif userChoice=='2':
     userinputName=raw_input("input the project Name:")
     projectID=OpenRefinerecipe.create_project(userinputpath,userinputName)
     number_rows=raw_input("number of rows: You can choose 5/10/25/50")
-    print("Show the first "+number_rows+" for this project:")
+    print("Show the first "+number_rows+" rows for this project:")
 
     with open(userinputpath,'rb') as project:
         content=tuple(project)
-        header, *data=content
-        for i in range(number_rows):
+        header=content[0]
+        data=tuple(content[1:])
+        for i in range(int(number_rows)):
             print content[i]
     # response=OpenRefinerecipe.get_models(projectID)
     # column_model = response['columnModel']
     # column_name = [column['name'] for column in column_model['columns']]
     # print(column_name)
-    print("Enter the column name you want to make change:")
-    userrenamechoice=input("Enter the column name you want to change, if there is no choice , please enter N: ")
+    userrenamechoice=raw_input("Enter the column name you want to change, if there is no choice , please enter N: ")
     while userrenamechoice!='N':
-        newcolumnname=input("Enter the new column name:")
+        newcolumnname=raw_input("Enter the new column name:")
         OpenRefinerecipe.rename_column(projectID,userrenamechoice,newcolumnname)
-        userrenamechoice=input("Continue Enter the column name you want to change, if there is no choice, please Enter N: ")
+        userrenamechoice=raw_input("Continue Enter the column name you want to change, if there is no choice, please Enter N: ")
 
 
-    print("please choose operations:")
-    print("0. rename the columnName --suggest")
+    usercolumn=raw_input("Enter the column name you want to do Data Wrangling: ")
     print("1. mass edit")
     userOperates=raw_input("Enter a number:")
 
@@ -60,11 +59,11 @@ elif userChoice=='2':
             userFunction=raw_input("Enter the number:")
             if userFunction=='1':
                 params=raw_input("Enter the params:")
-                compute_clusters=OpenRefinerecipe.compute_clusters(projectID,column,clusterer_type='binning',function='ngram-fingerprint',params=params)
+                compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='binning',function='ngram-fingerprint',params=params)
                 Edit_from=OpenRefinerecipe.getFromValue(compute_clusters)
                 Edit_to=OpenRefinerecipe.getToValue(compute_clusters)
                 edits=[{'from':f, 'to':t} for f,t in zip(Edit_from, Edit_to)]
-                OpenRefinerecipe.mass_edit(projectID,column,edits,expression='value')
+                OpenRefinerecipe.mass_edit(projectID,usercolumn,edits,expression='value')
 
 
 

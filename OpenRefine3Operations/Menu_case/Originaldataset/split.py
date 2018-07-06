@@ -8,7 +8,8 @@ import random
 def process_csv(csv_filename):
     with open(csv_filename,'rt') as f:
         content=tuple(f)
-    header, *data=content
+    header=content[0]
+    data=tuple(content[1:])
 
     data=list(data)
     random.shuffle(data)
