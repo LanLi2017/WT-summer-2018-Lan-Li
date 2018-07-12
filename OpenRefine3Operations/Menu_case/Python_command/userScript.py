@@ -3,6 +3,8 @@ import csv
 import OpenRefinerecipe
 from OpenRefine3Operations.Menu_case.Python_command.google import refine
 
+import logging
+logging.basicConfig(filename='run_log.log',format='%(asctime)s : %(levelname)s : %(message)s',level=logging.INFO)
 
 # get yes or no to continue
 def Confirm(message,default=None):
@@ -55,6 +57,12 @@ def prompt_options(options):
         return prompt_int('Please enter your choice: ', min=1, max=len(options))
 
 
+def GetColumnName(projectID):
+    response=OpenRefinerecipe.get_models(projectID)
+    column_model = response['columnModel']
+    column_name = [column['name'] for column in column_model['columns']]
+    print(column_name)
+
 def main():
     print("Welcome to use OpenRefine userScript")
     # import project
@@ -96,10 +104,7 @@ def main():
                 userrenamechoice=raw_input("Continue Enter the column name you want to change, if there is no choice, please Enter N: ")
 
             # split row mode and record mode
-            response=OpenRefinerecipe.get_models(projectID)
-            column_model = response['columnModel']
-            column_name = [column['name'] for column in column_model['columns']]
-            print(column_name)
+            GetColumnName(projectID)
             usercolumn=raw_input("Enter the column name you want to do Data Wrangling,if there is no other columns you want to make change, enter N: ")
             while usercolumn!='N':
                 while True:
@@ -178,12 +183,15 @@ def main():
                                 elif userOperates==7:
                                     userSeparator=raw_input("input the separator: ")
                                     OpenRefinerecipe.split_column(projectID,usercolumn,userSeparator)
+                                    # something special here
+                                    # if split into several columns, then usercolumn will change
                                 elif userOperates==8:
                                     if Confirm("Are you sure to stop doing Data Wrangling?",default=False):
                                         break
                     elif userMode==3:
-                        if Confirm("Are you sure to exit?",default=False):
+                        if Confirm("Exit and transfer to another column operations",default=False):
                             break
+                GetColumnName(projectID)
                 usercolumn=raw_input("Continue Enter the column name, if no other steps, Enter N: ")
         elif choice==5:
             if Confirm("Are you sure to exit?",default=False):
