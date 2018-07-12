@@ -1,6 +1,6 @@
 import json
 
-with open('newJson.json','r')as f:
+with open('Menu_caseJsonfile.json','r')as f:
     data=json.load(f)
 
 newlist=sorted(data,key=lambda k:k['columnName'])
