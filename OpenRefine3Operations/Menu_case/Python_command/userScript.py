@@ -57,7 +57,6 @@ def prompt_options(options):
 
 def main():
     print("Welcome to use OpenRefine userScript")
-    print("raw_input your services choice")
     # import project
     while True:
         choice=prompt_options([
