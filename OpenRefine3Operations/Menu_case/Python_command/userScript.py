@@ -3,8 +3,13 @@ import csv
 import OpenRefinerecipe
 from OpenRefine3Operations.Menu_case.Python_command.google import refine
 
-import logging
-logging.basicConfig(filename='run_log.log',format='%(asctime)s : %(levelname)s : %(message)s',level=logging.INFO)
+import subprocess
+
+cmd = ['ls', '-l']
+
+with open('output.txt', 'w') as out:
+    return_code = subprocess.call(cmd, stdout=out)
+
 
 # get yes or no to continue
 def Confirm(message,default=None):
@@ -139,37 +144,60 @@ def main():
                                     print("2. knn")
                                     userClusterer=raw_input("Enter the number:")
                                     if userClusterer=='1':
-                                        print("please choose function:")
-                                        print("1. fingerprint")
-                                        userFunction=raw_input("Enter the number:")
-                                        if userFunction=='1':
+                                        userFunction=prompt_options([
+                                            'fingerprint',
+                                            'metaphone3',
+                                            'cologne-phonetic',
+                                        ])
+                                        if userFunction==1:
                                             params=raw_input("Enter the params:")
                                             compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='binning',function='ngram-fingerprint',params=params)
-                                            print(compute_clusters)
-                                            userClusterinput=raw_input("Do you want to do manually edition for cluster? If not, input N; else input Y: ")
-                                            Edit_from=OpenRefinerecipe.getFromValue(compute_clusters)
-                                            Edit_to=OpenRefinerecipe.getToValue(compute_clusters)
-                                            if userClusterinput =='N':
-                                                edits=[{'from':f, 'to':t} for f,t in zip(Edit_from, Edit_to)]
-                                                OpenRefinerecipe.mass_edit(projectID,usercolumn,edits,expression='value')
-                                            elif userClusterinput=='Y':
-                                                print("This is the original values in cluster: ")
-                                                print(Edit_from)
-                                                print("This is the values after the chosen cluster: ")
-                                                print(Edit_to)
-                                                Edit_new_to=[]
-                                                for to in Edit_to:
-                                                    userinputTo=raw_input("Input the value you want to make change, if not, input N")
-                                                    if userinputTo!='N':
-                                                        to=userinputTo
-                                                        Edit_new_to.append(to)
-                                                    else:
-                                                        to=to
-                                                        Edit_new_to.append(to)
-                                                print(Edit_new_to)
-                                                mannually_edits=[{'from':f, 'to':t} for f,t in zip(Edit_from, Edit_new_to)]
-                                                OpenRefinerecipe.mass_edit(projectID,usercolumn,mannually_edits,expression='value')
+                                        elif userFunction==2:
+                                            compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='binning',function='metaphone3')
+                                        elif userFunction==3:
+                                            compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='binning',function='cologne-phonetic')
 
+                                    elif userClusterer=='2':
+
+                                        userKNNfunction=prompt_options([
+                                           'levenshtein',
+                                           'PPM',
+                                        ])
+                                        if userKNNfunction==1:
+                                            print("Please set the params: ")
+                                            userinputradius=float(raw_input("Set the radius: "))
+                                            userinputNgramsize=int(raw_input("Set the Bloking Ngram-size: "))
+                                            compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='knn',function='levenshtein',params={ 'radius':userinputradius,'blocking-ngram-size':userinputNgramsize})
+                                        elif userKNNfunction==2:
+                                            print("Please set the params: ")
+                                            userinputradius=float(raw_input("Set the radius: "))
+                                            userinputNgramsize=int(raw_input("Set the Bloking Ngram-size: "))
+                                            compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='knn',function='PPM',params={ 'radius':userinputradius,'blocking-ngram-size':userinputNgramsize})
+                                    print(compute_clusters)
+                                    userClusterinput=raw_input("Do you want to do manually edition for cluster? If not, input N; else input Y: ")
+
+                                    Edit_from=OpenRefinerecipe.getFromValue(compute_clusters)
+                                    Edit_to=OpenRefinerecipe.getToValue(compute_clusters)
+                                    if userClusterinput =='N':
+                                        edits=[{'from':f, 'to':t} for f,t in zip(Edit_from, Edit_to)]
+                                        OpenRefinerecipe.mass_edit(projectID,usercolumn,edits,expression='value')
+                                    elif userClusterinput=='Y':
+                                        print("This is the original values in cluster: ")
+                                        print(Edit_from)
+                                        print("This is the values after the chosen cluster: ")
+                                        print(Edit_to)
+                                        Edit_new_to=[]
+                                        for to in Edit_to:
+                                            userinputTo=raw_input("Input the value you want to make change, if not, input N")
+                                            if userinputTo!='N':
+                                                to=userinputTo
+                                                Edit_new_to.append(to)
+                                            else:
+                                                to=to
+                                                Edit_new_to.append(to)
+                                        print(Edit_new_to)
+                                        mannually_edits=[{'from':f, 'to':t} for f,t in zip(Edit_from, Edit_new_to)]
+                                        OpenRefinerecipe.mass_edit(projectID,usercolumn,mannually_edits,expression='value')
                                 elif userOperates==2:
                                     OpenRefinerecipe.text_transform(projectID,usercolumn,'value.trim()')
                                 elif userOperates==3:
