@@ -1,0 +1,116 @@
+Welcome to use OpenRefine userScript
+Create Project
+@IN file path: partTest.csv
+@IN project Name: WorkflowPY
+@OUT New Project ID : 1916404340004
+{
+"op": "core/column-rename",
+"description: "Rename column currency to MoneyOrder","
+oldColumnName: "currency"
+newColumnName: "MoneyOrder"
+}
+{
+"op": "core/column-rename",
+"description: "Rename column sponsor to Sponsor","
+oldColumnName: "sponsor"
+newColumnName: "Sponsor"
+}
+Data Wrangling On Column Sponsor
+Row mode 
+{
+"op": "core/mass-edit",
+"description:": "Mass edit cells in column Sponsor "
+"engineConfig": {"mode": "row-based","facets": []},
+"columnName": "Sponsor",
+"expression": "value",
+type: binning 
+function: fingerprint
+params: 20
+}
+{
+"op": "core/text-transform",
+"description": "Text transform on cells in column Sponsor using expression value.trim()",
+"engineConfig": {"mode": "row-based","facets": []},
+"columnName": "Sponsor",
+"expression": "value.trim()",
+"onError": "set-to-blank",
+"repeat": false,
+"repeatCount": 10
+}
+{
+"op": "core/text-transform",
+"description": "Text transform on cells in column Sponsor using expression value.toLowercase()",
+"engineConfig": {"mode": "row-based","facets": []},
+"columnName": "Sponsor",
+"expression": "value.toLowercase()",
+"onError": "set-to-blank",
+"repeat": false,
+"repeatCount": 10
+}
+Data Wrangling On Column event
+Row mode 
+{
+"op": "core/mass-edit",
+"description:": "Mass edit cells in column event "
+"engineConfig": {"mode": "row-based","facets": []},
+"columnName": "event",
+"expression": "value",
+type: knn
+function: PPM
+params: {'radius':3.000000, 'blocking-ngram-size':6}
+}
+{
+"op": "core/text-transform",
+"description": "Text transform on cells in column event using expression value.toLowercase()",
+"engineConfig": {"mode": "row-based","facets": []},
+"columnName": "event",
+"expression": "value.toLowercase()",
+"onError": "set-to-blank",
+"repeat": false,
+"repeatCount": 10
+}
+Data Wrangling On Column call_number
+Row mode 
+{
+"op": "core/text-transform",
+"description": "Text transform on cells in column call_number using expression value.toNumber()",
+"engineConfig": {"mode": "row-based","facets": []},
+"columnName": "call_number",
+"expression": "value.toNumber()",
+"onError": "set-to-blank",
+"repeat": false,
+"repeatCount": 10
+}
+{
+"op": "core/text-transform",
+"description": "Text transform on cells in column call_number using expression value.trim()",
+"engineConfig": {"mode": "row-based","facets": []},
+"columnName": "call_number",
+"expression": "value.trim()",
+"onError": "set-to-blank",
+"repeat": false,
+"repeatCount": 10
+}
+Data Wrangling On Column date
+Row mode 
+{
+"op": "core/text-transform",
+"description": "Text transform on cells in column date using expression value.toDate()",
+"engineConfig": {"mode": "row-based","facets": []},
+"columnName": "date",
+"expression": "value.toDate()",
+"onError": "set-to-blank",
+"repeat": false,
+"repeatCount": 10
+}
+{
+"op": "core/text-transform",
+"description": "Text transform on cells in column date using expression value.toDate()",
+"engineConfig": {"mode": "row-based","facets": []},
+"columnName": "date",
+"expression": "value.toDate()",
+"onError": "set-to-blank",
+"repeat": false,
+"repeatCount": 10
+}
+Exit System
