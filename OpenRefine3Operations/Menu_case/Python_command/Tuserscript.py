@@ -130,7 +130,7 @@ def main():
                 f.write('{\n')
                 f.write('"op": "core/column-rename",\n')
                 newcolumnname=raw_input("Enter the new column name:")
-                f.write('"description": "Rename column %s to %s"",\n'%(userrenamechoice, newcolumnname))
+                f.write('"description": "Rename column %s to %s",\n'%(userrenamechoice, newcolumnname))
                 f.write('"oldColumnName": "%s",\n'%userrenamechoice)
                 f.write('"newColumnName": "%s"\n'%newcolumnname)
                 f.write('}\n')
@@ -141,6 +141,7 @@ def main():
             print(GetColumnName(projectID))
             usercolumn=raw_input("Enter the column name you want to do Data Wrangling,if there is no other columns you want to make change, enter N: ")
             while usercolumn!='N':
+                f.write(',\n')
                 # f.write('Data Wrangling On Column %s\n'%usercolumn)
                 while True:
                     userMode=prompt_options([
@@ -159,7 +160,6 @@ def main():
                     elif userMode==1:
                             # f.write('Row mode \n')
                             while True:
-                                f.write(',\n')
                                 userOperates=prompt_options([
                                     'Mass Edit',
                                     'Trim Whitespace',
