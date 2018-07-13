@@ -1,10 +1,5 @@
 [
-  {
-    "op": "core/column-rename",
-    "description": "Rename column currency to money",
-    "oldColumnName": "currency",
-    "newColumnName": "money"
-  },
+//  mass-edit sponsor
   {
     "op": "core/mass-edit",
     "description": "Mass edit cells in column sponsor",
@@ -19,11 +14,34 @@
         "fromBlank": false,
         "fromError": false,
         "from": [
+          "HAMBURG-AMERIKA LINE",
+          "HAMBURG-AMERIKA LINIE"
+        ],
+        "to": "HAMBURG-AMERIKA LINE"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
           "NORDDEUTSCHER LLOYD BREMEN",
           "NORDDEUTSCHER LLOYD  BREMEN"
         ],
-        "to": "NLB"
-      },
+        "to": "NORDDEUTSCHER LLOYD BREMEN"
+      }
+    ]
+  },
+
+//  mass-edit sponsor
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column sponsor",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "sponsor",
+    "expression": "value",
+    "edits": [
       {
         "fromBlank": false,
         "fromError": false,
@@ -31,75 +49,41 @@
           "Waldorf Astoria",
           "Waldorf-Astoria"
         ],
-        "to": "Waldorf Astoria"
+        "to": "WA"
       }
     ]
   },
+
+//  mass-edit event
   {
-    "op": "core/text-transform",
-    "description": "Text transform on cells in column sponsor using expression value.toLowercase()",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "sponsor",
-    "expression": "value.toLowercase()",
-    "onError": "set-to-blank",
-    "repeat": false,
-    "repeatCount": 10
-  },
-  {
-    "op": "core/text-transform",
-    "description": "Text transform on cells in column sponsor using expression value.trim()",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "sponsor",
-    "expression": "value.trim()",
-    "onError": "set-to-blank",
-    "repeat": false,
-    "repeatCount": 10
-  },
-  {
-    "op": "core/text-transform",
-    "description": "Text transform on cells in column event using expression value.trim()",
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column event",
     "engineConfig": {
       "mode": "row-based",
       "facets": []
     },
     "columnName": "event",
-    "expression": "value.trim()",
-    "onError": "set-to-blank",
-    "repeat": false,
-    "repeatCount": 10
-  },
-  {
-    "op": "core/text-transform",
-    "description": "Text transform on cells in column event using expression value.toLowercase()",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "event",
-    "expression": "value.toLowercase()",
-    "onError": "set-to-blank",
-    "repeat": false,
-    "repeatCount": 10
-  },
-  {
-    "op": "core/column-split",
-    "description": "Split column event by separator",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "event",
-    "guessCellType": true,
-    "removeOriginalColumn": true,
-    "mode": "separator",
-    "separator": " ",
-    "regex": false,
-    "maxColumns": 0
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "LUNCH",
+          "[LUNCH]",
+          "lunch"
+        ],
+        "to": "LUNCH"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "DINNER",
+          "Dinner"
+        ],
+        "to": "DN"
+      }
+    ]
   }
 ]
