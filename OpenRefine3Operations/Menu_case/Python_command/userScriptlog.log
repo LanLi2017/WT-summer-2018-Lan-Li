@@ -1,0 +1,190 @@
+Welcome to use OpenRefine userScript
+(1, 'List Projects')
+(2, 'Create Project')
+(3, 'Open Project')
+(4, 'Get Project Name')
+(5, 'Exit')
+# Create project
+Please enter your choice: 2
+
+# @in filepath
+# @in projectName
+input the file path:partTest.csv
+input the project Name:ffffff
+
+# @out projectID
+# @out projectRows
+id: 1761826710466
+rows: 109
+
+# Display head of rows
+Display some number of rows: You can choose 5/10/25/505
+Show the first 5 rows for this project:
+,id,HotelName,sponsor,event,venue,City&Country,measurements,occasion,notes,call_number,keywords,language,date,place,place_type,currency,currency_symbol,status,page_count,dish_count
+
+10136,27619,,"Supper Menu, S. S. Vaderland, March 18th, 1910.",Supper Menu,,,,,,1910-946 ITEM B,,,1910-03-18,"Supper Menu, S. S. Vaderland, March 18th, 1910.",,,,complete,2,14
+
+3185,19118,,,,,,,,,,,,1900-05-15,Norddeutscher Lloyd Bremen,,,,complete,2,71
+
+9375,26828,,Moulin,Dessert menu,"FOREIGN,RESTAURANT","restaurant Moulin, France","Folder, paper, 8 x 10.5 inches",,"Dieter Zander Collection; cover artwork signed by artist, Palayer",Zander 664,,,,Moulin,,Francs,FF,complete,4,19
+
+7428,24486,,CORTLAND COUNTY SOCIETY OF NEW YORK,EIGHTH ANNUAL DINNER,PATR;,"HOTEL ASTOR, [NEW YORK]",BOOKLET; ILLUS; COL; 5.75 X 8.5;,ANNIVERSARY;,SEPIA PHOTOGRAPH OF SCENE;,1908-096,,,1908-01-30,Cortland County Society Of New York,,,,complete,12,16
+
+2353,16283,,,,,,,,,,,,1905-12-30,Members And Friends Of The Pen And Pencil Club,,,,complete,4,21
+
+
+# Rename operations
+Enter the column name you want to change, if there is no choice , please enter N: N
+[u'Column', u'id', u'HotelName', u'sponsor', u'event', u'venue', u'City&Country', u'measurements', u'occasion', u'notes', u'call_number', u'keywords', u'language', u'date', u'place', u'place_type', u'currency', u'currency_symbol', u'status', u'page_count', u'dish_count']
+
+# @begin DataWrangling
+# @in columnName
+Enter the column name you want to do Data Wrangling,if there is no other columns you want to make change, enter N: sponsor
+(1, 'row mode')
+(2, 'record mode')
+(3, 'Exit')
+
+# @in mode
+Please enter your choice: 1
+
+
+(1, 'Mass Edit')
+(2, 'Trim Whitespace')
+(3, 'Lowercase the column value')
+(4, 'Uppercase the column value')
+(5, 'Transform the column value to Date')
+(6, 'Transform the column value to Numeric')
+(7, 'Split multi-valued cells in column ')
+(8, 'Exit')
+
+# @Mass-edit
+# @in clusterer type
+# @in cluster function
+# @in radius
+# @in blocking Ngram-size
+Please enter your choice: 1
+please choose clusterer type:
+1. binning
+2. knn
+Enter the number:2
+(1, 'levenshtein')
+(2, 'PPM')
+Please enter your choice: 2
+Please set the params:
+Set the radius: 1
+Set the Bloking Ngram-size: 6
+[[{'count': 1, 'value': u'HAMBURG-AMERIKA LINE'}, {'count': 1, 'value': u'HAMBURG-AMERIKA LINIE'}], [{'count': 4, 'value': u'NORDDEUTSCHER LLOYD BREMEN'}, {'count': 2, 'value': u'NORDDEUTSCHER LLOYD  BREMEN'}]]
+Do you want to do manually edition for cluster? If not, input N; else input Y: N
+
+
+(1, 'Mass Edit')
+(2, 'Trim Whitespace')
+(3, 'Lowercase the column value')
+(4, 'Uppercase the column value')
+(5, 'Transform the column value to Date')
+(6, 'Transform the column value to Numeric')
+(7, 'Split multi-valued cells in column ')
+(8, 'Exit')
+Please enter your choice: 1
+please choose clusterer type:
+1. binning
+2. knn
+Enter the number:1
+(1, 'fingerprint')
+(2, 'metaphone3')
+(3, 'cologne-phonetic')
+Please enter your choice: 1
+Enter the params:20
+[[{'count': 4, 'value': u'Waldorf Astoria'}, {'count': 1, 'value': u'Waldorf-Astoria'}]]
+Do you want to do manually edition for cluster? If not, input N; else input Y: Y
+This is the original values in cluster:
+[[u'Waldorf Astoria', u'Waldorf-Astoria']]
+This is the values after the chosen cluster:
+[u'Waldorf Astoria']
+Input the value you want to make change, if not, input NWA
+['WA']
+
+
+
+
+(1, 'Mass Edit')
+(2, 'Trim Whitespace')
+(3, 'Lowercase the column value')
+(4, 'Uppercase the column value')
+(5, 'Transform the column value to Date')
+(6, 'Transform the column value to Numeric')
+(7, 'Split multi-valued cells in column ')
+(8, 'Exit')
+Please enter your choice: 8
+Are you sure to stop doing Data Wrangling? (y/N)y
+(1, 'row mode')
+(2, 'record mode')
+(3, 'Exit')
+Please enter your choice: 3
+Exit and transfer to another column operations (y/N)y
+
+
+
+# @begin another columne data wrangling
+# @in columnName
+# @in mode
+[u'Column', u'id', u'HotelName', u'sponsor', u'event', u'venue', u'City&Country', u'measurements', u'occasion', u'notes', u'call_number', u'keywords', u'language', u'date', u'place', u'place_type', u'currency', u'currency_symbol', u'status', u'page_count', u'dish_count']
+Continue Enter the column name, if no other steps, Enter N: event
+(1, 'row mode')
+(2, 'record mode')
+(3, 'Exit')
+Please enter your choice: 1
+(1, 'Mass Edit')
+(2, 'Trim Whitespace')
+(3, 'Lowercase the column value')
+(4, 'Uppercase the column value')
+(5, 'Transform the column value to Date')
+(6, 'Transform the column value to Numeric')
+(7, 'Split multi-valued cells in column ')
+(8, 'Exit')
+Please enter your choice: 1
+please choose clusterer type:
+1. binning
+2. knn
+Enter the number:1
+(1, 'fingerprint')
+(2, 'metaphone3')
+(3, 'cologne-phonetic')
+Please enter your choice: 1
+Enter the params:30
+[[{'count': 2, 'value': u'LUNCH'}, {'count': 1, 'value': u'[LUNCH]'}, {'count': 1, 'value': u'lunch'}], [{'count': 12, 'value': u'DINNER'}, {'count': 1, 'value': u'Dinner'}]]
+Do you want to do manually edition for cluster? If not, input N; else input Y: Y
+This is the original values in cluster:
+[[u'LUNCH', u'[LUNCH]', u'lunch'], [u'DINNER', u'Dinner']]
+This is the values after the chosen cluster:
+[u'LUNCH', u'DINNER']
+Input the value you want to make change, if not, input NN
+Input the value you want to make change, if not, input NDN
+[u'LUNCH', 'DN']
+
+
+# @exit the whole procedure
+(1, 'Mass Edit')
+(2, 'Trim Whitespace')
+(3, 'Lowercase the column value')
+(4, 'Uppercase the column value')
+(5, 'Transform the column value to Date')
+(6, 'Transform the column value to Numeric')
+(7, 'Split multi-valued cells in column ')
+(8, 'Exit')
+Please enter your choice: 8
+Are you sure to stop doing Data Wrangling? (y/N)y
+(1, 'row mode')
+(2, 'record mode')
+(3, 'Exit')
+Please enter your choice: 3
+Exit and transfer to another column operations (y/N)y
+[u'Column', u'id', u'HotelName', u'sponsor', u'event', u'venue', u'City&Country', u'measurements', u'occasion', u'notes', u'call_number', u'keywords', u'language', u'date', u'place', u'place_type', u'currency', u'currency_symbol', u'status', u'page_count', u'dish_count']
+Continue Enter the column name, if no other steps, Enter N: N
+(1, 'List Projects')
+(2, 'Create Project')
+(3, 'Open Project')
+(4, 'Get Project Name')
+(5, 'Exit')
+Please enter your choice: 5
+Are you sure to exit? (y/N)y
