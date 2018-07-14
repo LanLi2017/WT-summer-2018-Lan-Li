@@ -1,78 +1,74 @@
 [
 {
 "op": "core/column-rename",
-"description": "Rename column event to Event",
-"oldColumnName": "event",
-"newColumnName": "Event"
-},
+"description": "Rename column sponsor to Sponsor",
+"oldColumnName": "sponsor",
+"newColumnName": "Sponsor"
+}
+,
 {
 "op": "core/mass-edit",
-"description:": "Mass edit cells in column Event "
+"description:": "Mass edit cells in column Sponsor ",
 "engineConfig": {"mode": "row-based","facets": []},
-"columnName": "Event",
+"columnName": "Sponsor",
 "expression": "value",
-"type": "binning", 
-"function": "fingerprint",
-"params": 20
-},
+"edits":[{
+"fromBlank": false,
+"fromError": false,
+"from": [
+"NORDDEUTSCHER LLOYD BREMEN",
+"NORDDEUTSCHER LLOYD  BREMEN"],
+"to": "NORDDEUTSCHER LLOYD BREMEN"
+}
+,{
+"fromBlank": false,
+"fromError": false,
+"from": [
+"Waldorf Astoria",
+"Waldorf-Astoria"],
+"to": "Waldorf Astoria"
+}
+]
+}
+,
 {
 "op": "core/text-transform",
-"description": "Text transform on cells in column Event using expression value.trim()",
+"description": "Text transform on cells in column Sponsor using expression value.trim()",
 "engineConfig": {"mode": "row-based","facets": []},
-"columnName": "Event",
+"columnName": "Sponsor",
 "expression": "value.trim()",
 "onError": "set-to-blank",
 "repeat": false,
 "repeatCount": 10
-},
+}
+,
 {
 "op": "core/text-transform",
-"description": "Text transform on cells in column Event using expression value.toLowercase()",
+"description": "Text transform on cells in column Sponsor using expression value.toLowercase()",
 "engineConfig": {"mode": "row-based","facets": []},
-"columnName": "Event",
+"columnName": "Sponsor",
 "expression": "value.toLowercase()",
-"onError": "set-to-blank",
-"repeat": false,
-"repeatCount": 10
-},
-{
-"op": "core/mass-edit",
-"description:": "Mass edit cells in column sponsor "
-"engineConfig": {"mode": "row-based","facets": []},
-"columnName": "sponsor",
-"expression": "value",
-"type": "knn",
-"function": "levenshtein",
-"params": {"radius":2.000000, "blocking-ngram-size":6}
-},
-{
-"op": "core/text-transform",
-"description": "Text transform on cells in column sponsor using expression value.toLowercase()",
-"engineConfig": {"mode": "row-based","facets": []},
-"columnName": "sponsor",
-"expression": "value.toLowercase()",
-"onError": "set-to-blank",
-"repeat": false,
-"repeatCount": 10
-},
-{
-"op": "core/text-transform",
-"description": "Text transform on cells in column call_number using expression value.toNumber()",
-"engineConfig": {"mode": "row-based","facets": []},
-"columnName": "call_number",
-"expression": "value.toNumber()",
-"onError": "set-to-blank",
-"repeat": false,
-"repeatCount": 10
-},
-{
-"op": "core/text-transform",
-"description": "Text transform on cells in column date using expression value.toDate()",
-"engineConfig": {"mode": "row-based","facets": []},
-"columnName": "date",
-"expression": "value.toDate()",
 "onError": "set-to-blank",
 "repeat": false,
 "repeatCount": 10
 }
+
+,
+{
+"op": "core/mass-edit",
+"description:": "Mass edit cells in column event ",
+"engineConfig": {"mode": "row-based","facets": []},
+"columnName": "event",
+"expression": "value",
+"edits":[{
+"fromBlank": false,
+"fromError": false,
+"from": [
+"DINNER",
+"Dinner"],
+"to": "DINNER"
+}
+]
+}
+
 ]
