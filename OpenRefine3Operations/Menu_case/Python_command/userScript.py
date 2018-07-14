@@ -70,8 +70,7 @@ def GetColumnName(projectID):
 
 
 def main():
-    f=open('logWorkflow.txt','w') # open file with name of 'logWorkflow.txt'
-    f.write('Welcome to use OpenRefine userScript\n')
+    f=open('logWorkflow.json','w') # open file with name of 'logWorkflow.txt'
     print("Welcome to use OpenRefine userScript")
     # import project
     while True:
@@ -84,23 +83,22 @@ def main():
         ])
         if choice==1:
             OpenRefinerecipe.list_objects()
-            f.write('Create Project\n')
         elif choice==3:
             userinputID=raw_input("input the project ID:")
             OpenRefinerecipe.open_project(userinputID)
-            f.write('Open Project\n')
+            # f.write('Open Project\n')
         elif choice==4:
             usergetprojectID=raw_input("input the project ID:")
             OpenRefinerecipe.get_project_name(usergetprojectID)
-            f.write('Get Project Name\n')
+            # f.write('Get Project Name\n')
         elif choice==2:
-            f.write('Create Project\n')
+            # f.write('Create Project\n')
             userinputpath=raw_input("input the file path:")
             userinputName=raw_input("input the project Name:")
-            f.write('@IN file path: %s\n'%userinputpath)
-            f.write('@IN project Name: %s\n'%userinputName)
+            # f.write('@IN file path: %s\n'%userinputpath)
+            # f.write('@IN project Name: %s\n'%userinputName)
             projectID=OpenRefinerecipe.create_project(userinputpath,userinputName)
-            f.write('@OUT New Project ID : %s\n'%projectID)
+            # f.write('@OUT New Project ID : %s\n'%projectID)
 
             number_rows=raw_input("Display some number of rows: You can choose 5/10/25/50")
             print("Show the first "+number_rows+" rows for this project:")
@@ -112,6 +110,8 @@ def main():
                 # data=tuple(content[1:int(number_rows)+1])
                 for i in range(1,int(number_rows)+1):
                     print(content[i])
+
+            f.write('[\n')
             '''
             rename operation
             [
@@ -130,9 +130,9 @@ def main():
                 f.write('{\n')
                 f.write('"op": "core/column-rename",\n')
                 newcolumnname=raw_input("Enter the new column name:")
-                f.write('"description: "Rename column %s to %s","\n'%(userrenamechoice, newcolumnname))
-                f.write('oldColumnName: "%s"\n'%userrenamechoice)
-                f.write('newColumnName: "%s"\n'%newcolumnname)
+                f.write('"description": "Rename column %s to %s",\n'%(userrenamechoice, newcolumnname))
+                f.write('"oldColumnName": "%s",\n'%userrenamechoice)
+                f.write('"newColumnName": "%s"\n'%newcolumnname)
                 f.write('}\n')
                 OpenRefinerecipe.rename_column(projectID,userrenamechoice,newcolumnname)
                 userrenamechoice=raw_input("Continue Enter the column name you want to change, if there is no choice, please Enter N: ")
@@ -141,7 +141,7 @@ def main():
             print(GetColumnName(projectID))
             usercolumn=raw_input("Enter the column name you want to do Data Wrangling,if there is no other columns you want to make change, enter N: ")
             while usercolumn!='N':
-                f.write('Data Wrangling On Column %s\n'%usercolumn)
+                # f.write('Data Wrangling On Column %s\n'%usercolumn)
                 while True:
                     userMode=prompt_options([
                         'row mode',
@@ -149,7 +149,7 @@ def main():
                         'Exit',
                     ])
                     if userMode==2:
-                        f.write('Record mode \n')
+                        # f.write('Record mode \n')
                         # five steps
                         # 1. identify the field that contains the records marker
                         userStandardColumn=raw_input("Please input the records marker: ")
@@ -157,7 +157,8 @@ def main():
                         OpenRefinerecipe.reorder_columns(projectID,0)
                         # 3. sort this column (no corresponding function)
                     elif userMode==1:
-                            f.write('Row mode \n')
+
+                            # f.write('Row mode \n')
                             while True:
                                 userOperates=prompt_options([
                                     'Mass Edit',
@@ -169,6 +170,10 @@ def main():
                                     'Split multi-valued cells in column ',
                                     'Exit',
                                 ])
+                                if userOperates !=8:
+                                    f.write(',\n')
+                                else:
+                                    f.write('\n')
                                 if userOperates==1:
                                     '''
                                     {
@@ -181,73 +186,114 @@ def main():
                                     "columnName": "sponsor",
                                     "expression": "value",
                                     "edits": [
+                                     {
+                                        "fromBlank": false,
+                                        "fromError": false,
+                                        "from": [
+                                          "waldorf astoria",
+                                          "waldorf-astoria"
+                                        ],
+                                        "to": "waldorf astoria"
+                                      }
                                     ]
                                   },
                                     
                                     
                                     '''
+
                                     f.write('{\n')
                                     f.write('"op": "core/mass-edit",\n')
-                                    f.write('"description:": "Mass edit cells in column %s "\n'%usercolumn)
+                                    f.write('"description:": "Mass edit cells in column %s ",\n'%usercolumn)
                                     f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
                                     f.write('"columnName": "%s",\n'%usercolumn)
                                     f.write('"expression": "value",\n')
+                                    f.write('"edits":[')
                                     print("please choose clusterer type:")
                                     print("1. binning")
                                     print("2. knn")
                                     userClusterer=raw_input("Enter the number:")
                                     if userClusterer=='1':
-                                        f.write('type: binning \n')
                                         userFunction=prompt_options([
                                             'fingerprint',
                                             'metaphone3',
                                             'cologne-phonetic',
                                         ])
                                         if userFunction==1:
-                                            f.write('function: fingerprint\n')
+                                            # f.write('"function": "fingerprint",\n')
                                             params=raw_input("Enter the params:")
-                                            f.write('params: %s\n'%params)
-                                            f.write('}\n')
+                                            # f.write('"params": %s\n'%params)
+                                            # f.write('}\n')
                                             print(type(f))
                                             compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='binning',function='ngram-fingerprint',params=params)
                                         elif userFunction==2:
-                                            f.write('function: metaphone3\n')
-                                            f.write('}\n')
+                                            # f.write('"function": "metaphone3"\n')
+                                            # f.write('}\n')
                                             compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='binning',function='metaphone3')
                                         elif userFunction==3:
-                                            f.write('function: cologne-phonetic\n')
-                                            f.write('}\n')
+                                            # f.write('"function": "cologne-phonetic"\n')
+                                            # f.write('}\n')
                                             compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='binning',function='cologne-phonetic')
 
                                     elif userClusterer=='2':
-                                        f.write('type: knn\n')
+                                        # f.write('"type": "knn",\n')
                                         userKNNfunction=prompt_options([
                                            'levenshtein',
                                            'PPM',
                                         ])
                                         if userKNNfunction==1:
-                                            f.write('function: levenshtein\n')
+                                            # f.write('"function": "levenshtein",\n')
                                             print("Please set the params: ")
                                             userinputradius=float(raw_input("Set the radius: "))
                                             userinputNgramsize=int(raw_input("Set the Bloking Ngram-size: "))
-                                            f.write('params: {\'radius\':%f, \'blocking-ngram-size\':%d}\n'%(userinputradius,userinputNgramsize))
-                                            f.write('}\n')
+                                            # f.write('"params": {"radius":%f, "blocking-ngram-size":%d}\n'%(userinputradius,userinputNgramsize))
+                                            # f.write('}\n')
                                             compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='knn',function='levenshtein',params={ 'radius':userinputradius,'blocking-ngram-size':userinputNgramsize})
                                         elif userKNNfunction==2:
-                                            f.write('function: PPM\n')
+                                            # f.write('"function": "PPM",\n')
                                             print("Please set the params: ")
                                             userinputradius=float(raw_input("Set the radius: "))
                                             userinputNgramsize=int(raw_input("Set the Bloking Ngram-size: "))
-                                            f.write('params: {\'radius\':%f, \'blocking-ngram-size\':%d}\n'%(userinputradius,userinputNgramsize))
-                                            f.write('}\n')
+                                            # f.write('"params": {"radius":%f, "blocking-ngram-size":%d}\n'%(userinputradius,userinputNgramsize))
+                                            # f.write('}\n')
                                             compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='knn',function='PPM',params={ 'radius':userinputradius,'blocking-ngram-size':userinputNgramsize})
                                     print(compute_clusters)
                                     userClusterinput=raw_input("Do you want to do manually edition for cluster? If not, input N; else input Y: ")
 
                                     Edit_from=OpenRefinerecipe.getFromValue(compute_clusters)
                                     Edit_to=OpenRefinerecipe.getToValue(compute_clusters)
+                                    ''' slice '''
+                                    preEdit_from=Edit_from[:-1]
+                                    lastEdit_from=Edit_from[-1:]
+                                    preEdit_to=Edit_to[:-1]
+                                    lastEdit_to=Edit_to[-1:]
                                     if userClusterinput =='N':
                                         edits=[{'from':f1, 'to':t} for f1,t in zip(Edit_from, Edit_to)]
+                                        for fromset,tset in zip(preEdit_from,preEdit_to):
+                                            f.write('{\n')
+                                            f.write('"fromBlank": false,\n')
+                                            f.write('"fromError": false,\n')
+                                            f.write('"from": [\n')
+                                            for i in range(len(fromset)-1):
+                                                f.write('"%s",\n'%fromset[i])
+                                            f.write('"%s"'%fromset[len(fromset)-1])
+
+                                            f.write('],\n')
+                                            f.write('"to": "%s"\n'%tset)
+                                            f.write('}\n')
+                                            f.write(',')
+                                        for fsub,tsub in zip(lastEdit_from,lastEdit_to):
+                                            f.write('{\n')
+                                            f.write('"fromBlank": false,\n')
+                                            f.write('"fromError": false,\n')
+                                            f.write('"from": [\n')
+                                            for i in range(len(fsub)-1):
+                                                    f.write('"%s",\n'%fsub[i])
+                                            f.write('"%s"'%fsub[len(fsub)-1])
+                                            f.write('],\n')
+                                            f.write('"to": "%s"\n'%tsub)
+                                            f.write('}\n')
+                                        f.write(']\n')
+                                        f.write('}\n')
                                         OpenRefinerecipe.mass_edit(projectID,usercolumn,edits,expression='value')
                                     elif userClusterinput=='Y':
                                         print("This is the original values in cluster: ")
@@ -264,7 +310,35 @@ def main():
                                                 to=to
                                                 Edit_new_to.append(to)
                                         print(Edit_new_to)
+                                        preEdit_new_to=Edit_new_to[:-1]
+                                        lastEdit_new_to=Edit_new_to[-1:]
                                         mannually_edits=[{'from':f1, 'to':t} for f1,t in zip(Edit_from, Edit_new_to)]
+                                        for fromset,tset in zip(preEdit_from,preEdit_new_to):
+                                            f.write('{\n')
+                                            f.write('"fromBlank": false,\n')
+                                            f.write('"fromError": false,\n')
+                                            f.write('"from": [\n')
+                                            for i in range(len(fromset)-1):
+                                                f.write('"%s",\n'%fromset[i])
+                                            f.write('"%s"'%fromset[len(fromset)-1])
+
+                                            f.write('],\n')
+                                            f.write('"to": "%s"\n'%tset)
+                                            f.write('}\n')
+                                            f.write(',')
+                                        for fsub,tsub in zip(lastEdit_from,lastEdit_new_to):
+                                            f.write('{\n')
+                                            f.write('"fromBlank": false,\n')
+                                            f.write('"fromError": false,\n')
+                                            f.write('"from": [\n')
+                                            for i in range(len(fsub)-1):
+                                                    f.write('"%s",\n'%fsub[i])
+                                            f.write('"%s"'%fsub[len(fsub)-1])
+                                            f.write('],\n')
+                                            f.write('"to": "%s"\n'%tsub)
+                                            f.write('}\n')
+                                        f.write(']\n')
+                                        f.write('}\n')
                                         OpenRefinerecipe.mass_edit(projectID,usercolumn,mannually_edits,expression='value')
 
                                 elif userOperates==2:
@@ -403,8 +477,10 @@ def main():
                             break
                 print(GetColumnName(projectID))
                 usercolumn=raw_input("Continue Enter the column name, if no other steps, Enter N: ")
+
         elif choice==5:
-            f.write('Exit System\n')
+            f.write(']\n')
+
             if Confirm("Are you sure to exit?",default=False):
                 break
 
