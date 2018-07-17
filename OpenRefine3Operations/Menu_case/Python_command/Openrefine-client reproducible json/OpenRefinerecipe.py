@@ -1,4 +1,4 @@
-from google.refine import refine
+from OpenRefine3Operations.Menu_case.Python_command.google.refine import refine
 
 
 def list_objects():
@@ -209,7 +209,7 @@ def main():
     userinputname='UserstoryPy'
     project_id=create_project(userinputpath,userinputname)
     print(project_id)
-    apply_operations(project_id,'./Userstory/OpenrefineJsonfile/Userstory1.json')
+    # apply_operations(project_id,'./Userstory/OpenrefineJsonfile/Userstory1.json')
 
 
 

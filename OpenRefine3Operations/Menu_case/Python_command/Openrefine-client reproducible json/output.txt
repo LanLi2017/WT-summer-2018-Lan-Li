@@ -1,0 +1,9 @@
+total 184
+-rw-r--r--  1 barbaralee  staff   8101 Jul 17 16:30 OpenRefinerecipe.py
+-rw-r--r--  1 barbaralee  staff  14682 Jul 17 16:31 OpenRefinerecipe.pyc
+-rw-r--r--  1 barbaralee  staff   2061 Jul 17 16:24 TlogWorkflow.json
+-rw-r--r--  1 barbaralee  staff  25001 Jul 17 16:24 Tuserscript.py
+-rw-r--r--  1 barbaralee  staff    865 Jul 17 16:24 logWorkflow.json
+-rw-r--r--  1 barbaralee  staff      0 Jul 17 16:31 output.txt
+-rw-r--r--  1 barbaralee  staff   5830 Jul 17 16:24 parse&reproduce.py
+-rw-r--r--  1 barbaralee  staff  21022 Jul 17 16:24 partTest.csv

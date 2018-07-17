@@ -1,0 +1,54 @@
+[
+{
+"op": "createProject",
+"opname": "create",
+"description": "create a new project",
+"projectName": "partTest",
+"projectPath": "partTest.csv",
+"projectID": 1998381697024
+},
+{
+"op": "core/column-rename",
+"opname": "rename",
+"description": "Rename column event to Events",
+"oldColumnName": "event",
+"newColumnName": "Events"
+}
+,
+{
+"op": "core/mass-edit",
+"opname": "Cluster and Relabel",
+"description:": "Mass edit cells in column sponsor ",
+"engineConfig": {"mode": "row-based","facets": []},
+"columnName": "sponsor",
+"expression": "value",
+"type": "binning", 
+"function": "fingerprint",
+"params": 20
+}
+,
+{
+"op": "core/text-transform",
+"opname": "TrimwhiteSpace",
+"description": "Text transform on cells in column sponsor using expression value.trim()",
+"engineConfig": {"mode": "row-based","facets": []},
+"columnName": "sponsor",
+"expression": "value.trim()",
+"onError": "set-to-blank",
+"repeat": false,
+"repeatCount": 10
+}
+,
+{
+"op": "core/text-transform",
+"opname": "toLowercase",
+"description": "Text transform on cells in column sponsor using expression value.toLowercase()",
+"engineConfig": {"mode": "row-based","facets": []},
+"columnName": "sponsor",
+"expression": "value.toLowercase()",
+"onError": "set-to-blank",
+"repeat": false,
+"repeatCount": 10
+}
+
+]

@@ -2,7 +2,7 @@ import json
 from pprint import pprint
 
 # create
-from OpenRefine3Operations.Menu_case.Python_command import OpenRefinerecipe
+import OpenRefinerecipe
 
 
 # def create_op(data):
