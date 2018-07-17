@@ -1,6 +1,24 @@
 [
 {
+"op": "createProject",
+"opname": "create",
+"description": "create a new project",
+"projectName": "partTesttest",
+"projectPath": "partTest.csv",
+"projectID": 1920179119351
+},
+
+  {
 "op": "core/column-rename",
+"opname": "rename",
+"description": "Rename column event to Event",
+"oldColumnName": "event",
+"newColumnName": "Event"
+}
+,
+  {
+"op": "core/column-rename",
+"opname": "rename",
 "description": "Rename column sponsor to Sponsor",
 "oldColumnName": "sponsor",
 "newColumnName": "Sponsor"
@@ -8,9 +26,10 @@
 ,
 {
 "op": "core/mass-edit",
-"description:": "Mass edit cells in column event ",
+"opname": "Cluster and Relabel",
+"description:": "Mass edit cells in column Event ",
 "engineConfig": {"mode": "row-based","facets": []},
-"columnName": "event",
+"columnName": "Event",
 "expression": "value",
 "type": "binning", 
 "function": "fingerprint",
@@ -19,9 +38,10 @@
 ,
 {
 "op": "core/text-transform",
-"description": "Text transform on cells in column event using expression value.trim()",
+"opname": "TrimwhiteSpace",
+"description": "Text transform on cells in column Event using expression value.trim()",
 "engineConfig": {"mode": "row-based","facets": []},
-"columnName": "event",
+"columnName": "Event",
 "expression": "value.trim()",
 "onError": "set-to-blank",
 "repeat": false,
@@ -30,9 +50,10 @@
 ,
 {
 "op": "core/text-transform",
-"description": "Text transform on cells in column event using expression value.toLowercase()",
+"opname": "toLowercase",
+"description": "Text transform on cells in column Event using expression value.toLowercase()",
 "engineConfig": {"mode": "row-based","facets": []},
-"columnName": "event",
+"columnName": "Event",
 "expression": "value.toLowercase()",
 "onError": "set-to-blank",
 "repeat": false,
@@ -41,25 +62,29 @@
 
 ,
 {
-"op": "core/mass-edit",
-"description:": "Mass edit cells in column dish_count ",
-"engineConfig": {"mode": "row-based","facets": []},
-"columnName": "dish_count",
-"expression": "value",
-"type": "binning", 
-"function": "fingerprint",
-"params": 1
-}
-,
-{
 "op": "core/text-transform",
-"description": "Text transform on cells in column dish_count using expression value.toNumber()",
+"opname": "toLowercase",
+"description": "Text transform on cells in column sponsor using expression value.toLowercase()",
 "engineConfig": {"mode": "row-based","facets": []},
-"columnName": "dish_count",
-"expression": "value.toNumber()",
+"columnName": "sponsor",
+"expression": "value.toLowercase()",
 "onError": "set-to-blank",
 "repeat": false,
 "repeatCount": 10
+}
+,
+{
+"op": "core/column-split",
+"opname": "Splitcolumn",
+"description": "Split column sponsor by separator",
+"engineConfig": {"mode": "row-based","facets": []},
+"columnName": "sponsor",
+"guessCellType": true,
+"removeOriginalColumn": true,
+"mode": "separator",
+"separator": " ",
+"regex": false,
+"maxColumns": 0
 }
 
 ]

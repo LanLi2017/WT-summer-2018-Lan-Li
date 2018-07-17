@@ -71,6 +71,7 @@ def GetColumnName(projectID):
 
 def main():
     f=open('TlogWorkflow.json','w') # open file with name of 'logWorkflow.txt'
+    f.write('[\n')
     print("Welcome to use OpenRefine userScript")
     # import project
     while True:
@@ -95,9 +96,17 @@ def main():
             # f.write('Create Project\n')
             userinputpath=raw_input("input the file path:")
             userinputName=raw_input("input the project Name:")
+            f.write('{\n')
+            f.write('"op": "createProject",\n')
+            f.write('"opname": "create",\n')
+            f.write('"description": "create a new project",\n')
+            f.write('"projectName": "%s",\n'%userinputName)
+            f.write('"projectPath": "%s",\n'%userinputpath)
             # f.write('@IN file path: %s\n'%userinputpath)
             # f.write('@IN project Name: %s\n'%userinputName)
             projectID=OpenRefinerecipe.create_project(userinputpath,userinputName)
+            f.write('"projectID": %s\n'%projectID)
+            f.write('},\n')
             # f.write('@OUT New Project ID : %s\n'%projectID)
 
             number_rows=raw_input("Display some number of rows: You can choose 5/10/25/50")
@@ -111,7 +120,7 @@ def main():
                 for i in range(1,int(number_rows)+1):
                     print(content[i])
 
-            f.write('[\n')
+
             '''
             rename operation
             [
@@ -129,6 +138,7 @@ def main():
             while userrenamechoice!='N':
                 f.write('{\n')
                 f.write('"op": "core/column-rename",\n')
+                f.write('"opname": "rename",\n')
                 newcolumnname=raw_input("Enter the new column name:")
                 f.write('"description": "Rename column %s to %s",\n'%(userrenamechoice, newcolumnname))
                 f.write('"oldColumnName": "%s",\n'%userrenamechoice)
@@ -201,6 +211,7 @@ def main():
                                     '''
                                     f.write('{\n')
                                     f.write('"op": "core/mass-edit",\n')
+                                    f.write('"opname": "Cluster and Relabel",\n')
                                     f.write('"description:": "Mass edit cells in column %s ",\n'%usercolumn)
                                     f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
                                     f.write('"columnName": "%s",\n'%usercolumn)
@@ -299,6 +310,7 @@ def main():
                                     '''
                                     f.write('{\n')
                                     f.write('"op": "core/text-transform",\n')
+                                    f.write('"opname": "TrimwhiteSpace",\n')
                                     f.write('"description": "Text transform on cells in column %s using expression value.trim()",\n'%usercolumn)
                                     f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
                                     f.write('"columnName": "%s",\n'%usercolumn)
@@ -328,6 +340,7 @@ def main():
 
                                     f.write('{\n')
                                     f.write('"op": "core/text-transform",\n')
+                                    f.write('"opname": "toLowercase",\n')
                                     f.write('"description": "Text transform on cells in column %s using expression value.toLowercase()",\n'%usercolumn)
                                     f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
                                     f.write('"columnName": "%s",\n'%usercolumn)
@@ -341,6 +354,7 @@ def main():
 
                                     f.write('{\n')
                                     f.write('"op": "core/text-transform",\n')
+                                    f.write('"opname": "toUppercase",\n')
                                     f.write('"description": "Text transform on cells in column %s using expression value.toUppercase()",\n'%usercolumn)
                                     f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
                                     f.write('"columnName": "%s",\n'%usercolumn)
@@ -353,6 +367,7 @@ def main():
                                 elif userOperates==5:
                                     f.write('{\n')
                                     f.write('"op": "core/text-transform",\n')
+                                    f.write('"opname": "toDate",\n')
                                     f.write('"description": "Text transform on cells in column %s using expression value.toDate()",\n'%usercolumn)
                                     f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
                                     f.write('"columnName": "%s",\n'%usercolumn)
@@ -365,6 +380,7 @@ def main():
                                 elif userOperates==6:
                                     f.write('{\n')
                                     f.write('"op": "core/text-transform",\n')
+                                    f.write('"opname": "toNumber",\n')
                                     f.write('"description": "Text transform on cells in column %s using expression value.toNumber()",\n'%usercolumn)
                                     f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
                                     f.write('"columnName": "%s",\n'%usercolumn)
@@ -395,6 +411,7 @@ def main():
                                     '''
                                     f.write('{\n')
                                     f.write('"op": "core/column-split",\n')
+                                    f.write('"opname": "Splitcolumn",\n')
                                     f.write('"description": "Split column %s by separator",\n'%usercolumn)
                                     f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
                                     f.write('"columnName": "%s",\n'%usercolumn)
