@@ -1,3 +1,4 @@
+# coding=utf-8
 import csv
 
 import OpenRefinerecipe
@@ -9,7 +10,6 @@ cmd = ['ls', '-l']
 
 with open('output.txt', 'w') as out:
     return_code = subprocess.call(cmd, stdout=out)
-
 
 # get yes or no to continue
 def Confirm(message,default=None):
@@ -70,7 +70,7 @@ def GetColumnName(projectID):
 
 
 def main():
-    f=open('logWorkflow.json','w') # open file with name of 'logWorkflow.txt'
+    f=open('TlogWorkflow.json','w') # open file with name of 'logWorkflow.txt'
     print("Welcome to use OpenRefine userScript")
     # import project
     while True:
@@ -141,7 +141,6 @@ def main():
             print(GetColumnName(projectID))
             usercolumn=raw_input("Enter the column name you want to do Data Wrangling,if there is no other columns you want to make change, enter N: ")
             while usercolumn!='N':
-                f.write(',\n')
                 # f.write('Data Wrangling On Column %s\n'%usercolumn)
                 while True:
                     userMode=prompt_options([
@@ -161,7 +160,7 @@ def main():
                             # f.write('Row mode \n')
                             while True:
                                 userOperates=prompt_options([
-                                    'Mass Edit',
+                                    'Cluster and Relabel',
                                     'Trim Whitespace',
                                     'Lowercase the column value',
                                     'Uppercase the column value',
@@ -170,6 +169,10 @@ def main():
                                     'Split multi-valued cells in column ',
                                     'Exit',
                                 ])
+                                if userOperates !=8:
+                                    f.write(',\n')
+                                else:
+                                    f.write('\n')
                                 if userOperates==1:
                                     '''
                                     {
@@ -182,6 +185,15 @@ def main():
                                     "columnName": "sponsor",
                                     "expression": "value",
                                     "edits": [
+                                     {
+                                        "fromBlank": false,
+                                        "fromError": false,
+                                        "from": [
+                                          "waldorf astoria",
+                                          "waldorf-astoria"
+                                        ],
+                                        "to": "waldorf astoria"
+                                      }
                                     ]
                                   },
                                     
@@ -193,10 +205,10 @@ def main():
                                     f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
                                     f.write('"columnName": "%s",\n'%usercolumn)
                                     f.write('"expression": "value",\n')
-                                    print("please choose clusterer type:")
+                                    # print("please choose clustering type:")
                                     print("1. binning")
                                     print("2. knn")
-                                    userClusterer=raw_input("Enter the number:")
+                                    userClusterer=raw_input("please choose clustering type:")
                                     if userClusterer=='1':
                                         f.write('"type": "binning", \n')
                                         userFunction=prompt_options([
@@ -209,7 +221,6 @@ def main():
                                             params=raw_input("Enter the params:")
                                             f.write('"params": %s\n'%params)
                                             f.write('}\n')
-                                            print(type(f))
                                             compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='binning',function='ngram-fingerprint',params=params)
                                         elif userFunction==2:
                                             f.write('"function": "metaphone3"\n')
@@ -257,8 +268,10 @@ def main():
                                         print(Edit_to)
                                         Edit_new_to=[]
                                         for to in Edit_to:
-                                            userinputTo=raw_input("Input the value you want to make change, if not, input N")
+                                            print(to)
+                                            userinputTo=raw_input("Input the value you want to make change with this value, if not, input N")
                                             if userinputTo!='N':
+
                                                 to=userinputTo
                                                 Edit_new_to.append(to)
                                             else:
@@ -416,7 +429,7 @@ if __name__=='__main__':
     main()
 
 
-
+# // extendend Or  execution
 
 
 

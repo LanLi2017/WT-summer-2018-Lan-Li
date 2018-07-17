@@ -161,7 +161,7 @@ def main():
                             # f.write('Row mode \n')
                             while True:
                                 userOperates=prompt_options([
-                                    'Mass Edit',
+                                    'Cluster and Relabel', # .....
                                     'Trim Whitespace',
                                     'Lowercase the column value',
                                     'Uppercase the column value',
@@ -208,10 +208,10 @@ def main():
                                     f.write('"columnName": "%s",\n'%usercolumn)
                                     f.write('"expression": "value",\n')
                                     f.write('"edits":[')
-                                    print("please choose clusterer type:")
+                                    # print("please choose clustering type:")
                                     print("1. binning")
                                     print("2. knn")
-                                    userClusterer=raw_input("Enter the number:")
+                                    userClusterer=raw_input("please choose clustering type:")
                                     if userClusterer=='1':
                                         userFunction=prompt_options([
                                             'fingerprint',
@@ -302,6 +302,7 @@ def main():
                                         print(Edit_to)
                                         Edit_new_to=[]
                                         for to in Edit_to:
+                                            print(to)
                                             userinputTo=raw_input("Input the value you want to make change, if not, input N")
                                             if userinputTo!='N':
                                                 to=userinputTo

@@ -7,31 +7,6 @@
 }
 ,
 {
-"op": "core/mass-edit",
-"description:": "Mass edit cells in column Sponsor ",
-"engineConfig": {"mode": "row-based","facets": []},
-"columnName": "Sponsor",
-"expression": "value",
-"edits":[{
-"fromBlank": false,
-"fromError": false,
-"from": [
-"NORDDEUTSCHER LLOYD BREMEN",
-"NORDDEUTSCHER LLOYD  BREMEN"],
-"to": "NORDDEUTSCHER LLOYD BREMEN"
-}
-,{
-"fromBlank": false,
-"fromError": false,
-"from": [
-"Waldorf Astoria",
-"Waldorf-Astoria"],
-"to": "Waldorf Astoria"
-}
-]
-}
-,
-{
 "op": "core/text-transform",
 "description": "Text transform on cells in column Sponsor using expression value.trim()",
 "engineConfig": {"mode": "row-based","facets": []},
@@ -43,30 +18,26 @@
 }
 ,
 {
-"op": "core/text-transform",
-"description": "Text transform on cells in column Sponsor using expression value.toLowercase()",
+"op": "core/mass-edit",
+"description:": "Mass edit cells in column Sponsor ",
 "engineConfig": {"mode": "row-based","facets": []},
 "columnName": "Sponsor",
-"expression": "value.toLowercase()",
-"onError": "set-to-blank",
-"repeat": false,
-"repeatCount": 10
-}
-
-,
-{
-"op": "core/mass-edit",
-"description:": "Mass edit cells in column event ",
-"engineConfig": {"mode": "row-based","facets": []},
-"columnName": "event",
 "expression": "value",
 "edits":[{
 "fromBlank": false,
 "fromError": false,
 "from": [
-"DINNER",
-"Dinner"],
-"to": "DINNER"
+"NORDDEUTSCHER LLOYD BREMEN",
+"NORDDEUTSCHER LLOYD  BREMEN"],
+"to": "NLB"
+}
+,{
+"fromBlank": false,
+"fromError": false,
+"from": [
+"Waldorf Astoria",
+"Waldorf-Astoria"],
+"to": "WA"
 }
 ]
 }
