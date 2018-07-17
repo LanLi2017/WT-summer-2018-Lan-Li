@@ -17,14 +17,14 @@ from OpenRefine3Operations.Menu_case.Python_command import OpenRefinerecipe
 
 
 # rename
-def rename_op(data,projectID):
-    for dicts in data:
-        if dicts['opname']=='rename':
-            oldcol=dicts['oldColumnName']
-            newcol=dicts['newColumnName']
-            print(oldcol)
-            print(newcol)
-            return OpenRefinerecipe.rename_column(projectID,oldcol,newcol)
+def rename_op(dicts,projectID):
+    # for dicts in data:
+    if dicts['opname']=='rename':
+        oldcol=dicts['oldColumnName']
+        newcol=dicts['newColumnName']
+        print(oldcol)
+        print(newcol)
+        return OpenRefinerecipe.rename_column(projectID,oldcol,newcol)
 
 
 # cluster and relabel
@@ -41,15 +41,14 @@ def rename_op(data,projectID):
 "params": 20
 }
 '''
-def clusterAndrelabel(data,projectID):
-    for dicts in data:
-        if dicts['opname']=='Cluster and Relabel':
-            columnName=dicts['columnName']
-            clusterer_type=dicts['type']
-            function=dicts['function']
-            params=dicts['params']
-            # what if people choose different clusters?
-            return OpenRefinerecipe.compute_clusters(projectID,columnName,clusterer_type=clusterer_type,function=function,params=params)
+def clusterAndrelabel(dicts,projectID):
+    if dicts['opname']=='Cluster and Relabel':
+        columnName=dicts['columnName']
+        clusterer_type=dicts['type']
+        function=dicts['function']
+        params=dicts['params']
+        # what if people choose different clusters?
+        return OpenRefinerecipe.compute_clusters(projectID,columnName,clusterer_type=clusterer_type,function=function,params=params)
 
 
 
@@ -67,12 +66,11 @@ def clusterAndrelabel(data,projectID):
 "repeatCount": 10
 }
 '''
-def trim_op(data,projectID):
-    for dicts in data:
-        if dicts['opname']=='TrimwhiteSpace':
-            columnName=dicts['columnName']
-            expression=dicts['expression']
-            return OpenRefinerecipe.text_transform(projectID,columnName,expression)
+def trim_op(dicts,projectID):
+    if dicts['opname']=='TrimwhiteSpace':
+        columnName=dicts['columnName']
+        expression=dicts['expression']
+        return OpenRefinerecipe.text_transform(projectID,columnName,expression)
 
 
 
@@ -91,12 +89,11 @@ def trim_op(data,projectID):
 }
 
 '''
-def lowercase_op(data,projectID):
-    for dicts in data:
-        if dicts['opname']=='toLowercase':
-            columnName=dicts['columnName']
-            expression=dicts['expression']
-            return OpenRefinerecipe.text_transform(projectID,columnName,expression)
+def lowercase_op(dicts,projectID):
+    if dicts['opname']=='toLowercase':
+        columnName=dicts['columnName']
+        expression=dicts['expression']
+        return OpenRefinerecipe.text_transform(projectID,columnName,expression)
 
 # uppercase
 '''
@@ -115,12 +112,11 @@ def lowercase_op(data,projectID):
     "repeatCount": 10
   }
 '''
-def uppercase_op(data,projectID):
-    for dicts in data:
-        if dicts['opname']=='toUppercase':
-            columnName=dicts['columnName']
-            expression=dicts['expression']
-            return OpenRefinerecipe.text_transform(projectID,columnName,expression)
+def uppercase_op(dicts,projectID):
+    if dicts['opname']=='toUppercase':
+        columnName=dicts['columnName']
+        expression=dicts['expression']
+        return OpenRefinerecipe.text_transform(projectID,columnName,expression)
 
 
 
@@ -141,12 +137,11 @@ def uppercase_op(data,projectID):
     "repeatCount": 10
   }
 '''
-def Todate_op(data,projectID):
-    for dicts in data:
-        if dicts['opname']=='toDate':
-            columnName=dicts['columnName']
-            expression=dicts['expression']
-            return OpenRefinerecipe.text_transform(projectID,columnName,expression)
+def Todate_op(dicts,projectID):
+    if dicts['opname']=='toDate':
+        columnName=dicts['columnName']
+        expression=dicts['expression']
+        return OpenRefinerecipe.text_transform(projectID,columnName,expression)
 
 
 # ToNumber
@@ -167,12 +162,11 @@ def Todate_op(data,projectID):
   }
 
 '''
-def Tonumber_op(data,projectID):
-    for dicts in data:
-        if dicts['opname']=='toNumber':
-            columnName=dicts['columnName']
-            expression=dicts['expression']
-            return OpenRefinerecipe.text_transform(projectID,columnName,expression)
+def Tonumber_op(dicts,projectID):
+    if dicts['opname']=='toNumber':
+        columnName=dicts['columnName']
+        expression=dicts['expression']
+        return OpenRefinerecipe.text_transform(projectID,columnName,expression)
 
 
 
@@ -197,13 +191,12 @@ def Tonumber_op(data,projectID):
   }
 ]
 '''
-def Split_op(data,projectID):
-    for dicts in data:
-        if dicts['opname']=='Splitcolumn':
-            columnName=dicts['columnName']
-            separator=dicts['separator']
-            return OpenRefinerecipe.split_column(projectID,columnName,separator)
-    pass
+def Split_op(dicts,projectID):
+    if dicts['opname']=='Splitcolumn':
+        columnName=dicts['columnName']
+        separator=dicts['separator']
+        return OpenRefinerecipe.split_column(projectID,columnName,separator)
+
 
 
 
@@ -214,17 +207,16 @@ def main():
     with open('TlogWorkflow.json','r')as f:
         dataset=json.load(f)
     print(dataset)
-    i=0
-    while True:
-        rename_op(dataset,projectID)
-        clusterAndrelabel(dataset,projectID)
-        lowercase_op(dataset,projectID)
-        uppercase_op(dataset,projectID)
-        Tonumber_op(dataset,projectID)
-        Todate_op(dataset,projectID)
-        trim_op(dataset,projectID)
-        Split_op(dataset,projectID)
-        i=i+1
+    for dicts in dataset:
+        rename_op(dicts,projectID)
+        clusterAndrelabel(dicts,projectID)
+        lowercase_op(dicts,projectID)
+        uppercase_op(dicts,projectID)
+        Tonumber_op(dicts,projectID)
+        Todate_op(dicts,projectID)
+        trim_op(dicts,projectID)
+        Split_op(dicts,projectID)
+
 
 
 
