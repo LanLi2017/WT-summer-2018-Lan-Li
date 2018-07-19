@@ -1,222 +1,112 @@
 import json
 from pprint import pprint
 
+
+__author__='Lan Li'
 # create
 import OpenRefinerecipe
 
-
-# def create_op(data):
-#     for dicts in data:
-#         if dicts['op']=='create':
-#             projectID=dicts['projectID']
-#             print(type(projectID))
-#             projectName=dicts['projectName']
-#             print(type(projectName))
-#             project_path=dicts['projectPath']
-#             return OpenRefinerecipe.create_project(project_path,projectName)
-
-
-# rename
-def rename_op(dicts,projectID):
-    # for dicts in data:
-    if dicts['opname']=='rename':
-        oldcol=dicts['oldColumnName']
-        newcol=dicts['newColumnName']
-        print(oldcol)
-        print(newcol)
-        return OpenRefinerecipe.rename_column(projectID,oldcol,newcol)
-
-
-# cluster and relabel
-'''
-{
-"op": "core/mass-edit",
-"opname": "Cluster and Relabel",
-"description:": "Mass edit cells in column Event ",
-"engineConfig": {"mode": "row-based","facets": []},
-"columnName": "Event",
-"expression": "value",
-"type": "binning", 
-"function": "fingerprint",
-"params": 20
-}
-'''
-def clusterAndrelabel(dicts,projectID):
-    if dicts['opname']=='Cluster and Relabel':
-        columnName=dicts['columnName']
-        clusterer_type=dicts['type']
-        function=dicts['function']
-        params=dicts['params']
-        # what if people choose different clusters?
-        return OpenRefinerecipe.compute_clusters(projectID,columnName,clusterer_type=clusterer_type,function=function,params=params)
-
-
-
-# trim whitespace
-'''
-{
-"op": "core/text-transform",
-"opname": "TrimwhiteSpace",
-"description": "Text transform on cells in column Event using expression value.trim()",
-"engineConfig": {"mode": "row-based","facets": []},
-"columnName": "Event",
-"expression": "value.trim()",
-"onError": "set-to-blank",
-"repeat": false,
-"repeatCount": 10
-}
-'''
-def trim_op(dicts,projectID):
-    if dicts['opname']=='TrimwhiteSpace':
-        columnName=dicts['columnName']
-        expression=dicts['expression']
-        return OpenRefinerecipe.text_transform(projectID,columnName,expression)
-
-
-
-# lowercase
-'''
-{
-"op": "core/text-transform",
-"opname": "toLowercase",
-"description": "Text transform on cells in column Event using expression value.toLowercase()",
-"engineConfig": {"mode": "row-based","facets": []},
-"columnName": "Event",
-"expression": "value.toLowercase()",
-"onError": "set-to-blank",
-"repeat": false,
-"repeatCount": 10
-}
-
-'''
-def lowercase_op(dicts,projectID):
-    if dicts['opname']=='toLowercase':
-        columnName=dicts['columnName']
-        expression=dicts['expression']
-        return OpenRefinerecipe.text_transform(projectID,columnName,expression)
-
-# uppercase
-'''
-{
-    "op": "core/text-transform",
-    "opname": "toUppercase",
-    "description": "Text transform on cells in column date using expression value.toUppercase()",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "sponsor",
-    "expression": "value.toUppercase()",
-    "onError": "set-to-blank",
-    "repeat": false,
-    "repeatCount": 10
-  }
-'''
-def uppercase_op(dicts,projectID):
-    if dicts['opname']=='toUppercase':
-        columnName=dicts['columnName']
-        expression=dicts['expression']
-        return OpenRefinerecipe.text_transform(projectID,columnName,expression)
-
-
-
-# Todate
-'''
-{
-    "op": "core/text-transform",
-    "opname": "toDate",
-    "description": "Text transform on cells in column date using expression value.toDate()",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "date",
-    "expression": "value.toDate()",
-    "onError": "set-to-blank",
-    "repeat": false,
-    "repeatCount": 10
-  }
-'''
-def Todate_op(dicts,projectID):
-    if dicts['opname']=='toDate':
-        columnName=dicts['columnName']
-        expression=dicts['expression']
-        return OpenRefinerecipe.text_transform(projectID,columnName,expression)
-
-
-# ToNumber
-'''
-{
-    "op": "core/text-transform",
-    "op": "toNumber",
-    "description": "Text transform on cells in column date using expression value.toNumber()",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "dish_count",
-    "expression": "value.toNumber()",
-    "onError": "set-to-blank",
-    "repeat": false,
-    "repeatCount": 10
-  }
-
-'''
-def Tonumber_op(dicts,projectID):
-    if dicts['opname']=='toNumber':
-        columnName=dicts['columnName']
-        expression=dicts['expression']
-        return OpenRefinerecipe.text_transform(projectID,columnName,expression)
-
-
-
-# split
-'''
-[
-  {
-    "op": "core/column-split",
-    "opname": "Splitcolumn",
-    "description": "Split column call_number by separator",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "call_number",
-    "guessCellType": true,
-    "removeOriginalColumn": true,
-    "mode": "separator",
-    "separator": " ",
-    "regex": false,
-    "maxColumns": 0
-  }
-]
-'''
-def Split_op(dicts,projectID):
-    if dicts['opname']=='Splitcolumn':
-        columnName=dicts['columnName']
-        separator=dicts['separator']
-        return OpenRefinerecipe.split_column(projectID,columnName,separator)
 
 
 
 
 def main():
-    project_Name=raw_input('Enter the propject name:\n')
-    project_path=raw_input('Enter the project path:\n')
+    project_Name=raw_input('Enter the project name:\n')
+    project_path=raw_input('Enter the input dataset path:\n')
     projectID=OpenRefinerecipe.create_project(project_path,project_Name)
         # dataset=json.load(f)
-    with open('TlogWorkflow.json','r')as f:
+    # for further change :
+    '''
+    1.original 
+    2.Extended
+    3.combine
+    '''
+    with open('ExtendedWF.json','r')as f:
         dataset=json.load(f)
     print(dataset)
+    '''
+    
+    
+    '''
     for dicts in dataset:
-        rename_op(dicts,projectID)
-        clusterAndrelabel(dicts,projectID)
-        lowercase_op(dicts,projectID)
-        uppercase_op(dicts,projectID)
-        Tonumber_op(dicts,projectID)
-        Todate_op(dicts,projectID)
-        trim_op(dicts,projectID)
-        Split_op(dicts,projectID)
+        if dicts['opname']=='rename':
+            oldcol=dicts['oldColumnName']
+            newcol=dicts['newColumnName']
+            OpenRefinerecipe.rename_column(projectID,oldcol,newcol)
+        elif dicts['opname']=='Cluster_and_Relabel':
+            '''
+            {
+            "Cluster-function": "fingerprint", 
+            "description": "Mass edit cells in column sponsor", 
+            "Cluster-params": "20", 
+            "columnName": "sponsor", 
+            "engineConfig": {
+              "facets": "[]", 
+              "mode": "row-based"
+            }, 
+            "opname": "Cluster_and_Relabel", 
+            "Cluster-type": "binning", 
+            "expression": "value", 
+            "op": "core/mass-edit"
+          }, 
+            
+            '''
+            columnName=dicts['columnName']
+            clusterer_type=dicts['Cluster-type']
+            function=dicts['Cluster-function']
+            params=dicts['Cluster-params']
+            # what if people choose different clusters?
+            compute_clusters=OpenRefinerecipe.compute_clusters(projectID,columnName,clusterer_type=clusterer_type,function=function,params=params)
+            Edit_from=OpenRefinerecipe.getFromValue(compute_clusters)
+            Edit_to=OpenRefinerecipe.getToValue(compute_clusters)
+            edits=[{'from':f1, 'to':t} for f1,t in zip(Edit_from, Edit_to)]
+            OpenRefinerecipe.mass_edit(projectID,columnName,edits)
+
+
+        elif dicts['op']=='core/text-transform':
+            '''
+            {
+            "repeat": "false", 
+            "description": "Text transform on cells in column sponsor using expression value.trim()", 
+            "onError": "set-to-blank", 
+            "repeatCount": 10, 
+            "columnName": "sponsor", 
+            "engineConfig": {
+              "facets": "[]", 
+              "mode": "row-based"
+            }, 
+            "opname": "TrimwhiteSpace", 
+            "expression": "value.trim()", 
+            "op": "core/text-transform"
+          }, 
+        
+            '''
+            columnName=dicts['columnName']
+            expression=dicts['expression']
+            OpenRefinerecipe.text_transform(projectID,columnName,expression)
+        elif dicts['opname']=='Splitcolumn':
+            '''
+            {
+            "regex": "false", 
+            "description": "Split column call_number by separator", 
+            "maxColumns": 0, 
+            "columnName": "call_number", 
+            "guessCellType": "true", 
+            "removeOriginalColumn": "true", 
+            "separator": " ", 
+            "mode": "separator", 
+            "engineConfig": {
+              "facets": "[]", 
+              "mode": "row-based"
+            }, 
+            "opname": "Splitcolumn", 
+            "op": "core/column-split"
+          }
+            
+            '''
+            columnName=dicts['columnName']
+            separator=dicts['separator']
+            OpenRefinerecipe.split_column(projectID,columnName,separator)
 
 
 
