@@ -201,9 +201,10 @@ def Split_op(dicts,projectID):
 
 
 def main():
-    project_Name=raw_input('Enter the project name:\n')
+    project_Name=raw_input('Enter the propject name:\n')
     project_path=raw_input('Enter the project path:\n')
     projectID=OpenRefinerecipe.create_project(project_path,project_Name)
+        # dataset=json.load(f)
     with open('TlogWorkflow.json','r')as f:
         dataset=json.load(f)
     print(dataset)

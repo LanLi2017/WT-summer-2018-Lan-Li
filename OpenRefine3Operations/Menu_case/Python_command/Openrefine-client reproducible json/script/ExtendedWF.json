@@ -1,0 +1,96 @@
+[
+  {
+    "description": "create a new project", 
+    "projectName": "Menuparttest", 
+    "projectPath": "Menupart.csv", 
+    "projectID": "1541884982550", 
+    "opname": "create", 
+    "op": "createProject"
+  }, 
+  {
+    "Cluster-function": "fingerprint", 
+    "description": "Mass edit cells in column sponsor", 
+    "Cluster-params": "20", 
+    "columnName": "sponsor", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "Cluster_and_Relabel", 
+    "Cluster-type": "binning", 
+    "expression": "value", 
+    "op": "core/mass-edit"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column sponsor using expression value.trim()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "sponsor", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "TrimwhiteSpace", 
+    "expression": "value.trim()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column sponsor using expression value.toLowercase()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "sponsor", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "toLowercase", 
+    "expression": "value.toLowercase()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column date using expression value.toDate()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "date", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "ToDate", 
+    "expression": "value.toDate()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column dish_count using expression value.toNumber()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "dish_count", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "toNumber", 
+    "expression": "value.toNumber()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "regex": "false", 
+    "description": "Split column call_number by separator", 
+    "maxColumns": 0, 
+    "columnName": "call_number", 
+    "guessCellType": "true", 
+    "removeOriginalColumn": "true", 
+    "separator": " ", 
+    "mode": "separator", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "Splitcolumn", 
+    "op": "core/column-split"
+  }
+]

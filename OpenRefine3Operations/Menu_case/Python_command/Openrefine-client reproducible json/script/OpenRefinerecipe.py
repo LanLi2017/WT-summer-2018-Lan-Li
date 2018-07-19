@@ -205,11 +205,11 @@ def reconcile(project_id,column,service,reconciliation_type=None,reconciliation_
 
 
 def main():
-    userinputpath='partTest.csv'
+    userinputpath='Menupart.csv'
     userinputname='UserstoryPy'
     project_id=create_project(userinputpath,userinputname)
     print(project_id)
-    # apply_operations(project_id,'./Userstory/OpenrefineJsonfile/Userstory1.json')
+    apply_operations(project_id,'./Userstory/OpenrefineJsonfile/Userstory1.json')
 
 
 

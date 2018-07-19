@@ -1,15 +1,12 @@
 # coding=utf-8
 import csv
+import json
 
 import OpenRefinerecipe
 from OpenRefine3Operations.Menu_case.Python_command.google import refine
 
 import subprocess
 
-cmd = ['ls', '-l']
-
-with open('output.txt', 'w') as out:
-    return_code = subprocess.call(cmd, stdout=out)
 
 # get yes or no to continue
 def Confirm(message,default=None):
@@ -70,8 +67,7 @@ def GetColumnName(projectID):
 
 
 def main():
-    f=open('TlogWorkflow.json','w') # open file with name of 'logWorkflow.txt'
-    f.write('[\n')
+    result=[]
     print("Welcome to use OpenRefine userScript")
     # import project
     while True:
@@ -87,27 +83,28 @@ def main():
         elif choice==3:
             userinputID=raw_input("input the project ID:")
             OpenRefinerecipe.open_project(userinputID)
-            # f.write('Open Project\n')
+            # f.write('Open Project')
         elif choice==4:
             usergetprojectID=raw_input("input the project ID:")
             OpenRefinerecipe.get_project_name(usergetprojectID)
-            # f.write('Get Project Name\n')
+            # f.write('Get Project Name')
         elif choice==2:
-            # f.write('Create Project\n')
+            # f.write('Create Project')
             userinputpath=raw_input("input the file path:")
             userinputName=raw_input("input the project Name:")
-            f.write('{\n')
-            f.write('"op": "createProject",\n')
-            f.write('"opname": "create",\n')
-            f.write('"description": "create a new project",\n')
-            f.write('"projectName": "%s",\n'%userinputName)
-            f.write('"projectPath": "%s",\n'%userinputpath)
-            # f.write('@IN file path: %s\n'%userinputpath)
-            # f.write('@IN project Name: %s\n'%userinputName)
+
+            createdicts ={}
+            createdicts['op']='createProject'
+            createdicts['opname']='create'
+            createdicts['description']='create a new project'
+            createdicts['projectName']='%s'%userinputName
+            createdicts['projectPath']='%s'%userinputpath
+            # f.write('@IN file path: %s'%userinputpath)
+            # f.write('@IN project Name: %s'%userinputName)
             projectID=OpenRefinerecipe.create_project(userinputpath,userinputName)
-            f.write('"projectID": %s\n'%projectID)
-            f.write('},\n')
-            # f.write('@OUT New Project ID : %s\n'%projectID)
+            createdicts['projectID']='%s'%projectID
+            result.append(createdicts)
+            # f.write('@OUT New Project ID : %s'%projectID)
 
             number_rows=raw_input("Display some number of rows: You can choose 5/10/25/50")
             print("Show the first "+number_rows+" rows for this project:")
@@ -136,14 +133,14 @@ def main():
 
             userrenamechoice=raw_input("Enter the column name you want to change, if there is no choice , please enter N: ")
             while userrenamechoice!='N':
-                f.write('{\n')
-                f.write('"op": "core/column-rename",\n')
-                f.write('"opname": "rename",\n')
+                renamedicts={}
+                renamedicts['op']='core/column-rename'
+                renamedicts['opname']='rename'
                 newcolumnname=raw_input("Enter the new column name:")
-                f.write('"description": "Rename column %s to %s",\n'%(userrenamechoice, newcolumnname))
-                f.write('"oldColumnName": "%s",\n'%userrenamechoice)
-                f.write('"newColumnName": "%s"\n'%newcolumnname)
-                f.write('}\n')
+                renamedicts['description']='Rename column %s to %s"'%(userrenamechoice, newcolumnname)
+                renamedicts['oldColumnName']='%s'%userrenamechoice
+                renamedicts['newColumnName']='%s'%newcolumnname
+                result.append(renamedicts)
                 OpenRefinerecipe.rename_column(projectID,userrenamechoice,newcolumnname)
                 userrenamechoice=raw_input("Continue Enter the column name you want to change, if there is no choice, please Enter N: ")
 
@@ -151,7 +148,7 @@ def main():
             print(GetColumnName(projectID))
             usercolumn=raw_input("Enter the column name you want to do Data Wrangling,if there is no other columns you want to make change, enter N: ")
             while usercolumn!='N':
-                # f.write('Data Wrangling On Column %s\n'%usercolumn)
+                # f.write('Data Wrangling On Column %s'%usercolumn)
                 while True:
                     userMode=prompt_options([
                         'row mode',
@@ -159,7 +156,7 @@ def main():
                         'Exit',
                     ])
                     if userMode==2:
-                        # f.write('Record mode \n')
+                        # f.write('Record mode ')
                         # five steps
                         # 1. identify the field that contains the records marker
                         userStandardColumn=raw_input("Please input the records marker: ")
@@ -167,7 +164,7 @@ def main():
                         OpenRefinerecipe.reorder_columns(projectID,0)
                         # 3. sort this column (no corresponding function)
                     elif userMode==1:
-                            # f.write('Row mode \n')
+                            # f.write('Row mode ')
                             while True:
                                 userOperates=prompt_options([
                                     'Cluster and Relabel',
@@ -179,10 +176,6 @@ def main():
                                     'Split multi-valued cells in column ',
                                     'Exit',
                                 ])
-                                if userOperates !=8:
-                                    f.write(',\n')
-                                else:
-                                    f.write('\n')
                                 if userOperates==1:
                                     '''
                                     {
@@ -209,60 +202,63 @@ def main():
                                     
                                     
                                     '''
-                                    f.write('{\n')
-                                    f.write('"op": "core/mass-edit",\n')
-                                    f.write('"opname": "Cluster and Relabel",\n')
-                                    f.write('"description:": "Mass edit cells in column %s ",\n'%usercolumn)
-                                    f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
-                                    f.write('"columnName": "%s",\n'%usercolumn)
-                                    f.write('"expression": "value",\n')
+                                    ClusterRelabeldicts={}
+                                    ClusterRelabeldicts['op']='core/mass-edit'
+                                    ClusterRelabeldicts['opname']='Cluster_and_Relabel'
+                                    ClusterRelabeldicts['description']='Mass edit cells in column %s'%usercolumn
+                                    ClusterRelabeldicts['engineConfig']={}
+                                    ClusterRelabeldicts['engineConfig']['mode']='row-based'
+                                    ClusterRelabeldicts['engineConfig']['facets']='[]'
+                                    ClusterRelabeldicts['columnName']='%s'%usercolumn
+                                    ClusterRelabeldicts['expression']='value'
+
                                     # print("please choose clustering type:")
                                     print("1. binning")
                                     print("2. knn")
                                     userClusterer=raw_input("please choose clustering type:")
                                     if userClusterer=='1':
-                                        f.write('"type": "binning", \n')
+                                        ClusterRelabeldicts['Cluster-type']='binning'
                                         userFunction=prompt_options([
                                             'fingerprint',
                                             'metaphone3',
                                             'cologne-phonetic',
                                         ])
                                         if userFunction==1:
-                                            f.write('"function": "fingerprint",\n')
+                                            ClusterRelabeldicts['Cluster-function']='fingerprint'
                                             params=raw_input("Enter the params:")
-                                            f.write('"params": %s\n'%params)
-                                            f.write('}\n')
+                                            ClusterRelabeldicts['Cluster-params']='%s'%params
+                                            result.append(ClusterRelabeldicts)
                                             compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='binning',function='ngram-fingerprint',params=params)
                                         elif userFunction==2:
-                                            f.write('"function": "metaphone3"\n')
-                                            f.write('}\n')
+                                            ClusterRelabeldicts['Cluster-function']='metaphone3'
+                                            result.append(ClusterRelabeldicts)
                                             compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='binning',function='metaphone3')
                                         elif userFunction==3:
-                                            f.write('"function": "cologne-phonetic"\n')
-                                            f.write('}\n')
+                                            ClusterRelabeldicts['Cluster-function']='cologne-phonetic'
+                                            result.append(ClusterRelabeldicts)
                                             compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='binning',function='cologne-phonetic')
 
                                     elif userClusterer=='2':
-                                        f.write('"type": "knn",\n')
+                                        ClusterRelabeldicts['Cluster-type']='knn'
                                         userKNNfunction=prompt_options([
                                            'levenshtein',
                                            'PPM',
                                         ])
                                         if userKNNfunction==1:
-                                            f.write('"function": "levenshtein",\n')
+                                            ClusterRelabeldicts['Cluster-function']='levenshtein'
                                             print("Please set the params: ")
                                             userinputradius=float(raw_input("Set the radius: "))
                                             userinputNgramsize=int(raw_input("Set the Bloking Ngram-size: "))
-                                            f.write('"params": {"radius":%f, "blocking-ngram-size":%d}\n'%(userinputradius,userinputNgramsize))
-                                            f.write('}\n')
+                                            ClusterRelabeldicts['Cluster-params']='{"radius":%f, "blocking-ngram-size":%d}'%(userinputradius,userinputNgramsize)
+                                            result.append(ClusterRelabeldicts)
                                             compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='knn',function='levenshtein',params={ 'radius':userinputradius,'blocking-ngram-size':userinputNgramsize})
                                         elif userKNNfunction==2:
-                                            f.write('"function": "PPM",\n')
+                                            ClusterRelabeldicts['Cluster-function']='PPM'
                                             print("Please set the params: ")
                                             userinputradius=float(raw_input("Set the radius: "))
                                             userinputNgramsize=int(raw_input("Set the Bloking Ngram-size: "))
-                                            f.write('"params": {"radius":%f, "blocking-ngram-size":%d}\n'%(userinputradius,userinputNgramsize))
-                                            f.write('}\n')
+                                            ClusterRelabeldicts['Cluster-params']='{"radius":%f, "blocking-ngram-size":%d}'%(userinputradius,userinputNgramsize)
+                                            result.append(ClusterRelabeldicts)
                                             compute_clusters=OpenRefinerecipe.compute_clusters(projectID,usercolumn,clusterer_type='knn',function='PPM',params={ 'radius':userinputradius,'blocking-ngram-size':userinputNgramsize})
                                     print(compute_clusters)
                                     userClusterinput=raw_input("Do you want to do manually edition for cluster? If not, input N; else input Y: ")
@@ -308,17 +304,20 @@ def main():
                                     "repeatCount": 10
                                   }
                                     '''
-                                    f.write('{\n')
-                                    f.write('"op": "core/text-transform",\n')
-                                    f.write('"opname": "TrimwhiteSpace",\n')
-                                    f.write('"description": "Text transform on cells in column %s using expression value.trim()",\n'%usercolumn)
-                                    f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
-                                    f.write('"columnName": "%s",\n'%usercolumn)
-                                    f.write('"expression": "value.trim()",\n')
-                                    f.write('"onError": "set-to-blank",\n')
-                                    f.write('"repeat": false,\n')
-                                    f.write('"repeatCount": 10\n')
-                                    f.write('}\n')
+                                    trimdicts={}
+                                    trimdicts['op']='core/text-transform'
+                                    trimdicts['opname']='TrimwhiteSpace'
+                                    trimdicts['description']='Text transform on cells in column %s using expression value.trim()'%usercolumn
+                                    trimdicts['engineConfig']={}
+                                    trimdicts['engineConfig']['mode']='row-based'
+                                    trimdicts['engineConfig']['facets']='[]'
+                                    trimdicts['columnName']='%s'%usercolumn
+                                    trimdicts['expression']='value.trim()'
+                                    trimdicts['onError']='set-to-blank'
+                                    trimdicts['repeat']='false'
+                                    trimdicts['repeatCount']=10
+                                    result.append(trimdicts)
+
                                     OpenRefinerecipe.text_transform(projectID,usercolumn,'value.trim()')
                                 elif userOperates==3:
                                     '''
@@ -338,57 +337,68 @@ def main():
                                     
                                     '''
 
-                                    f.write('{\n')
-                                    f.write('"op": "core/text-transform",\n')
-                                    f.write('"opname": "toLowercase",\n')
-                                    f.write('"description": "Text transform on cells in column %s using expression value.toLowercase()",\n'%usercolumn)
-                                    f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
-                                    f.write('"columnName": "%s",\n'%usercolumn)
-                                    f.write('"expression": "value.toLowercase()",\n')
-                                    f.write('"onError": "set-to-blank",\n')
-                                    f.write('"repeat": false,\n')
-                                    f.write('"repeatCount": 10\n')
-                                    f.write('}\n')
+                                    Lowercasedicts={}
+                                    Lowercasedicts['op']='core/text-transform'
+                                    Lowercasedicts['opname']='toLowercase'
+                                    Lowercasedicts['description']='Text transform on cells in column %s using expression value.toLowercase()'%usercolumn
+                                    Lowercasedicts['engineConfig']={}
+                                    Lowercasedicts['engineConfig']['mode']='row-based'
+                                    Lowercasedicts['engineConfig']['facets']='[]'
+                                    Lowercasedicts['columnName']='%s'%usercolumn
+                                    Lowercasedicts['expression']='value.toLowercase()'
+                                    Lowercasedicts['onError']='set-to-blank'
+                                    Lowercasedicts['repeat']='false'
+                                    Lowercasedicts['repeatCount']=10
+                                    result.append(Lowercasedicts)
                                     OpenRefinerecipe.text_transform(projectID,usercolumn,'value.toLowercase()')
                                 elif userOperates==4:
 
-                                    f.write('{\n')
-                                    f.write('"op": "core/text-transform",\n')
-                                    f.write('"opname": "toUppercase",\n')
-                                    f.write('"description": "Text transform on cells in column %s using expression value.toUppercase()",\n'%usercolumn)
-                                    f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
-                                    f.write('"columnName": "%s",\n'%usercolumn)
-                                    f.write('"expression": "value.toUppercase()",\n')
-                                    f.write('"onError": "set-to-blank",\n')
-                                    f.write('"repeat": false,\n')
-                                    f.write('"repeatCount": 10\n')
-                                    f.write('}\n')
+                                    Uppercasedicts={}
+                                    Uppercasedicts['op']='core/text-transform'
+                                    Uppercasedicts['opname']='toUppercase'
+                                    Uppercasedicts['description']='Text transform on cells in column %s using expression value.toUppercase()'%usercolumn
+                                    Uppercasedicts['engineConfig']={}
+                                    Uppercasedicts['engineConfig']['mode']='row-based'
+                                    Uppercasedicts['engineConfig']['facets']='[]'
+                                    Uppercasedicts['columnName']='%s'%usercolumn
+                                    Uppercasedicts['expression']='value.toUppercase()'
+                                    Uppercasedicts['onError']='set-to-blank'
+                                    Uppercasedicts['repeat']='false'
+                                    Uppercasedicts['repeatCount']=10
+                                    result.append(Uppercasedicts)
+
                                     OpenRefinerecipe.text_transform(projectID,usercolumn,'value.toUppercase()')
                                 elif userOperates==5:
-                                    f.write('{\n')
-                                    f.write('"op": "core/text-transform",\n')
-                                    f.write('"opname": "toDate",\n')
-                                    f.write('"description": "Text transform on cells in column %s using expression value.toDate()",\n'%usercolumn)
-                                    f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
-                                    f.write('"columnName": "%s",\n'%usercolumn)
-                                    f.write('"expression": "value.toDate()",\n')
-                                    f.write('"onError": "set-to-blank",\n')
-                                    f.write('"repeat": false,\n')
-                                    f.write('"repeatCount": 10\n')
-                                    f.write('}\n')
+                                    Datedicts={}
+                                    Datedicts['op']='core/text-transform'
+                                    Datedicts['opname']='ToDate'
+                                    Datedicts['description']='Text transform on cells in column %s using expression value.toDate()'%usercolumn
+                                    Datedicts['engineConfig']={}
+                                    Datedicts['engineConfig']['mode']='row-based'
+                                    Datedicts['engineConfig']['facets']='[]'
+                                    Datedicts['columnName']='%s'%usercolumn
+                                    Datedicts['expression']='value.toDate()'
+                                    Datedicts['onError']='set-to-blank'
+                                    Datedicts['repeat']='false'
+                                    Datedicts['repeatCount']=10
+                                    result.append(Datedicts)
+
                                     OpenRefinerecipe.text_transform(projectID,usercolumn,'value.toDate()')
                                 elif userOperates==6:
-                                    f.write('{\n')
-                                    f.write('"op": "core/text-transform",\n')
-                                    f.write('"opname": "toNumber",\n')
-                                    f.write('"description": "Text transform on cells in column %s using expression value.toNumber()",\n'%usercolumn)
-                                    f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
-                                    f.write('"columnName": "%s",\n'%usercolumn)
-                                    f.write('"expression": "value.toNumber()",\n')
-                                    f.write('"onError": "set-to-blank",\n')
-                                    f.write('"repeat": false,\n')
-                                    f.write('"repeatCount": 10\n')
-                                    f.write('}\n')
+                                    Numberdicts={}
+                                    Numberdicts['op']='core/text-transform'
+                                    Numberdicts['opname']='toNumber'
+                                    Numberdicts['description']='Text transform on cells in column %s using expression value.toNumber()'%usercolumn
+                                    Numberdicts['engineConfig']={}
+                                    Numberdicts['engineConfig']['mode']='row-based'
+                                    Numberdicts['engineConfig']['facets']='[]'
+                                    Numberdicts['columnName']='%s'%usercolumn
+                                    Numberdicts['expression']='value.toNumber()'
+                                    Numberdicts['onError']='set-to-blank'
+                                    Numberdicts['repeat']='false'
+                                    Numberdicts['repeatCount']=10
+                                    result.append(Numberdicts)
+
                                     OpenRefinerecipe.text_transform(projectID,usercolumn,'value.toNumber()')
                                 elif userOperates==7:
                                     '''
@@ -409,20 +419,23 @@ def main():
                                   }
                                     
                                     '''
-                                    f.write('{\n')
-                                    f.write('"op": "core/column-split",\n')
-                                    f.write('"opname": "Splitcolumn",\n')
-                                    f.write('"description": "Split column %s by separator",\n'%usercolumn)
-                                    f.write('"engineConfig": {"mode": "row-based","facets": []},\n')
-                                    f.write('"columnName": "%s",\n'%usercolumn)
-                                    f.write('"guessCellType": true,\n')
-                                    f.write('"removeOriginalColumn": true,\n')
-                                    f.write('"mode": "separator",\n')
-                                    f.write('"separator": " ",\n')
-                                    f.write('"regex": false,\n')
-                                    f.write('"maxColumns": 0\n')
-                                    f.write('}\n')
+                                    Splitdicts={}
+                                    Splitdicts['op']='core/column-split'
+                                    Splitdicts['opname']='Splitcolumn'
+                                    Splitdicts['description']='Split column %s by separator'%usercolumn
+                                    Splitdicts['engineConfig']={}
+                                    Splitdicts['engineConfig']['mode']='row-based'
+                                    Splitdicts['engineConfig']['facets']='[]'
+                                    Splitdicts['columnName']='%s'%usercolumn
+                                    Splitdicts['guessCellType']='true'
+                                    Splitdicts['removeOriginalColumn']='true'
+                                    Splitdicts['mode']='separator'
+
                                     userSeparator=raw_input("input the separator: ")
+                                    Splitdicts['separator']='%s'%userSeparator
+                                    Splitdicts['regex']='false'
+                                    Splitdicts['maxColumns']=0
+                                    result.append(Splitdicts)
                                     OpenRefinerecipe.split_column(projectID,usercolumn,userSeparator)
                                     # something special here
                                     # if split into several columns, then usercolumn will change
@@ -435,8 +448,9 @@ def main():
                 print(GetColumnName(projectID))
                 usercolumn=raw_input("Continue Enter the column name, if no other steps, Enter N: ")
         elif choice==5:
-            f.write(']\n')
             if Confirm("Are you sure to exit?",default=False):
+                with open('ExtendedWF.json','wt')as f:
+                    json.dump(result,f,indent=2)
                 break
 
 
