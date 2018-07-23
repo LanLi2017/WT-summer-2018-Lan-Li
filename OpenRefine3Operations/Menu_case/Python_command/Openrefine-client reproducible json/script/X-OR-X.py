@@ -66,6 +66,18 @@ def GetColumnName(projectID):
     return column_name
 
 
+def checkpath():
+    while True:
+        try:
+            path=raw_input("Enter the json path: ")
+            with open(path,'r')as f:
+                f.close()
+        except IOError as e:
+            print(e)
+        else:
+            return path
+
+
 def main():
     result=[]
     print("Welcome to use OpenRefine userScript")
@@ -90,7 +102,11 @@ def main():
             # f.write('Get Project Name')
         elif choice==2:
             # f.write('Create Project')
-            userinputpath=raw_input("input the file path:")
+            # while True:
+            #     try:
+            #         userinputpath=raw_input("input the file path:")
+            #         with open(userinputpath,'r')
+            userinputpath=checkpath()
             userinputName=raw_input("input the project Name:")
 
             createdicts ={}
