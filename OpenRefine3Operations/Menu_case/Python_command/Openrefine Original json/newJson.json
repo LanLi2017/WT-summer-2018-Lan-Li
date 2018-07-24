@@ -1,0 +1,198 @@
+[
+  {
+    "newColumnName": "MoneyOrder", 
+    "oldColumnName": "currency", 
+    "description": "Rename column currency to MoneyOrder", 
+    "op": "core/column-rename"
+  }, 
+  {
+    "newColumnName": "Sponsor", 
+    "oldColumnName": "sponsor", 
+    "description": "Rename column sponsor to Sponsor", 
+    "op": "core/column-rename"
+  }, 
+  {
+    "description": "Mass edit cells in column Sponsor", 
+    "columnName": "Sponsor", 
+    "edits": [
+      {
+        "to": "NORDDEUTSCHER LLOYD BREMEN", 
+        "fromBlank": false, 
+        "from": [
+          "NORDDEUTSCHER LLOYD BREMEN", 
+          "NORDDEUTSCHER LLOYD  BREMEN"
+        ], 
+        "fromError": false
+      }, 
+      {
+        "to": "Waldorf Astoria", 
+        "fromBlank": false, 
+        "from": [
+          "Waldorf Astoria", 
+          "Waldorf-Astoria"
+        ], 
+        "fromError": false
+      }
+    ], 
+    "engineConfig": {
+      "facets": [], 
+      "mode": "row-based"
+    }, 
+    "expression": "value", 
+    "op": "core/mass-edit"
+  }, 
+  {
+    "repeat": false, 
+    "description": "Text transform on cells in column Sponsor using expression value.trim()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "Sponsor", 
+    "engineConfig": {
+      "facets": [], 
+      "mode": "row-based"
+    }, 
+    "expression": "value.trim()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": false, 
+    "description": "Text transform on cells in column Sponsor using expression value.toLowercase()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "Sponsor", 
+    "engineConfig": {
+      "facets": [], 
+      "mode": "row-based"
+    }, 
+    "expression": "value.toLowercase()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": false, 
+    "description": "Text transform on cells in column call_number using expression value.toNumber()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "call_number", 
+    "engineConfig": {
+      "facets": [], 
+      "mode": "row-based"
+    }, 
+    "expression": "value.toNumber()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": false, 
+    "description": "Text transform on cells in column call_number using expression value.trim()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "call_number", 
+    "engineConfig": {
+      "facets": [], 
+      "mode": "row-based"
+    }, 
+    "expression": "value.trim()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": false, 
+    "description": "Text transform on cells in column date using expression value.toDate()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "date", 
+    "engineConfig": {
+      "facets": [], 
+      "mode": "row-based"
+    }, 
+    "expression": "value.toDate()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "description": "Mass edit cells in column event", 
+    "columnName": "event", 
+    "edits": [
+      {
+        "to": "DINNER", 
+        "fromBlank": false, 
+        "from": [
+          "DINNER", 
+          "DINNER SPECIALS", 
+          "NOON DINNER"
+        ], 
+        "fromError": false
+      }, 
+      {
+        "to": "DS", 
+        "fromBlank": false, 
+        "from": [
+          "DINNER SPECIALS", 
+          "SPECIAL SUPPER"
+        ], 
+        "fromError": false
+      }, 
+      {
+        "to": "NAD", 
+        "fromBlank": false, 
+        "from": [
+          "NINETEENTH ANNUAL DINNER", 
+          "EIGHTH ANNUAL DINNER"
+        ], 
+        "fromError": false
+      }, 
+      {
+        "to": "BANQUET", 
+        "fromBlank": false, 
+        "from": [
+          "BANQUET", 
+          "ANNUAL BANQUET"
+        ], 
+        "fromError": false
+      }, 
+      {
+        "to": "THANKSGIVING DINNER", 
+        "fromBlank": false, 
+        "from": [
+          "THANKSGIVING DINNER", 
+          "THANKSGIVING DAY DINNER"
+        ], 
+        "fromError": false
+      }, 
+      {
+        "to": "DAILY MENU, BREAKFAST", 
+        "fromBlank": false, 
+        "from": [
+          "DAILY MENU, BREAKFAST", 
+          "BREAKFAST"
+        ], 
+        "fromError": false
+      }, 
+      {
+        "to": "DAILY MENU", 
+        "fromBlank": false, 
+        "from": [
+          "DAILY MENU", 
+          "DAILY MENU, BREAKFAST"
+        ], 
+        "fromError": false
+      }
+    ], 
+    "engineConfig": {
+      "facets": [], 
+      "mode": "row-based"
+    }, 
+    "expression": "value", 
+    "op": "core/mass-edit"
+  }, 
+  {
+    "repeat": false, 
+    "description": "Text transform on cells in column event using expression value.toLowercase()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "event", 
+    "engineConfig": {
+      "facets": [], 
+      "mode": "row-based"
+    }, 
+    "expression": "value.toLowercase()", 
+    "op": "core/text-transform"
+  }
+]
