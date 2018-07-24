@@ -67,6 +67,8 @@
 @begin OperationsOncol-name:sponsor@desc Serial column operations on Column sponsor
 @in col-name:sponsor
 @in cluster-function:fingerprint
+@in cluster-type:binning
+@in cluster-params:20
 @in expression:value.trim()
 @in expression:value.toLowercase()
 @in dtable1

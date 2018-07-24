@@ -2,6 +2,8 @@ import json
 from itertools import groupby
 from operator import itemgetter
 
+import itertools
+
 with open('ExtendedWF.json','r')as f:
     data=json.load(f)
     # first part rename and output dtable
@@ -98,7 +100,7 @@ for subprelist in list_of_lists:
 # =====something wrong here
 print(subinputlists)
 list_of_sublists=[
-    [k] +[item[1]for item in g]
+    [k] + list(itertools.chain(*list(item[1:] for item in g)))
     for k,g in groupby(subinputlists,itemgetter(0))
 ]
 #.......only the first can be catched
