@@ -1,0 +1,54 @@
+@begin LinearXOR@desc Workflow of Extended openrefine history
+@in col-name:call_number
+@in separator:" "
+@in expression:value.toDate()
+@in col-name:sponsor
+@in col-name:date
+@in expression:value.toLowercase()
+@in cluster-params:20
+@in cluster-type:binning
+@in expression:value.toNumber()
+@in col-name:dish_count
+@in cluster-function:fingerprint
+@in expression:value.trim()
+@in dtable0
+@out dtable6
+@begin core/mass-edit0@desc Mass edit cells in column sponsor
+@in col-name:sponsor
+@in cluster-type:binning
+@in cluster-params:20
+@in cluster-function:fingerprint
+@in dtable0
+@out dtable1
+@end core/mass-edit0
+@begin core/text-transform0@desc Text transform on cells in column sponsor using expression value.trim()
+@in col-name:sponsor
+@in expression:value.trim()
+@in dtable1
+@out dtable2
+@end core/text-transform0
+@begin core/text-transform1@desc Text transform on cells in column sponsor using expression value.toLowercase()
+@in col-name:sponsor
+@in expression:value.toLowercase()
+@in dtable2
+@out dtable3
+@end core/text-transform1
+@begin core/text-transform2@desc Text transform on cells in column date using expression value.toDate()
+@in col-name:date
+@in expression:value.toDate()
+@in dtable3
+@out dtable4
+@end core/text-transform2
+@begin core/text-transform3@desc Text transform on cells in column dish_count using expression value.toNumber()
+@in col-name:dish_count
+@in expression:value.toNumber()
+@in dtable4
+@out dtable5
+@end core/text-transform3
+@begin core/column-split0@desc Split column call_number by separator
+@in col-name:call_number
+@in separator:" "
+@in dtable5
+@out dtable6
+@end core/column-split0
+@end LinearXOR
