@@ -1,0 +1,52 @@
+@begin LinearDataORJson@desc Workflow of Linear original openrefine history from data directory
+@in col-name:call_number
+@in separator:" "
+@in expression:value.toDate()
+@in col-name:sponsor
+@in col-name:date
+@in expression:value.toLowercase()
+@in expression:value.toNumber()
+@in col-name:dish_count
+@in expression:value.trim()
+@in dtable0
+@out dtable7
+@begin core/mass-edit0@desc Mass edit 6 cells in column sponsor
+@in col-name:sponsor
+@in dtable0
+@out dtable1
+@end core/mass-edit0
+@begin core/text-transform0@desc Text transform on 0 cells in column sponsor: value.trim()
+@in col-name:sponsor
+@in expression:value.trim()
+@in dtable1
+@out dtable2
+@end core/text-transform0
+@begin core/text-transform1@desc Text transform on 102 cells in column sponsor: value.toLowercase()
+@in col-name:sponsor
+@in expression:value.toLowercase()
+@in dtable2
+@out dtable3
+@end core/text-transform1
+@begin core/text-transform2@desc Text transform on 105 cells in column date: value.toDate()
+@in col-name:date
+@in expression:value.toDate()
+@in dtable3
+@out dtable4
+@end core/text-transform2
+@begin core/text-transform3@desc Text transform on 109 cells in column dish_count: value.toNumber()
+@in col-name:dish_count
+@in expression:value.toNumber()
+@in dtable4
+@out dtable5
+@end core/text-transform3
+@begin core/column-split0@desc Split 102 cell(s) in column call_number into several columns by separator
+@in col-name:call_number
+@in separator:" "
+@in dtable5
+@out dtable6
+@end core/column-split0
+@begin ManualEdit@desc Edit single cell on row 1, column HotelName
+@in dtable6
+@out dtable7
+@end ManualEdit
+@end LinearDataORJson
