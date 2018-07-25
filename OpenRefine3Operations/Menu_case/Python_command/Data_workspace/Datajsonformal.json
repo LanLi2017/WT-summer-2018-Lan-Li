@@ -1,0 +1,125 @@
+[
+  {
+    "operation": {
+      "description": "Mass edit cells in column sponsor", 
+      "columnName": "sponsor", 
+      "edits": [
+        {
+          "to": "NORDDEUTSCHER LLOYD BREMEN", 
+          "fromBlank": false, 
+          "from": [
+            "NORDDEUTSCHER LLOYD BREMEN", 
+            "NORDDEUTSCHER LLOYD  BREMEN"
+          ], 
+          "fromError": false
+        }
+      ], 
+      "engineConfig": {
+        "facets": [], 
+        "mode": "row-based"
+      }, 
+      "expression": "value", 
+      "op": "core/mass-edit"
+    }, 
+    "time": "2018-07-19T17:13:54Z", 
+    "id": 1532038558210, 
+    "description": "Mass edit 6 cells in column sponsor"
+  }, 
+  {
+    "operation": {
+      "repeat": false, 
+      "description": "Text transform on cells in column sponsor using expression value.trim()", 
+      "onError": "set-to-blank", 
+      "repeatCount": 10, 
+      "columnName": "sponsor", 
+      "engineConfig": {
+        "facets": [], 
+        "mode": "row-based"
+      }, 
+      "expression": "value.trim()", 
+      "op": "core/text-transform"
+    }, 
+    "time": "2018-07-19T17:13:54Z", 
+    "id": 1532039378318, 
+    "description": "Text transform on 0 cells in column sponsor: value.trim()"
+  }, 
+  {
+    "operation": {
+      "repeat": false, 
+      "description": "Text transform on cells in column sponsor using expression value.toLowercase()", 
+      "onError": "set-to-blank", 
+      "repeatCount": 10, 
+      "columnName": "sponsor", 
+      "engineConfig": {
+        "facets": [], 
+        "mode": "row-based"
+      }, 
+      "expression": "value.toLowercase()", 
+      "op": "core/text-transform"
+    }, 
+    "time": "2018-07-19T17:13:54Z", 
+    "id": 1532039090043, 
+    "description": "Text transform on 102 cells in column sponsor: value.toLowercase()"
+  }, 
+  {
+    "operation": {
+      "repeat": false, 
+      "description": "Text transform on cells in column date using expression value.toDate()", 
+      "onError": "set-to-blank", 
+      "repeatCount": 10, 
+      "columnName": "date", 
+      "engineConfig": {
+        "facets": [], 
+        "mode": "row-based"
+      }, 
+      "expression": "value.toDate()", 
+      "op": "core/text-transform"
+    }, 
+    "time": "2018-07-19T17:13:54Z", 
+    "id": 1532039151579, 
+    "description": "Text transform on 105 cells in column date: value.toDate()"
+  }, 
+  {
+    "operation": {
+      "repeat": false, 
+      "description": "Text transform on cells in column dish_count using expression value.toNumber()", 
+      "onError": "set-to-blank", 
+      "repeatCount": 10, 
+      "columnName": "dish_count", 
+      "engineConfig": {
+        "facets": [], 
+        "mode": "row-based"
+      }, 
+      "expression": "value.toNumber()", 
+      "op": "core/text-transform"
+    }, 
+    "time": "2018-07-19T17:13:54Z", 
+    "id": 1532038848174, 
+    "description": "Text transform on 109 cells in column dish_count: value.toNumber()"
+  }, 
+  {
+    "operation": {
+      "regex": false, 
+      "description": "Split column call_number by separator", 
+      "maxColumns": 0, 
+      "columnName": "call_number", 
+      "guessCellType": true, 
+      "removeOriginalColumn": true, 
+      "separator": " ", 
+      "mode": "separator", 
+      "engineConfig": {
+        "facets": [], 
+        "mode": "row-based"
+      }, 
+      "op": "core/column-split"
+    }, 
+    "time": "2018-07-19T17:13:54Z", 
+    "id": 1532039312076, 
+    "description": "Split 102 cell(s) in column call_number into several columns by separator"
+  }, 
+  {
+    "time": "2018-07-23T10:50:18Z", 
+    "id": 1532361039768, 
+    "description": "Edit single cell on row 1, column HotelName"
+  }
+]
