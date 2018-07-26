@@ -8,6 +8,7 @@
 @in expression:value.toNumber()
 @in col-name:dish_count
 @in expression:value.trim()
+@in col-name:HotelName
 @in dtable0
 @out dtable-cleaned
 @begin OperationsOncol-name:sponsor@desc Serial column operations on Column sponsor
@@ -57,10 +58,16 @@
 @out dtabledish_count
 @end core/text-transform3
 @end OperationsOncol-name:dish_count
+@begin ManualEdit@desc Manual Edit for cells
+@in col-name:HotelName
+@in col-name:sponsor
+@out dtableManualEdit
+@end ManualEdit
 @begin MergeOperationsColumns @desc Merge the Parallel Column operations
 @in dtablesponsor
 @in dtabledate
 @in dtabledish_count
+@in dtableManualEdit
 @out dtable-cleaned
 @end MergeOperationsColumns
 @end SPDataOR2YW
