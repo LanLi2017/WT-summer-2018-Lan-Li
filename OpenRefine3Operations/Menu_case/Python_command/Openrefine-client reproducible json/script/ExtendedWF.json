@@ -6,7 +6,13 @@
     "projectID": "1541884982550", 
     "opname": "create", 
     "op": "createProject"
-  }, 
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column currency to MoneyOrder",
+    "oldColumnName": "currency",
+    "newColumnName": "MoneyOrder"
+  },
   {
     "Cluster-function": "fingerprint", 
     "description": "Mass edit cells in column sponsor", 
@@ -20,7 +26,7 @@
     "Cluster-type": "binning", 
     "expression": "value", 
     "op": "core/mass-edit"
-  }, 
+  },
   {
     "repeat": "false", 
     "description": "Text transform on cells in column sponsor using expression value.trim()", 
@@ -34,7 +40,7 @@
     "opname": "TrimwhiteSpace", 
     "expression": "value.trim()", 
     "op": "core/text-transform"
-  }, 
+  },
   {
     "repeat": "false", 
     "description": "Text transform on cells in column sponsor using expression value.toLowercase()", 
@@ -48,7 +54,7 @@
     "opname": "toLowercase", 
     "expression": "value.toLowercase()", 
     "op": "core/text-transform"
-  }, 
+  },
   {
     "repeat": "false", 
     "description": "Text transform on cells in column date using expression value.toDate()", 
@@ -62,7 +68,7 @@
     "opname": "ToDate", 
     "expression": "value.toDate()", 
     "op": "core/text-transform"
-  }, 
+  },
   {
     "repeat": "false", 
     "description": "Text transform on cells in column dish_count using expression value.toNumber()", 
@@ -76,7 +82,7 @@
     "opname": "toNumber", 
     "expression": "value.toNumber()", 
     "op": "core/text-transform"
-  }, 
+  },
   {
     "regex": "false", 
     "description": "Split column call_number by separator", 
@@ -94,3 +100,4 @@
     "op": "core/column-split"
   }
 ]
+

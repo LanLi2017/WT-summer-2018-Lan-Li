@@ -1,4 +1,5 @@
 [
+
   {
     "op": "core/column-rename",
     "description": "Rename column currency to MoneyOrder",
@@ -10,36 +11,6 @@
     "description": "Rename column sponsor to Sponsor",
     "oldColumnName": "sponsor",
     "newColumnName": "Sponsor"
-  },
-  {
-    "op": "core/mass-edit",
-    "description": "Mass edit cells in column Sponsor",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "Sponsor",
-    "expression": "value",
-    "edits": [
-      {
-        "fromBlank": false,
-        "fromError": false,
-        "from": [
-          "NORDDEUTSCHER LLOYD BREMEN",
-          "NORDDEUTSCHER LLOYD  BREMEN"
-        ],
-        "to": "NORDDEUTSCHER LLOYD BREMEN"
-      },
-      {
-        "fromBlank": false,
-        "fromError": false,
-        "from": [
-          "Waldorf Astoria",
-          "Waldorf-Astoria"
-        ],
-        "to": "Waldorf Astoria"
-      }
-    ]
   },
   {
     "op": "core/text-transform",
@@ -68,80 +39,30 @@
     "repeatCount": 10
   },
   {
-    "op": "core/mass-edit",
-    "description": "Mass edit cells in column event",
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Sponsor using expression value.toUppercase()",
     "engineConfig": {
       "mode": "row-based",
       "facets": []
     },
-    "columnName": "event",
-    "expression": "value",
-    "edits": [
-      {
-        "fromBlank": false,
-        "fromError": false,
-        "from": [
-          "DINNER",
-          "DINNER SPECIALS",
-          "NOON DINNER"
-        ],
-        "to": "DINNER"
-      },
-      {
-        "fromBlank": false,
-        "fromError": false,
-        "from": [
-          "DINNER SPECIALS",
-          "SPECIAL SUPPER"
-        ],
-        "to": "DS"
-      },
-      {
-        "fromBlank": false,
-        "fromError": false,
-        "from": [
-          "NINETEENTH ANNUAL DINNER",
-          "EIGHTH ANNUAL DINNER"
-        ],
-        "to": "NAD"
-      },
-      {
-        "fromBlank": false,
-        "fromError": false,
-        "from": [
-          "BANQUET",
-          "ANNUAL BANQUET"
-        ],
-        "to": "BANQUET"
-      },
-      {
-        "fromBlank": false,
-        "fromError": false,
-        "from": [
-          "THANKSGIVING DINNER",
-          "THANKSGIVING DAY DINNER"
-        ],
-        "to": "THANKSGIVING DINNER"
-      },
-      {
-        "fromBlank": false,
-        "fromError": false,
-        "from": [
-          "DAILY MENU, BREAKFAST",
-          "BREAKFAST"
-        ],
-        "to": "DAILY MENU, BREAKFAST"
-      },
-      {
-        "fromBlank": false,
-        "fromError": false,
-        "from": [
-          "DAILY MENU",
-          "DAILY MENU, BREAKFAST"
-        ],
-        "to": "DAILY MENU"
-      }
-    ]
+    "columnName": "Sponsor",
+    "expression": "value.toUppercase()",
+    "onError": "set-to-blank",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Sponsor using expression value.toDate()",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "Sponsor",
+    "expression": "value.toDate()",
+    "onError": "set-to-blank",
+    "repeat": false,
+    "repeatCount": 10
   },
   {
     "op": "core/text-transform",
@@ -169,6 +90,7 @@
     "repeat": false,
     "repeatCount": 10
   },
+
   {
     "op": "core/text-transform",
     "description": "Text transform on cells in column call_number using expression value.trim()",
@@ -194,18 +116,6 @@
     "onError": "set-to-blank",
     "repeat": false,
     "repeatCount": 10
-  },
-  {
-    "op": "core/text-transform",
-    "description": "Text transform on cells in column date using expression value.toDate()",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "date",
-    "expression": "value.toDate()",
-    "onError": "set-to-blank",
-    "repeat": false,
-    "repeatCount": 10
   }
+
 ]

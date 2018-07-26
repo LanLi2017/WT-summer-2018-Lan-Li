@@ -90,7 +90,7 @@
 @begin core/text-transform3@desc Text transform on cells in column sponsor using expression value.toLowercase()
 @in col-name:sponsor
 @in expression:value.toLowercase()
-@in dt0
+@in dt1
 @out dtablesponsor
 @end core/text-transform3
 @end OperationsOncol-name:sponsor

@@ -1,0 +1,66 @@
+@begin SPDataOR2YW@desc Workflow of Linear original openrefine history
+@in col-name:call_number
+@in separator:" "
+@in expression:value.toDate()
+@in col-name:sponsor
+@in col-name:date
+@in expression:value.toLowercase()
+@in expression:value.toNumber()
+@in col-name:dish_count
+@in expression:value.trim()
+@in dtable0
+@out dtable-cleaned
+@begin OperationsOncol-name:sponsor@desc Serial column operations on Column sponsor
+@in col-name:sponsor
+@in expression:value.trim()
+@in expression:value.toLowercase()
+@in dtable0
+@out dtablesponsor
+@begin core/mass-edit0@desc Mass edit 6 cells in column sponsor
+@in col-name:sponsor
+@in dtable0
+@out dt0
+@end core/mass-edit0@begin core/text-transform0@desc Text transform on 0 cells in column sponsor: value.trim()
+@in col-name:sponsor
+@in expression:value.trim()
+@in dt0
+@out dt1
+@end core/text-transform0
+@begin core/text-transform1@desc Text transform on 102 cells in column sponsor: value.toLowercase()
+@in col-name:sponsor
+@in expression:value.toLowercase()
+@in dt1
+@out dtablesponsor
+@end core/text-transform1
+@end OperationsOncol-name:sponsor
+@begin OperationsOncol-name:date@desc Serial column operations on Column date
+@in col-name:date
+@in expression:value.toDate()
+@in dtable0
+@out dtabledate
+@begin core/text-transform2@desc Text transform on 105 cells in column date: value.toDate()
+@in col-name:date
+@in expression:value.toDate()
+@in dtable0
+@out dtabledate
+@end core/text-transform2
+@end OperationsOncol-name:date
+@begin OperationsOncol-name:dish_count@desc Serial column operations on Column dish_count
+@in col-name:dish_count
+@in expression:value.toNumber()
+@in dtable0
+@out dtabledish_count
+@begin core/text-transform3@desc Text transform on 109 cells in column dish_count: value.toNumber()
+@in col-name:dish_count
+@in expression:value.toNumber()
+@in dtable0
+@out dtabledish_count
+@end core/text-transform3
+@end OperationsOncol-name:dish_count
+@begin MergeOperationsColumns @desc Merge the Parallel Column operations
+@in dtablesponsor
+@in dtabledate
+@in dtabledish_count
+@out dtable-cleaned
+@end MergeOperationsColumns
+@end SPDataOR2YW

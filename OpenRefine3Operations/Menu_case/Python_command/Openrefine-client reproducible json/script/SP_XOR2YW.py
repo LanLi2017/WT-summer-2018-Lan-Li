@@ -103,7 +103,7 @@ list_of_sublists=[
     [k] + list(itertools.chain(*list(item[1:] for item in g)))
     for k,g in groupby(subinputlists,itemgetter(0))
 ]
-#.......only the first can be catched
+#.......using chain here....
 print(list_of_sublists)
 
 
@@ -143,11 +143,10 @@ texttrans_c=0
 colsplit_c=0
 
 
-def ruleforreturn(list1,ind):
+def ruleforreturn(list1,ind,tc):
     i=len(list1)
     # [{'columnName':Sponsor, 'function':value.toNumber()},{....}]
     # [{'columnName':event, 'function':value.toDate()},{.....}]
-    indexi=0
     if i==1:
         f.write('@in dtable%d\n'%table_c)
         f.write('@out dtable%s\n'%(list1[ind]['columnName']))
@@ -156,11 +155,10 @@ def ruleforreturn(list1,ind):
            f.write('@in dtable%d\n'%table_c)
            f.write('@out dt0\n')
         if ind in range(1,i-1):
-            f.write('@in dt%d\n'%indexi)
-            indexi+=1
-            f.write('@out dt%d\n'%indexi)
+            f.write('@in dt%d\n'%(tc-1))
+            f.write('@out dt%d\n'%tc)
         if ind==i-1:
-            f.write('@in dt%d\n'%indexi)
+            f.write('@in dt%d\n'%(tc-1))
             f.write('@out dtable%s\n'%(list1[ind]['columnName']))
 
 
@@ -176,6 +174,7 @@ for a in range(len(list_of_sublists)):
     f.write('@in dtable%d\n'%table_c)
     f.write('@out dtable%s\n'%list_of_lists[a][0]['columnName'])
     count=0
+    tc=0
     for b in range(len(list_of_lists[a])):
         if list_of_lists[a][b]['op']=='core/mass-edit':
             f.write('@begin core/mass-edit%d'%massedit_c+'@desc '+list_of_lists[a][b]['description']+'\n')
@@ -183,7 +182,8 @@ for a in range(len(list_of_sublists)):
             f.write('@in cluster-type:'+list_of_lists[a][b]['Cluster-type']+'\n')
             f.write('@in cluster-function:'+list_of_lists[a][b]['Cluster-function']+'\n')
             f.write('@in cluster-params:'+list_of_lists[a][b]['Cluster-params']+'\n')
-            ruleforreturn(list_of_lists[a],count)
+            ruleforreturn(list_of_lists[a],count,tc)
+            tc+=1
             count+=1
             f.write('@end core/mass-edit%d\n'%massedit_c)
             massedit_c+=1
@@ -191,7 +191,8 @@ for a in range(len(list_of_sublists)):
             f.write('@begin core/text-transform%d'%texttrans_c+'@desc '+list_of_lists[a][b]['description']+'\n')
             f.write('@in col-name:'+list_of_lists[a][b]['columnName']+'\n')
             f.write('@in expression:'+list_of_lists[a][b]['expression']+'\n')
-            ruleforreturn(list_of_lists[a],count)
+            ruleforreturn(list_of_lists[a],count,tc)
+            tc+=1
             count+=1
             f.write('@end core/text-transform%d\n'%texttrans_c)
             texttrans_c+=1
@@ -199,7 +200,8 @@ for a in range(len(list_of_sublists)):
             f.write('@begin core/column-split%d'%colsplit_c+'@desc '+list_of_lists[a][b]['description']+'\n')
             f.write('@in col-name:'+list_of_lists[a][b]['columnName']+'\n')
             f.write('@in separator:'+'"%s"\n'%(list_of_lists[a][b]['separator']))
-            ruleforreturn(list_of_lists[a],count)
+            ruleforreturn(list_of_lists[a],count,tc)
+            tc+=1
             count+=1
             f.write('@end core/column-split%d\n'%colsplit_c)
             colsplit_c+=1
