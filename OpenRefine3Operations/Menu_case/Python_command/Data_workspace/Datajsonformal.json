@@ -1,4 +1,5 @@
 [
+
   {
     "operation": {
       "description": "Mass edit cells in column sponsor", 
@@ -116,10 +117,16 @@
     "time": "2018-07-19T17:13:54Z", 
     "id": 1532039312076, 
     "description": "Split 102 cell(s) in column call_number into several columns by separator"
-  }, 
-  {
-    "time": "2018-07-23T10:50:18Z", 
-    "id": 1532361039768, 
+  },
+     {
+    "time": "2018-07-23T10:50:18Z",
+    "id": 1532361039768,
     "description": "Edit single cell on row 1, column HotelName"
+  },
+  {
+    "time": "2018-07-23T10:50:19Z",
+    "id": 1532361039768,
+    "description": "Edit single cell on row 1, column sponsor"
   }
+
 ]

@@ -8,8 +8,9 @@
 @in expression:value.toNumber()
 @in col-name:dish_count
 @in expression:value.trim()
+@in col-name:HotelName
 @in dtable0
-@out dtable7
+@out dtable8
 @begin core/mass-edit0@desc Mass edit 6 cells in column sponsor
 @in col-name:sponsor
 @in dtable0
@@ -45,8 +46,14 @@
 @in dtable5
 @out dtable6
 @end core/column-split0
-@begin ManualEdit@desc Edit single cell on row 1, column HotelName
+@begin ManualEdit0@desc Edit single cell on row 1, column HotelName
+@in col-name:HotelName
 @in dtable6
 @out dtable7
-@end ManualEdit
+@end ManualEdit0
+@begin ManualEdit1@desc Edit single cell on row 1, column sponsor
+@in col-name:sponsor
+@in dtable7
+@out dtable8
+@end ManualEdit1
 @end LinearDataORJson

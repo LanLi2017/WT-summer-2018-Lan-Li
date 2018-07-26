@@ -33,7 +33,10 @@ with open('Datajsonformal.json','r')as f:
                 inputdatalist.append(colname)
                 inputdatalist.append(separator)
         except KeyError:
-            pass
+            ManualEditin=dicts['description'].split()
+            colname='col-name:'+ManualEditin[len(ManualEditin)-1]
+            inputdatalist.append(colname)
+
 
 
 
@@ -56,6 +59,7 @@ massedit_c=0
 texttrans_c=0
 colsplit_c=0
 table_c=0
+ME=0
 for dicts in data:
     try:
         if dicts['operation']['op']=='core/column-rename':
@@ -96,11 +100,15 @@ for dicts in data:
             f.write('@end core/column-split%d\n'%colsplit_c)
             colsplit_c+=1
     except KeyError:
-        f.write('@begin ManualEdit'+'@desc %s\n'%dicts['description'])
+        f.write('@begin ManualEdit%d'%ME+'@desc %s\n'%dicts['description'])
+        ManualEditin=dicts['description'].split()
+        colname='col-name:'+ManualEditin[len(ManualEditin)-1]
+        f.write('@in '+colname+'\n')
         f.write('@in dtable%d\n'%table_c)
         table_c+=1
         f.write('@out dtable%d\n'%table_c)
-        f.write('@end ManualEdit\n')
+        f.write('@end ManualEdit%d\n'%ME)
+        ME+=1
 
 
 f.write('@end LinearDataORJson\n')
