@@ -20,6 +20,7 @@ with open('Datajsonformal.json','r')as f:
 # groupby the columnName
 list_of_lists=[]
 newdata=data[rename_c:]
+list_of_Manual=[]
 
 try:
     for key,group in groupby(newdata,lambda x:x['operation']['columnName']):
@@ -28,9 +29,11 @@ except KeyError:
     pass
 
 
+
 #
 # with open('newJson.json','w')as f:
 #     f.writelines(json.dumps(data,indent=2))
+ManualEdit_columnName=[]
 
 # print all of the @in
 inputdatalist=[]
@@ -59,8 +62,13 @@ for dicts in data:
             inputdatalist.append(colname)
             inputdatalist.append(separator)
     except KeyError:
-        print("bug")
-        pass
+        ManualEditin=dicts['description'].split()
+        colname='col-name:'+ManualEditin[len(ManualEditin)-1]
+        inputdatalist.append(colname)
+        ManualEdit_columnName.append(ManualEditin[len(ManualEditin)-1])
+
+        # ManualEditdesclist=ManualEditdesc.split()
+print(ManualEdit_columnName)
 deinputdatalist=set(inputdatalist)
 print("hello world")
 print(deinputdatalist)
@@ -69,7 +77,8 @@ print(deinputdatalist)
 subinputlists=[]
 subinnerlist=[]
 
-ManualEdit=[]
+ManualEditdesc=[]
+
 # [[{sponsor1,sponsor2,sponsor3}],[event1,event2,event3],[call_number1,call_number2],....]
 #[[sponsor_in],[event_in],[call_number_in],....]
 for subprelist in list_of_lists:
@@ -91,7 +100,9 @@ for subprelist in list_of_lists:
             subinputlists.append(subinnerlist)
             subinnerlist=[]
         except KeyError:
-            ManualEdit.append(subinpredicts['description'])
+            ManualEditdesc.append(subinpredicts['description'])
+            # colname='col-name:'+ManualEditin[len(ManualEditin)-1]
+            # subinputlists.append(colname)
 
 
 # inner inputs list of list [[],[],...]
@@ -193,16 +204,20 @@ for a in range(len(list_of_sublists)):
             colsplit_c+=1
 
     f.write('@end OperationsOn%s\n'%list_of_sublists[a][0])
-#     ------dependencies ------
-# for Manualdesc in ManualEdit:
-#     f.write('@begin ManualEdit'+'@desc %s\n'%Manualdesc)
-#     f.write('@in dtable%d\n'%table_c)
-#     table_c+=1
-#     f.write('@out dtable%d\n'%table_c)
-#     f.write('@end ManualEdit\n')
+
+#  Manual Edit
+f.write('@begin ManualEdit'+'@desc Manual Edit for cells\n')
+for colNameManual in ManualEdit_columnName:
+    f.write('@in col-name:%s\n'%colNameManual)
+
+
+f.write('@out dtableManualEdit\n')
+f.write('@end ManualEdit\n')
+
 f.write('@begin MergeOperationsColumns @desc Merge the Parallel Column operations\n')
 for c in range(len(list_of_lists)):
     f.write('@in dtable%s\n'%list_of_lists[c][0]['operation']['columnName'])
+f.write('@in dtableManualEdit\n')
 f.write('@out dtable-cleaned\n')
 f.write('@end MergeOperationsColumns\n')
 
