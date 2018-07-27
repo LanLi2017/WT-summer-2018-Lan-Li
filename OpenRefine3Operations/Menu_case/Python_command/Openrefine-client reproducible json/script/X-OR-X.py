@@ -284,7 +284,7 @@ def main():
                                     if userClusterinput =='N':
                                         edits=[{'from':f1, 'to':t} for f1,t in zip(Edit_from, Edit_to)]
                                         print(edits)
-                                        ClusterRelabeldicts['Edits']=edits
+                                        ClusterRelabeldicts['edits']=edits
                                         OpenRefinerecipe.mass_edit(projectID,usercolumn,edits,expression='value')
                                     elif userClusterinput=='Y':
                                         print("This is the original values in cluster: ")
@@ -304,7 +304,7 @@ def main():
                                                 Edit_new_to.append(to)
                                         print(Edit_new_to)
                                         mannually_edits=[{'from':f1, 'to':t} for f1,t in zip(Edit_from, Edit_new_to)]
-                                        ClusterRelabeldicts['Edits']=mannually_edits
+                                        ClusterRelabeldicts['edits']=mannually_edits
                                         OpenRefinerecipe.mass_edit(projectID,usercolumn,mannually_edits,expression='value')
 
                                 elif userOperates==2:
