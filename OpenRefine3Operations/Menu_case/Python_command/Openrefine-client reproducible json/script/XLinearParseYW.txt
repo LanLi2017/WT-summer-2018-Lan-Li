@@ -1,6 +1,7 @@
 @begin LinearXOR@desc Workflow of Extended openrefine history
 @in col-name:call_number
 @in separator:" "
+@in oldColumnName:currency
 @in expression:value.toDate()
 @in col-name:sponsor
 @in col-name:date
@@ -11,44 +12,51 @@
 @in col-name:dish_count
 @in cluster-function:fingerprint
 @in expression:value.trim()
+@in newColumnName:MoneyOrder
 @in dtable0
-@out dtable6
-@begin core/mass-edit0@desc Mass edit cells in column sponsor
-@in col-name:sponsor
-@in cluster-type:binning
-@in cluster-params:20
-@in cluster-function:fingerprint
+@out dtable7
+@begin core/column-rename0@desc Rename column currency to MoneyOrder
+@param oldColumnName:currency
+@param newColumnName:MoneyOrder
 @in dtable0
 @out dtable1
-@end core/mass-edit0
-@begin core/text-transform0@desc Text transform on cells in column sponsor using expression value.trim()
-@in col-name:sponsor
-@in expression:value.trim()
+@end core/column-rename0
+@begin core/mass-edit0@desc Mass edit cells in column sponsor
+@param col-name:sponsor
+@param cluster-type:binning
+@param cluster-params:20
+@param cluster-function:fingerprint
 @in dtable1
 @out dtable2
-@end core/text-transform0
-@begin core/text-transform1@desc Text transform on cells in column sponsor using expression value.toLowercase()
-@in col-name:sponsor
-@in expression:value.toLowercase()
+@end core/mass-edit0
+@begin core/text-transform0@desc Text transform on cells in column sponsor using expression value.trim()
+@param col-name:sponsor
+@param expression:value.trim()
 @in dtable2
 @out dtable3
-@end core/text-transform1
-@begin core/text-transform2@desc Text transform on cells in column date using expression value.toDate()
-@in col-name:date
-@in expression:value.toDate()
+@end core/text-transform0
+@begin core/text-transform1@desc Text transform on cells in column sponsor using expression value.toLowercase()
+@param col-name:sponsor
+@param expression:value.toLowercase()
 @in dtable3
 @out dtable4
-@end core/text-transform2
-@begin core/text-transform3@desc Text transform on cells in column dish_count using expression value.toNumber()
-@in col-name:dish_count
-@in expression:value.toNumber()
+@end core/text-transform1
+@begin core/text-transform2@desc Text transform on cells in column date using expression value.toDate()
+@param col-name:date
+@param expression:value.toDate()
 @in dtable4
 @out dtable5
-@end core/text-transform3
-@begin core/column-split0@desc Split column call_number by separator
-@in col-name:call_number
-@in separator:" "
+@end core/text-transform2
+@begin core/text-transform3@desc Text transform on cells in column dish_count using expression value.toNumber()
+@param col-name:dish_count
+@param expression:value.toNumber()
 @in dtable5
 @out dtable6
+@end core/text-transform3
+@begin core/column-split0@desc Split column call_number by separator
+@param col-name:call_number
+@param separator:" "
+@in dtable6
+@out dtable7
 @end core/column-split0
 @end LinearXOR

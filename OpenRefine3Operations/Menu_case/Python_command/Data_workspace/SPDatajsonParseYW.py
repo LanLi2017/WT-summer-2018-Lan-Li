@@ -119,7 +119,7 @@ list_of_sublists=[
 f=open('SPParseDataJsonYW.txt','w')
 f.write('@begin SPDataOR2YW@desc Workflow of Linear original openrefine history\n')
 for sublist in list(deinputdatalist):
-    f.write('@in '+sublist+'\n')
+    f.write('@param '+sublist+'\n')
 f.write('@in dtable0\n')
 f.write('@out dtable-cleaned\n')
 table_c=0
@@ -128,8 +128,8 @@ i=0
 for dicts in data[:rename_c]:
     if dicts['operation']['op']=='core/column-rename':
         f.write('@begin core/column-rename%d'%i+'@desc '+dicts['operation']['description']+'\n')
-        f.write('@in oldColumnName:'+dicts['operation']['oldColumnName']+'\n')
-        f.write('@in newColumnName:'+dicts['operation']['newColumnName']+'\n')
+        f.write('@param oldColumnName:'+dicts['operation']['oldColumnName']+'\n')
+        f.write('@param newColumnName:'+dicts['operation']['newColumnName']+'\n')
         f.write('@in dtable%d\n'%table_c)
         table_c+=1
         f.write('@out dtable%d\n'%table_c)
@@ -170,7 +170,7 @@ def ruleforreturn(list1,ind,tc):
 for a in range(len(list_of_sublists)):
     f.write('@begin OperationsOn%s'%list_of_sublists[a][0]+'@desc Serial column operations on Column %s\n'%list_of_lists[a][0]['operation']['columnName'])
     for subnewlists in list_of_sublists[a]:
-        f.write('@in %s\n'%subnewlists)
+        f.write('@param %s\n'%subnewlists)
     f.write('@in dtable%d\n'%table_c)
     f.write('@out dtable%s\n'%list_of_lists[a][0]['operation']['columnName'])
     count=0
@@ -178,7 +178,7 @@ for a in range(len(list_of_sublists)):
     for b in range(len(list_of_lists[a])):
         if list_of_lists[a][b]['operation']['op']=='core/mass-edit':
             f.write('@begin core/mass-edit%d'%massedit_c+'@desc '+list_of_lists[a][b]['description']+'\n')
-            f.write('@in col-name:'+list_of_lists[a][b]['operation']['columnName']+'\n')
+            f.write('@param col-name:'+list_of_lists[a][b]['operation']['columnName']+'\n')
             ruleforreturn(list_of_lists[a],count,tc)
             tc+=1
             count+=1
@@ -186,8 +186,8 @@ for a in range(len(list_of_sublists)):
             massedit_c+=1
         elif list_of_lists[a][b]['operation']['op']=='core/text-transform':
             f.write('@begin core/text-transform%d'%texttrans_c+'@desc '+list_of_lists[a][b]['description']+'\n')
-            f.write('@in col-name:'+list_of_lists[a][b]['operation']['columnName']+'\n')
-            f.write('@in expression:'+list_of_lists[a][b]['operation']['expression']+'\n')
+            f.write('@param col-name:'+list_of_lists[a][b]['operation']['columnName']+'\n')
+            f.write('@param expression:'+list_of_lists[a][b]['operation']['expression']+'\n')
             ruleforreturn(list_of_lists[a],count,tc)
             tc+=1
             count+=1
@@ -195,8 +195,8 @@ for a in range(len(list_of_sublists)):
             texttrans_c+=1
         elif list_of_lists[a][b]['operation']['op']=='core/column-split':
             f.write('@begin core/column-split%d'%colsplit_c+'@desc '+list_of_lists[a][b]['description']+'\n')
-            f.write('@in col-name:'+list_of_lists[a][b]['operation']['columnName']+'\n')
-            f.write('@in separator:'+'"%s"\n'%(list_of_lists[a][b]['operation']['separator']))
+            f.write('@param col-name:'+list_of_lists[a][b]['operation']['columnName']+'\n')
+            f.write('@param separator:'+'"%s"\n'%(list_of_lists[a][b]['operation']['separator']))
             ruleforreturn(list_of_lists[a],count,tc)
             tc+=1
             count+=1
@@ -208,7 +208,7 @@ for a in range(len(list_of_sublists)):
 #  Manual Edit
 f.write('@begin ManualEdit'+'@desc Manual Edit for cells\n')
 for colNameManual in ManualEdit_columnName:
-    f.write('@in col-name:%s\n'%colNameManual)
+    f.write('@param col-name:%s\n'%colNameManual)
 
 
 f.write('@out dtableManualEdit\n')

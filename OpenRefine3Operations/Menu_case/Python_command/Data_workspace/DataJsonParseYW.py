@@ -51,7 +51,7 @@ deinputdatalist=set(inputdatalist)
 f=open('LinearDataJsonParseYW.txt','w')
 f.write('@begin LinearDataORJson@desc Workflow of Linear original openrefine history from data directory\n')
 for sublist in list(deinputdatalist):
-    f.write('@in '+sublist+'\n')
+    f.write('@param '+sublist+'\n')
 f.write('@in dtable0\n')
 f.write('@out '+outputfinal+'\n')
 rename_c=0
@@ -64,8 +64,8 @@ for dicts in data:
     try:
         if dicts['operation']['op']=='core/column-rename':
             f.write('@begin core/column-rename%d'%rename_c+'@desc '+dicts['description']+'\n')
-            f.write('@in oldColumnName:'+dicts['operation']['oldColumnName']+'\n')
-            f.write('@in newColumnName:'+dicts['operation']['newColumnName']+'\n')
+            f.write('@param oldColumnName:'+dicts['operation']['oldColumnName']+'\n')
+            f.write('@param newColumnName:'+dicts['operation']['newColumnName']+'\n')
             f.write('@in dtable%d\n'%table_c)
             table_c+=1
             f.write('@out dtable%d\n'%table_c)
@@ -75,7 +75,7 @@ for dicts in data:
 
         elif dicts['operation']['op']=='core/mass-edit':
             f.write('@begin core/mass-edit%d'%massedit_c+'@desc '+dicts['description']+'\n')
-            f.write('@in col-name:'+dicts['operation']['columnName']+'\n')
+            f.write('@param col-name:'+dicts['operation']['columnName']+'\n')
             f.write('@in dtable%d\n'%table_c)
             table_c+=1
             f.write('@out dtable%d\n'%table_c)
@@ -83,8 +83,8 @@ for dicts in data:
             massedit_c+=1
         elif dicts['operation']['op']=='core/text-transform':
             f.write('@begin core/text-transform%d'%texttrans_c+'@desc '+dicts['description']+'\n')
-            f.write('@in col-name:'+dicts['operation']['columnName']+'\n')
-            f.write('@in expression:'+dicts['operation']['expression']+'\n')
+            f.write('@param col-name:'+dicts['operation']['columnName']+'\n')
+            f.write('@param expression:'+dicts['operation']['expression']+'\n')
             f.write('@in dtable%d\n'%table_c)
             table_c+=1
             f.write('@out dtable%d\n'%table_c)
@@ -92,8 +92,8 @@ for dicts in data:
             texttrans_c+=1
         elif dicts['operation']['op']=='core/column-split':
             f.write('@begin core/column-split%d'%colsplit_c+'@desc '+dicts['description']+'\n')
-            f.write('@in col-name:'+dicts['operation']['columnName']+'\n')
-            f.write('@in separator:'+'"%s"'%(dicts['operation']['separator'])+'\n')
+            f.write('@param col-name:'+dicts['operation']['columnName']+'\n')
+            f.write('@param separator:'+'"%s"'%(dicts['operation']['separator'])+'\n')
             f.write('@in dtable%d\n'%table_c)
             table_c+=1
             f.write('@out dtable%d\n'%table_c)
@@ -103,7 +103,7 @@ for dicts in data:
         f.write('@begin ManualEdit%d'%ME+'@desc %s\n'%dicts['description'])
         ManualEditin=dicts['description'].split()
         colname='col-name:'+ManualEditin[len(ManualEditin)-1]
-        f.write('@in '+colname+'\n')
+        f.write('@param '+colname+'\n')
         f.write('@in dtable%d\n'%table_c)
         table_c+=1
         f.write('@out dtable%d\n'%table_c)

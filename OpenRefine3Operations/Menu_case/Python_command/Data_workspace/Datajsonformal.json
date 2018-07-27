@@ -1,5 +1,15 @@
 [
-
+  {
+    "operation": {
+      "newColumnName": "MoneyOrder", 
+      "oldColumnName": "currency", 
+      "description": "Rename column currency to MoneyOrder", 
+      "op": "core/column-rename"
+    }, 
+    "time": "2018-07-27T09:57:14Z", 
+    "id": 1532704106522, 
+    "description": "Rename column currency to MoneyOrder"
+  }, 
   {
     "operation": {
       "description": "Mass edit cells in column sponsor", 
@@ -22,8 +32,8 @@
       "expression": "value", 
       "op": "core/mass-edit"
     }, 
-    "time": "2018-07-19T17:13:54Z", 
-    "id": 1532038558210, 
+    "time": "2018-07-27T09:57:14Z", 
+    "id": 1532703706978, 
     "description": "Mass edit 6 cells in column sponsor"
   }, 
   {
@@ -40,8 +50,8 @@
       "expression": "value.trim()", 
       "op": "core/text-transform"
     }, 
-    "time": "2018-07-19T17:13:54Z", 
-    "id": 1532039378318, 
+    "time": "2018-07-27T09:57:14Z", 
+    "id": 1532703959886, 
     "description": "Text transform on 0 cells in column sponsor: value.trim()"
   }, 
   {
@@ -58,8 +68,8 @@
       "expression": "value.toLowercase()", 
       "op": "core/text-transform"
     }, 
-    "time": "2018-07-19T17:13:54Z", 
-    "id": 1532039090043, 
+    "time": "2018-07-27T09:57:14Z", 
+    "id": 1532704230235, 
     "description": "Text transform on 102 cells in column sponsor: value.toLowercase()"
   }, 
   {
@@ -76,8 +86,8 @@
       "expression": "value.toDate()", 
       "op": "core/text-transform"
     }, 
-    "time": "2018-07-19T17:13:54Z", 
-    "id": 1532039151579, 
+    "time": "2018-07-27T09:57:14Z", 
+    "id": 1532704051737, 
     "description": "Text transform on 105 cells in column date: value.toDate()"
   }, 
   {
@@ -94,8 +104,8 @@
       "expression": "value.toNumber()", 
       "op": "core/text-transform"
     }, 
-    "time": "2018-07-19T17:13:54Z", 
-    "id": 1532038848174, 
+    "time": "2018-07-27T09:57:14Z", 
+    "id": 1532704068116, 
     "description": "Text transform on 109 cells in column dish_count: value.toNumber()"
   }, 
   {
@@ -114,19 +124,8 @@
       }, 
       "op": "core/column-split"
     }, 
-    "time": "2018-07-19T17:13:54Z", 
-    "id": 1532039312076, 
+    "time": "2018-07-27T09:57:14Z", 
+    "id": 1532704016412, 
     "description": "Split 102 cell(s) in column call_number into several columns by separator"
-  },
-     {
-    "time": "2018-07-23T10:50:18Z",
-    "id": 1532361039768,
-    "description": "Edit single cell on row 1, column HotelName"
-  },
-  {
-    "time": "2018-07-23T10:50:19Z",
-    "id": 1532361039768,
-    "description": "Edit single cell on row 1, column sponsor"
   }
-
 ]

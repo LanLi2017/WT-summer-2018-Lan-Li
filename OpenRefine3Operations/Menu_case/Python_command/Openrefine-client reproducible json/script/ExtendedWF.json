@@ -11,7 +11,8 @@
     "op": "core/column-rename",
     "description": "Rename column currency to MoneyOrder",
     "oldColumnName": "currency",
-    "newColumnName": "MoneyOrder"
+    "newColumnName": "MoneyOrder",
+    "opname":"rename"
   },
   {
     "Cluster-function": "fingerprint", 

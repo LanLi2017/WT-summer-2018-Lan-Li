@@ -2,6 +2,8 @@ import json
 from itertools import groupby
 from operator import itemgetter
 
+import itertools
+
 with open('userScript.json','r')as f:
     data=json.load(f)
     # first part rename and output dtable
@@ -74,19 +76,18 @@ for subprelist in list_of_lists:
         subinnerlist=[]
 
 # inner inputs list of list [[],[],...]
+
 list_of_sublists=[
-    [k] +[item[1]for item in g]
+    [k] + list(itertools.chain(*list(item[1:] for item in g)))
     for k,g in groupby(subinputlists,itemgetter(0))
 ]
-
-
 
 
 # parse
 f=open('Original_SPParseYW.txt','w')
 f.write('@begin SPOriginalOR@desc Workflow of Linear original openrefine history\n')
 for sublist in list(deinputdatalist):
-    f.write('@in '+sublist+'\n')
+    f.write('@param '+sublist+'\n')
 f.write('@in dtable0\n')
 f.write('@out dtable-cleaned\n')
 table_c=0
@@ -95,8 +96,8 @@ i=0
 for dicts in data[:rename_c]:
     if dicts['op']=='core/column-rename':
         f.write('@begin core/column-rename%d'%i+'@desc '+dicts['description']+'\n')
-        f.write('@in oldColumnName:'+dicts['oldColumnName']+'\n')
-        f.write('@in newColumnName:'+dicts['newColumnName']+'\n')
+        f.write('@param oldColumnName:'+dicts['oldColumnName']+'\n')
+        f.write('@param newColumnName:'+dicts['newColumnName']+'\n')
         f.write('@in dtable%d\n'%table_c)
         table_c+=1
         f.write('@out dtable%d\n'%table_c)
@@ -121,7 +122,7 @@ def ruleforreturn(list1,ind,tc):
     else:
         # for ind in range(i):
         #     if ind==0:
-        #         f.write('@in dtable%d\n'%table_c)
+        #         f.write('@param dtable%d\n'%table_c)
         #         f.write('@out dt0\n')
         #     elif ind==i-1:
         #         f.write('@in dt%d\n'%indexi)
@@ -149,7 +150,7 @@ def ruleforreturn(list1,ind,tc):
 for a in range(len(list_of_sublists)):
     f.write('@begin OperationsOn%s'%list_of_sublists[a][0]+'@desc Serial column operations on Column %s\n'%list_of_lists[a][0]['columnName'])
     for subnewlists in list_of_sublists[a]:
-        f.write('@in %s\n'%subnewlists)
+        f.write('@param %s\n'%subnewlists)
     f.write('@in dtable%d\n'%table_c)
     f.write('@out dtable%s\n'%list_of_lists[a][0]['columnName'])
     count=0
@@ -157,7 +158,7 @@ for a in range(len(list_of_sublists)):
     for b in range(len(list_of_lists[a])):
         if list_of_lists[a][b]['op']=='core/mass-edit':
             f.write('@begin core/mass-edit%d'%massedit_c+'@desc '+list_of_lists[a][b]['description']+'\n')
-            f.write('@in col-name:'+list_of_lists[a][b]['columnName']+'\n')
+            f.write('@param col-name:'+list_of_lists[a][b]['columnName']+'\n')
             ruleforreturn(list_of_lists[a],count,tc)
             tc+=1
             count+=1
@@ -165,8 +166,8 @@ for a in range(len(list_of_sublists)):
             massedit_c+=1
         elif list_of_lists[a][b]['op']=='core/text-transform':
             f.write('@begin core/text-transform%d'%texttrans_c+'@desc '+list_of_lists[a][b]['description']+'\n')
-            f.write('@in col-name:'+list_of_lists[a][b]['columnName']+'\n')
-            f.write('@in expression:'+list_of_lists[a][b]['expression']+'\n')
+            f.write('@param col-name:'+list_of_lists[a][b]['columnName']+'\n')
+            f.write('@param expression:'+list_of_lists[a][b]['expression']+'\n')
             ruleforreturn(list_of_lists[a],count,tc)
             tc+=1
             count+=1
@@ -174,8 +175,8 @@ for a in range(len(list_of_sublists)):
             texttrans_c+=1
         elif list_of_lists[a][b]['op']=='core/column-split':
             f.write('@begin core/column-split%d'%colsplit_c+'@desc '+list_of_lists[a][b]['description']+'\n')
-            f.write('@in col-name:'+list_of_lists[a][b]['columnName']+'\n')
-            f.write('@in separator:'+'"%s"\n'%(list_of_lists[a][b]['separator']))
+            f.write('@param col-name:'+list_of_lists[a][b]['columnName']+'\n')
+            f.write('@param separator:'+'"%s"\n'%(list_of_lists[a][b]['separator']))
             ruleforreturn(list_of_lists[a],count,tc)
             tc+=1
             count+=1

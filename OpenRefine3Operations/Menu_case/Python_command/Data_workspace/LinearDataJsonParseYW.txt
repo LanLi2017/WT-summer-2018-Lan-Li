@@ -1,59 +1,56 @@
 @begin LinearDataORJson@desc Workflow of Linear original openrefine history from data directory
-@in col-name:call_number
-@in separator:" "
-@in expression:value.toDate()
-@in col-name:sponsor
-@in col-name:date
-@in expression:value.toLowercase()
-@in expression:value.toNumber()
-@in col-name:dish_count
-@in expression:value.trim()
-@in col-name:HotelName
+@param col-name:call_number
+@param separator:" "
+@param oldColumnName:currency
+@param expression:value.toDate()
+@param col-name:sponsor
+@param col-name:date
+@param expression:value.toLowercase()
+@param expression:value.toNumber()
+@param col-name:dish_count
+@param expression:value.trim()
+@param newColumnName:MoneyOrder
 @in dtable0
-@out dtable8
-@begin core/mass-edit0@desc Mass edit 6 cells in column sponsor
-@in col-name:sponsor
+@out dtable7
+@begin core/column-rename0@desc Rename column currency to MoneyOrder
+@param oldColumnName:currency
+@param newColumnName:MoneyOrder
 @in dtable0
 @out dtable1
-@end core/mass-edit0
-@begin core/text-transform0@desc Text transform on 0 cells in column sponsor: value.trim()
-@in col-name:sponsor
-@in expression:value.trim()
+@end core/column-rename0
+@begin core/mass-edit0@desc Mass edit 6 cells in column sponsor
+@param col-name:sponsor
 @in dtable1
 @out dtable2
-@end core/text-transform0
-@begin core/text-transform1@desc Text transform on 102 cells in column sponsor: value.toLowercase()
-@in col-name:sponsor
-@in expression:value.toLowercase()
+@end core/mass-edit0
+@begin core/text-transform0@desc Text transform on 0 cells in column sponsor: value.trim()
+@param col-name:sponsor
+@param expression:value.trim()
 @in dtable2
 @out dtable3
-@end core/text-transform1
-@begin core/text-transform2@desc Text transform on 105 cells in column date: value.toDate()
-@in col-name:date
-@in expression:value.toDate()
+@end core/text-transform0
+@begin core/text-transform1@desc Text transform on 102 cells in column sponsor: value.toLowercase()
+@param col-name:sponsor
+@param expression:value.toLowercase()
 @in dtable3
 @out dtable4
-@end core/text-transform2
-@begin core/text-transform3@desc Text transform on 109 cells in column dish_count: value.toNumber()
-@in col-name:dish_count
-@in expression:value.toNumber()
+@end core/text-transform1
+@begin core/text-transform2@desc Text transform on 105 cells in column date: value.toDate()
+@param col-name:date
+@param expression:value.toDate()
 @in dtable4
 @out dtable5
-@end core/text-transform3
-@begin core/column-split0@desc Split 102 cell(s) in column call_number into several columns by separator
-@in col-name:call_number
-@in separator:" "
+@end core/text-transform2
+@begin core/text-transform3@desc Text transform on 109 cells in column dish_count: value.toNumber()
+@param col-name:dish_count
+@param expression:value.toNumber()
 @in dtable5
 @out dtable6
-@end core/column-split0
-@begin ManualEdit0@desc Edit single cell on row 1, column HotelName
-@in col-name:HotelName
+@end core/text-transform3
+@begin core/column-split0@desc Split 102 cell(s) in column call_number into several columns by separator
+@param col-name:call_number
+@param separator:" "
 @in dtable6
 @out dtable7
-@end ManualEdit0
-@begin ManualEdit1@desc Edit single cell on row 1, column sponsor
-@in col-name:sponsor
-@in dtable7
-@out dtable8
-@end ManualEdit1
+@end core/column-split0
 @end LinearDataORJson

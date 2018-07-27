@@ -44,7 +44,7 @@ deinputdatalist=set(inputdatalist)
 f=open('Original_LinearParseYW.txt','w')
 f.write('@begin LinearOriginalOR@desc Workflow of Linear original openrefine history\n')
 for sublist in list(deinputdatalist):
-    f.write('@in '+sublist+'\n')
+    f.write('@param '+sublist+'\n')
 f.write('@in dtable0\n')
 f.write('@out '+outputfinal+'\n')
 rename_c=0
@@ -55,9 +55,9 @@ table_c=0
 for dicts in data:
     if dicts['op']=='core/column-rename':
         f.write('@begin core/column-rename%d'%rename_c+'@desc '+dicts['description']+'\n')
-        f.write('@in oldColumnName:'+dicts['oldColumnName']+'\n')
-        f.write('@in newColumnName:'+dicts['newColumnName']+'\n')
-        f.write('@in dtable%d\n'%table_c)
+        f.write('@param oldColumnName:'+dicts['oldColumnName']+'\n')
+        f.write('@param newColumnName:'+dicts['newColumnName']+'\n')
+        f.write('@param dtable%d\n'%table_c)
         table_c+=1
         f.write('@out dtable%d\n'%table_c)
         f.write('@end core/column-rename%d\n'%rename_c)
@@ -66,7 +66,7 @@ for dicts in data:
 
     elif dicts['op']=='core/mass-edit':
         f.write('@begin core/mass-edit%d'%massedit_c+'@desc '+dicts['description']+'\n')
-        f.write('@in col-name:'+dicts['columnName']+'\n')
+        f.write('@param col-name:'+dicts['columnName']+'\n')
         f.write('@in dtable%d\n'%table_c)
         table_c+=1
         f.write('@out dtable%d\n'%table_c)
@@ -74,8 +74,8 @@ for dicts in data:
         massedit_c+=1
     elif dicts['op']=='core/text-transform':
         f.write('@begin core/text-transform%d'%texttrans_c+'@desc '+dicts['description']+'\n')
-        f.write('@in col-name:'+dicts['columnName']+'\n')
-        f.write('@in expression:'+dicts['expression']+'\n')
+        f.write('@param col-name:'+dicts['columnName']+'\n')
+        f.write('@param expression:'+dicts['expression']+'\n')
         f.write('@in dtable%d\n'%table_c)
         table_c+=1
         f.write('@out dtable%d\n'%table_c)
@@ -83,8 +83,8 @@ for dicts in data:
         texttrans_c+=1
     elif dicts['op']=='core/column-split':
         f.write('@begin core/column-split%d'%colsplit_c+'@desc '+dicts['description']+'\n')
-        f.write('@in col-name:'+dicts['columnName']+'\n')
-        f.write('@in separator:'+'"%s"'%(dicts['separator'])+'\n')
+        f.write('@param col-name:'+dicts['columnName']+'\n')
+        f.write('@param separator:'+'"%s"'%(dicts['separator'])+'\n')
         f.write('@in dtable%d\n'%table_c)
         table_c+=1
         f.write('@out dtable%d\n'%table_c)

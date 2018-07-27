@@ -1,96 +1,96 @@
 @begin SPX-OR@desc Workflow of Serial-Parallel Extended openrefine history
-@in expression:value.toLowercase()
-@in projectName:Menuparttest
-@in oldColumnName:currency
-@in expression:value.toDate()
-@in separator:" "
-@in col-name:sponsor
-@in expression:value.trim()
-@in col-name:call_number
-@in cluster-params:20
-@in cluster-type:binning
-@in expression:value.toNumber()
-@in col-name:dish_count
-@in projectPath:Menupart.csv
-@in cluster-function:fingerprint
-@in col-name:date
-@in newColumnName:MoneyOrder
+@param expression:value.toLowercase()
+@param projectName:Menuparttest
+@param oldColumnName:currency
+@param expression:value.toDate()
+@param separator:" "
+@param col-name:sponsor
+@param expression:value.trim()
+@param col-name:call_number
+@param cluster-params:20
+@param cluster-type:binning
+@param expression:value.toNumber()
+@param col-name:dish_count
+@param projectPath:Menupart.csv
+@param cluster-function:fingerprint
+@param col-name:date
+@param newColumnName:MoneyOrder
 @out dtable-cleaned
 @out projectID:1541884982550
-@begin Createproject@desc create a new project@in projectPath:Menupart.csv
-@in projectName:Menuparttest
+@begin Createproject@desc create a new project@param projectPath:Menupart.csv
+@param projectName:Menuparttest
 @out projectID:1541884982550
 @out dtable0
 @end Createproject
 @begin core/column-rename0@desc Rename column currency to MoneyOrder
-@in oldColumnName:currency
-@in newColumnName:MoneyOrder
+@param oldColumnName:currency
+@param newColumnName:MoneyOrder
 @in dtable0
 @out dtable1
 @end core/column-rename0
 @begin OperationsOncol-name:call_number@desc Serial column operations on Column call_number
-@in col-name:call_number
-@in separator:" "
+@param col-name:call_number
+@param separator:" "
 @in dtable1
 @out dtablecall_number
 @begin core/column-split0@desc Split column call_number by separator
-@in col-name:call_number
-@in separator:" "
+@param col-name:call_number
+@param separator:" "
 @in dtable1
 @out dtablecall_number
 @end core/column-split0
 @end OperationsOncol-name:call_number
 @begin OperationsOncol-name:date@desc Serial column operations on Column date
-@in col-name:date
-@in expression:value.toDate()
+@param col-name:date
+@param expression:value.toDate()
 @in dtable1
 @out dtabledate
 @begin core/text-transform0@desc Text transform on cells in column date using expression value.toDate()
-@in col-name:date
-@in expression:value.toDate()
+@param col-name:date
+@param expression:value.toDate()
 @in dtable1
 @out dtabledate
 @end core/text-transform0
 @end OperationsOncol-name:date
 @begin OperationsOncol-name:dish_count@desc Serial column operations on Column dish_count
-@in col-name:dish_count
-@in expression:value.toNumber()
+@param col-name:dish_count
+@param expression:value.toNumber()
 @in dtable1
 @out dtabledish_count
 @begin core/text-transform1@desc Text transform on cells in column dish_count using expression value.toNumber()
-@in col-name:dish_count
-@in expression:value.toNumber()
+@param col-name:dish_count
+@param expression:value.toNumber()
 @in dtable1
 @out dtabledish_count
 @end core/text-transform1
 @end OperationsOncol-name:dish_count
 @begin OperationsOncol-name:sponsor@desc Serial column operations on Column sponsor
-@in col-name:sponsor
-@in cluster-function:fingerprint
-@in cluster-type:binning
-@in cluster-params:20
-@in expression:value.trim()
-@in expression:value.toLowercase()
+@param col-name:sponsor
+@param cluster-function:fingerprint
+@param cluster-type:binning
+@param cluster-params:20
+@param expression:value.trim()
+@param expression:value.toLowercase()
 @in dtable1
 @out dtablesponsor
 @begin core/mass-edit0@desc Mass edit cells in column sponsor
-@in col-name:sponsor
-@in cluster-type:binning
-@in cluster-function:fingerprint
-@in cluster-params:20
+@param col-name:sponsor
+@param cluster-type:binning
+@param cluster-function:fingerprint
+@param cluster-params:20
 @in dtable1
 @out dt0
 @end core/mass-edit0
 @begin core/text-transform2@desc Text transform on cells in column sponsor using expression value.trim()
-@in col-name:sponsor
-@in expression:value.trim()
+@param col-name:sponsor
+@param expression:value.trim()
 @in dt0
 @out dt1
 @end core/text-transform2
 @begin core/text-transform3@desc Text transform on cells in column sponsor using expression value.toLowercase()
-@in col-name:sponsor
-@in expression:value.toLowercase()
-@in dt1
+@param col-name:sponsor
+@param expression:value.toLowercase()
+@in dt2
 @out dtablesponsor
 @end core/text-transform3
 @end OperationsOncol-name:sponsor

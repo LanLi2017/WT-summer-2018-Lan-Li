@@ -40,7 +40,37 @@
     }, 
     "expression": "value", 
     "op": "core/mass-edit"
-  }, 
+  },
+  {
+    "description": "Mass edit cells in column Sponsor",
+    "columnName": "Sponsor",
+    "edits": [
+      {
+        "to": "NORDDEUTSCHER LLOYD BREMEN",
+        "fromBlank": false,
+        "from": [
+          "NORDDEUTSCHER LLOYD BREMEN",
+          "NORDDEUTSCHER LLOYD  BREMEN"
+        ],
+        "fromError": false
+      },
+      {
+        "to": "Waldorf Astoria",
+        "fromBlank": false,
+        "from": [
+          "Waldorf Astoria",
+          "Waldorf-Astoria"
+        ],
+        "fromError": false
+      }
+    ],
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "expression": "value",
+    "op": "core/mass-edit"
+  },
   {
     "repeat": false, 
     "description": "Text transform on cells in column Sponsor using expression value.trim()", 

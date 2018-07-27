@@ -1,77 +1,56 @@
 @begin LinearOriginalOR@desc Workflow of Linear original openrefine history
 @param col-name:call_number
-@param oldColumnName:sponsor
-@param expression:value.toUppercase()
+@param separator:" "
 @param oldColumnName:currency
 @param expression:value.toDate()
-@param expression:value.toLowercase()
-@param col-name:event
-@param col-name:Sponsor
+@param col-name:sponsor
 @param col-name:date
-@param newColumnName:Sponsor
+@param expression:value.toLowercase()
 @param expression:value.toNumber()
+@param col-name:dish_count
 @param expression:value.trim()
 @param newColumnName:MoneyOrder
 @in dtable0
-@out dtable10
+@out dtable7
 @begin core/column-rename0@desc Rename column currency to MoneyOrder
 @param oldColumnName:currency
 @param newColumnName:MoneyOrder
 @param dtable0
 @out dtable1
 @end core/column-rename0
-@begin core/column-rename1@desc Rename column sponsor to Sponsor
-@param oldColumnName:sponsor
-@param newColumnName:Sponsor
-@param dtable1
+@begin core/mass-edit0@desc Mass edit cells in column sponsor
+@param col-name:sponsor
+@in dtable1
 @out dtable2
-@end core/column-rename1
-@begin core/text-transform0@desc Text transform on cells in column Sponsor using expression value.trim()
-@param col-name:Sponsor
+@end core/mass-edit0
+@begin core/text-transform0@desc Text transform on cells in column sponsor using expression value.trim()
+@param col-name:sponsor
 @param expression:value.trim()
 @in dtable2
 @out dtable3
 @end core/text-transform0
-@begin core/text-transform1@desc Text transform on cells in column Sponsor using expression value.toLowercase()
-@param col-name:Sponsor
+@begin core/text-transform1@desc Text transform on cells in column sponsor using expression value.toLowercase()
+@param col-name:sponsor
 @param expression:value.toLowercase()
 @in dtable3
 @out dtable4
 @end core/text-transform1
-@begin core/text-transform2@desc Text transform on cells in column Sponsor using expression value.toUppercase()
-@param col-name:Sponsor
-@param expression:value.toUppercase()
+@begin core/text-transform2@desc Text transform on cells in column date using expression value.toDate()
+@param col-name:date
+@param expression:value.toDate()
 @in dtable4
 @out dtable5
 @end core/text-transform2
-@begin core/text-transform3@desc Text transform on cells in column Sponsor using expression value.toDate()
-@param col-name:Sponsor
-@param expression:value.toDate()
+@begin core/text-transform3@desc Text transform on cells in column dish_count using expression value.toNumber()
+@param col-name:dish_count
+@param expression:value.toNumber()
 @in dtable5
 @out dtable6
 @end core/text-transform3
-@begin core/text-transform4@desc Text transform on cells in column event using expression value.toLowercase()
-@param col-name:event
-@param expression:value.toLowercase()
+@begin core/column-split0@desc Split column call_number by separator
+@param col-name:call_number
+@param separator:" "
 @in dtable6
 @out dtable7
-@end core/text-transform4
-@begin core/text-transform5@desc Text transform on cells in column call_number using expression value.toNumber()
-@param col-name:call_number
-@param expression:value.toNumber()
-@in dtable7
-@out dtable8
-@end core/text-transform5
-@begin core/text-transform6@desc Text transform on cells in column call_number using expression value.trim()
-@param col-name:call_number
-@param expression:value.trim()
-@in dtable8
-@out dtable9
-@end core/text-transform6
-@begin core/text-transform7@desc Text transform on cells in column date using expression value.toDate()
-@param col-name:date
-@param expression:value.toDate()
-@in dtable9
-@out dtable10
-@end core/text-transform7
+@end core/column-split0
 @end LinearOriginalOR
