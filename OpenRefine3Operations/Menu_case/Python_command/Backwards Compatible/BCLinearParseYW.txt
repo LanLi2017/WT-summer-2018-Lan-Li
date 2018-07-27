@@ -1,4 +1,5 @@
-@begin LinearXOR@desc Workflow of Extended openrefine history
+@begin LinearBCOR@desc Workflow of Extended openrefine history
+@param Edits:[{u'to': u'NORDDEUTSCHER LLOYD BREMEN', u'fromBlank': False, u'from': [u'NORDDEUTSCHER LLOYD BREMEN', u'NORDDEUTSCHER LLOYD  BREMEN'], u'fromError': False}]
 @param col-name:call_number
 @param separator:" "
 @param oldColumnName:currency
@@ -6,15 +7,12 @@
 @param col-name:sponsor
 @param col-name:date
 @param expression:value.toLowercase()
-@param cluster-params:20
-@param cluster-type:binning
 @param expression:value.toNumber()
 @param col-name:dish_count
-@param cluster-function:fingerprint
 @param expression:value.trim()
 @param newColumnName:MoneyOrder
 @in dtable0
-@out dtable7
+@out dtable6
 @begin core/column-rename0@desc Rename column currency to MoneyOrder
 @param oldColumnName:currency
 @param newColumnName:MoneyOrder
@@ -23,9 +21,7 @@
 @end core/column-rename0
 @begin core/mass-edit0@desc Mass edit cells in column sponsor
 @param col-name:sponsor
-@param cluster-type:binning
-@param cluster-params:20
-@param cluster-function:fingerprint
+@param Edits:[{u'to': u'NORDDEUTSCHER LLOYD BREMEN', u'fromBlank': False, u'from': [u'NORDDEUTSCHER LLOYD BREMEN', u'NORDDEUTSCHER LLOYD  BREMEN'], u'fromError': False}]
 @in dtable1
 @out dtable2
 @end core/mass-edit0
@@ -59,4 +55,4 @@
 @in dtable6
 @out dtable7
 @end core/column-split0
-@end LinearXOR
+@end LinearBCOR

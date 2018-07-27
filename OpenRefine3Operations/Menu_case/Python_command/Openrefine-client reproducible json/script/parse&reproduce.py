@@ -21,7 +21,7 @@ def main():
     2.Extended
     3.combine
     '''
-    with open('ExtendedWF.json','r')as f:
+    with open('HybridWF.json','r')as f:
         dataset=json.load(f)
     print(dataset)
     '''

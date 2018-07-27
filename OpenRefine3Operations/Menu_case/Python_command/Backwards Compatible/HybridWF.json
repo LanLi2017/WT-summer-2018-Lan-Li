@@ -1,9 +1,9 @@
 [
   {
     "description": "create a new project", 
-    "projectName": "hopeallisgood", 
+    "projectName": "hopeeverythingisbest", 
     "projectPath": "Menupart.csv", 
-    "projectID": "1605577981294", 
+    "projectID": "1714142448627", 
     "opname": "create", 
     "op": "createProject"
   }, 
@@ -11,7 +11,7 @@
     "newColumnName": "Sponsor", 
     "oldColumnName": "sponsor", 
     "opname": "rename", 
-    "description": "Rename column sponsor to Sponsor\"", 
+    "description": "Rename column sponsor to Sponsor", 
     "op": "core/column-rename"
   }, 
   {
@@ -19,7 +19,7 @@
     "description": "Mass edit cells in column Sponsor", 
     "Cluster-params": "20", 
     "columnName": "Sponsor", 
-    "Edits": [
+    "edits": [
       {
         "to": "NORDDEUTSCHER LLOYD BREMEN", 
         "from": [
@@ -74,20 +74,6 @@
   }, 
   {
     "repeat": "false", 
-    "description": "Text transform on cells in column event using expression value.trim()", 
-    "onError": "set-to-blank", 
-    "repeatCount": 10, 
-    "columnName": "event", 
-    "engineConfig": {
-      "facets": "[]", 
-      "mode": "row-based"
-    }, 
-    "opname": "TrimwhiteSpace", 
-    "expression": "value.trim()", 
-    "op": "core/text-transform"
-  }, 
-  {
-    "repeat": "false", 
     "description": "Text transform on cells in column event using expression value.toLowercase()", 
     "onError": "set-to-blank", 
     "repeatCount": 10, 
@@ -102,16 +88,16 @@
   }, 
   {
     "repeat": "false", 
-    "description": "Text transform on cells in column dish_count using expression value.toNumber()", 
+    "description": "Text transform on cells in column date using expression value.toDate()", 
     "onError": "set-to-blank", 
     "repeatCount": 10, 
-    "columnName": "dish_count", 
+    "columnName": "date", 
     "engineConfig": {
       "facets": "[]", 
       "mode": "row-based"
     }, 
-    "opname": "toNumber", 
-    "expression": "value.toNumber()", 
+    "opname": "ToDate", 
+    "expression": "value.toDate()", 
     "op": "core/text-transform"
   }
 ]

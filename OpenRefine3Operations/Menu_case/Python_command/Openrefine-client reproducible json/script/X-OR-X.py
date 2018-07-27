@@ -69,7 +69,7 @@ def GetColumnName(projectID):
 def checkpath():
     while True:
         try:
-            path=raw_input("Enter the json path: ")
+            path=raw_input("Enter the input file path: ")
             with open(path,'r')as f:
                 f.close()
         except IOError as e:
@@ -153,7 +153,7 @@ def main():
                 renamedicts['op']='core/column-rename'
                 renamedicts['opname']='rename'
                 newcolumnname=raw_input("Enter the new column name:")
-                renamedicts['description']='Rename column %s to %s"'%(userrenamechoice, newcolumnname)
+                renamedicts['description']='Rename column %s to %s'%(userrenamechoice, newcolumnname)
                 renamedicts['oldColumnName']='%s'%userrenamechoice
                 renamedicts['newColumnName']='%s'%newcolumnname
                 result.append(renamedicts)
@@ -283,6 +283,8 @@ def main():
                                     Edit_to=OpenRefinerecipe.getToValue(compute_clusters)
                                     if userClusterinput =='N':
                                         edits=[{'from':f1, 'to':t} for f1,t in zip(Edit_from, Edit_to)]
+                                        print(edits)
+                                        ClusterRelabeldicts['Edits']=edits
                                         OpenRefinerecipe.mass_edit(projectID,usercolumn,edits,expression='value')
                                     elif userClusterinput=='Y':
                                         print("This is the original values in cluster: ")
@@ -302,6 +304,7 @@ def main():
                                                 Edit_new_to.append(to)
                                         print(Edit_new_to)
                                         mannually_edits=[{'from':f1, 'to':t} for f1,t in zip(Edit_from, Edit_new_to)]
+                                        ClusterRelabeldicts['Edits']=mannually_edits
                                         OpenRefinerecipe.mass_edit(projectID,usercolumn,mannually_edits,expression='value')
 
                                 elif userOperates==2:
@@ -465,7 +468,7 @@ def main():
                 usercolumn=raw_input("Continue Enter the column name, if no other steps, Enter N: ")
         elif choice==5:
             if Confirm("Are you sure to exit?",default=False):
-                with open('ExtendedWF.json','wt')as f:
+                with open('HybridWF.json','wt')as f:
                     json.dump(result,f,indent=2)
                 break
 

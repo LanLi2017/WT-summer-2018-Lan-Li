@@ -5,7 +5,7 @@ import json
 inputdatalist=[]
 
 
-with open('ExtendedWF.json','r')as f:
+with open('HybridWF.json','r')as f:
     data=json.load(f)
     for dicts in data:
         # print('@begin '+dicts['op']+'@desc '+dicts['description']+'\n')
@@ -49,7 +49,7 @@ deinputdatalist=set(inputdatalist)
 f=open('XLinearParseYW.txt','w')
 f.write('@begin LinearXOR@desc Workflow of Extended openrefine history\n')
 for sublist in list(deinputdatalist):
-    f.write('@in '+sublist+'\n')
+    f.write('@param '+sublist+'\n')
 f.write('@in dtable0\n')
 f.write('@out dtable%d\n'%(len(data)-1))
 rename_c=0

@@ -4,7 +4,7 @@ from operator import itemgetter
 
 import itertools
 
-with open('ExtendedWF.json','r')as f:
+with open('HybridWF.json','r')as f:
     data=json.load(f)
     # first part rename and output dtable
     # difference: the first part is the create
