@@ -1,0 +1,117 @@
+[
+  {
+    "description": "create a new project", 
+    "projectName": "hopeallisgood", 
+    "projectPath": "Menupart.csv", 
+    "projectID": "1605577981294", 
+    "opname": "create", 
+    "op": "createProject"
+  }, 
+  {
+    "newColumnName": "Sponsor", 
+    "oldColumnName": "sponsor", 
+    "opname": "rename", 
+    "description": "Rename column sponsor to Sponsor\"", 
+    "op": "core/column-rename"
+  }, 
+  {
+    "Cluster-function": "fingerprint", 
+    "description": "Mass edit cells in column Sponsor", 
+    "Cluster-params": "20", 
+    "columnName": "Sponsor", 
+    "Edits": [
+      {
+        "to": "NORDDEUTSCHER LLOYD BREMEN", 
+        "from": [
+          "NORDDEUTSCHER LLOYD BREMEN", 
+          "NORDDEUTSCHER LLOYD  BREMEN"
+        ]
+      }, 
+      {
+        "to": "Waldorf Astoria", 
+        "from": [
+          "Waldorf Astoria", 
+          "Waldorf-Astoria"
+        ]
+      }
+    ], 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "Cluster_and_Relabel", 
+    "Cluster-type": "binning", 
+    "expression": "value", 
+    "op": "core/mass-edit"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column Sponsor using expression value.trim()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "Sponsor", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "TrimwhiteSpace", 
+    "expression": "value.trim()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column Sponsor using expression value.toLowercase()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "Sponsor", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "toLowercase", 
+    "expression": "value.toLowercase()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column event using expression value.trim()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "event", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "TrimwhiteSpace", 
+    "expression": "value.trim()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column event using expression value.toLowercase()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "event", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "toLowercase", 
+    "expression": "value.toLowercase()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column dish_count using expression value.toNumber()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "dish_count", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "toNumber", 
+    "expression": "value.toNumber()", 
+    "op": "core/text-transform"
+  }
+]
