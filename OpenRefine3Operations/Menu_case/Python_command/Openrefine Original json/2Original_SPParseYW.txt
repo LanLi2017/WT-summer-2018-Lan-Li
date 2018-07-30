@@ -1,0 +1,63 @@
+@begin 2SPOriginalOR@desc Workflow of Linear original openrefine history
+@param expression:value.toLowercase()
+@param separator:" "
+@param oldColumnName:currency
+@param expression:value.toDate()
+@param col-name:sponsor
+@param expression:value.trim()
+@param col-name:call_number
+@param expression:value.toNumber()
+@param col-name:dish_count
+@param col-name:date
+@param newColumnName:MoneyOrder
+@in dtable0
+@out dtable-cleaned
+@begin core/column-rename0@desc Rename column currency to MoneyOrder
+@param oldColumnName:currency
+@param newColumnName:MoneyOrder
+@in dtable0
+@out dtable1
+@end core/column-rename0
+@begin core/column-split0@desc Split column call_number by separator
+@param col-name:call_number
+@param separator:" "
+@in dtable1
+@out dtablecall_number
+@end core/column-split0
+@begin core/text-transform0@desc Text transform on cells in column date using expression value.toDate()
+@param col-name:date
+@param expression:value.toDate()
+@in dtable1
+@out dtabledate
+@end core/text-transform0
+@begin core/text-transform1@desc Text transform on cells in column dish_count using expression value.toNumber()
+@param col-name:dish_count
+@param expression:value.toNumber()
+@in dtable1
+@out dtabledish_count
+@end core/text-transform1
+@begin core/mass-edit0@desc Mass edit cells in column sponsor
+@param col-name:sponsor
+@in dtable1
+@out dt0
+@end core/mass-edit0
+@begin core/text-transform2@desc Text transform on cells in column sponsor using expression value.trim()
+@param col-name:sponsor
+@param expression:value.trim()
+@in dt0
+@out dt1
+@end core/text-transform2
+@begin core/text-transform3@desc Text transform on cells in column sponsor using expression value.toLowercase()
+@param col-name:sponsor
+@param expression:value.toLowercase()
+@in dt1
+@out dtablesponsor
+@end core/text-transform3
+@begin MergeOperationsColumns @desc Merge the Parallel Column operations
+@in dtablecall_number
+@in dtabledate
+@in dtabledish_count
+@in dtablesponsor
+@out dtable-cleaned
+@end MergeOperationsColumns
+@end 2SPOriginalOR
