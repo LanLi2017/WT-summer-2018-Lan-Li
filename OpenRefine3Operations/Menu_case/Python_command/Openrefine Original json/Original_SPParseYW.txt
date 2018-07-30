@@ -18,11 +18,9 @@
 @in dtable0
 @out dtable1
 @end core/column-rename0
-@begin OperationsOncol-name:call_number@desc Serial column operations on Column call_number
-@param col-name:call_number
-@param separator:" "
-@in dtable1
-@out dtablecall_number
+
+
+
 @begin core/column-split0@desc Split column call_number by separator
 @param col-name:call_number
 @param separator:" "
@@ -30,41 +28,33 @@
 @out dtablecall_number
 @end core/column-split0
 @end OperationsOncol-name:call_number
-@begin OperationsOncol-name:date@desc Serial column operations on Column date
-@param col-name:date
-@param expression:value.toDate()
-@in dtable1
-@out dtabledate
+
+
+
 @begin core/text-transform0@desc Text transform on cells in column date using expression value.toDate()
 @param col-name:date
 @param expression:value.toDate()
 @in dtable1
 @out dtabledate
 @end core/text-transform0
-@end OperationsOncol-name:date
-@begin OperationsOncol-name:dish_count@desc Serial column operations on Column dish_count
-@param col-name:dish_count
-@param expression:value.toNumber()
-@in dtable1
-@out dtabledish_count
+
+
+
 @begin core/text-transform1@desc Text transform on cells in column dish_count using expression value.toNumber()
 @param col-name:dish_count
 @param expression:value.toNumber()
 @in dtable1
 @out dtabledish_count
 @end core/text-transform1
-@end OperationsOncol-name:dish_count
-@begin OperationsOncol-name:sponsor@desc Serial column operations on Column sponsor
-@param col-name:sponsor
-@param expression:value.trim()
-@param expression:value.toLowercase()
-@in dtable1
-@out dtablesponsor
+
+
+
 @begin core/mass-edit0@desc Mass edit cells in column sponsor
 @param col-name:sponsor
 @in dtable1
 @out dt0
-@end core/mass-edit0@begin core/text-transform2@desc Text transform on cells in column sponsor using expression value.trim()
+@end core/mass-edit0
+@begin core/text-transform2@desc Text transform on cells in column sponsor using expression value.trim()
 @param col-name:sponsor
 @param expression:value.trim()
 @in dt0
@@ -76,7 +66,8 @@
 @in dt1
 @out dtablesponsor
 @end core/text-transform3
-@end OperationsOncol-name:sponsor
+
+
 @begin MergeOperationsColumns @desc Merge the Parallel Column operations
 @in dtablecall_number
 @in dtabledate

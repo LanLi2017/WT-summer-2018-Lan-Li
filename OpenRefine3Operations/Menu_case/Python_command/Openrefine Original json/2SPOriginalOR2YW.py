@@ -84,8 +84,8 @@ list_of_sublists=[
 
 
 # parse
-f=open('Original_SPParseYW.txt','w')
-f.write('@begin SPOriginalOR@desc Workflow of Linear original openrefine history\n')
+f=open('2Original_SPParseYW.txt','w')
+f.write('@begin 2SPOriginalOR@desc Workflow of Linear original openrefine history\n')
 for sublist in list(deinputdatalist):
     f.write('@param '+sublist+'\n')
 f.write('@in dtable0\n')
@@ -148,11 +148,11 @@ def ruleforreturn(list1,ind,tc):
 # list of lists
 # [[{'columnname':sponsor},{}], [{'columnname':call_number}]]
 for a in range(len(list_of_sublists)):
-    f.write('@begin OperationsOn%s'%list_of_sublists[a][0]+'@desc Serial column operations on Column %s\n'%list_of_lists[a][0]['columnName'])
-    for subnewlists in list_of_sublists[a]:
-        f.write('@param %s\n'%subnewlists)
-    f.write('@in dtable%d\n'%table_c)
-    f.write('@out dtable%s\n'%list_of_lists[a][0]['columnName'])
+    # f.write('@begin OperationsOn%s'%list_of_sublists[a][0]+'@desc Serial column operations on Column %s\n'%list_of_lists[a][0]['columnName'])
+    # for subnewlists in list_of_sublists[a]:
+    #     f.write('@param %s\n'%subnewlists)
+    # f.write('@in dtable%d\n'%table_c)
+    # f.write('@out dtable%s\n'%list_of_lists[a][0]['columnName'])
     count=0
     tc=0
     for b in range(len(list_of_lists[a])):
@@ -183,7 +183,7 @@ for a in range(len(list_of_sublists)):
             f.write('@end core/column-split%d\n'%colsplit_c)
             colsplit_c+=1
 
-    f.write('@end OperationsOn%s\n'%list_of_sublists[a][0])
+    # f.write('@end OperationsOn%s\n'%list_of_sublists[a][0])
 
 f.write('@begin MergeOperationsColumns @desc Merge the Parallel Column operations\n')
 for c in range(len(list_of_lists)):
@@ -191,5 +191,5 @@ for c in range(len(list_of_lists)):
 f.write('@out dtable-cleaned\n')
 f.write('@end MergeOperationsColumns\n')
 
-f.write('@end SPOriginalOR\n')
+f.write('@end 2SPOriginalOR\n')
 f.close()
