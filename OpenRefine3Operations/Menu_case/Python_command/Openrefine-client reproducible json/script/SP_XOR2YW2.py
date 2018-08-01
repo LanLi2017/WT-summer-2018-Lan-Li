@@ -5,10 +5,10 @@ from operator import itemgetter
 import itertools
 from pprint import pprint
 
-with open('userScript.json','r')as f:
+with open('ExtendedWF.json','r')as f:
     data=json.load(f)
     # first part rename and output dtable
-    rename_c=0
+    rename_c=1
     for dicts in data:
         if dicts['op']=='core/column-rename':
             rename_c+=1
@@ -46,7 +46,13 @@ for dicts in data:
 
     elif dicts['op']=='core/mass-edit':
         colname='col-name:'+dicts['columnName']
+        cluster_function='cluster-function:'+dicts['Cluster-function']
+        cluster_type='cluster-type:'+dicts['Cluster-type']
+        cluster_params='cluster-params:'+dicts['Cluster-params']
         inputdatalist.append(colname)
+        inputdatalist.append(cluster_function)
+        inputdatalist.append(cluster_type)
+        inputdatalist.append(cluster_params)
     elif dicts['op']=='core/text-transform':
         colname='col-name:'+dicts['columnName']
         expression='expression:'+dicts['expression']
@@ -78,8 +84,8 @@ outtable=table_counter+1
 
 
 # parse into YW model
-f=open('2Original_SPParseYW.txt','w')
-f.write('@begin SPOriginalOR2@desc Workflow of Linear original openrefine history\n')
+f=open('2X_SPParseYW.txt','w')
+f.write('@begin SPXOR2@desc Workflow of Linear original openrefine history\n')
 for sublist in list(deinputdatalist):
     f.write('@param '+sublist+'\n')
 f.write('@in dtable0\n')
@@ -128,6 +134,9 @@ for lists in newlist_of_lists:
         if dicts['op']=='core/mass-edit':
             f.write('@begin core/mass-edit%d'%massedit_c+'@desc '+dicts['description']+'\n')
             f.write('@param col-name:'+dicts['columnName']+'\n')
+            f.write('@param cluster-type:'+dicts['Cluster-type']+'\n')
+            f.write('@param cluster-function:'+dicts['Cluster-function']+'\n')
+            f.write('@param cluster-params:'+dicts['Cluster-params']+'\n')
             ruleforreturn(count,tc,col_name,table_c)
             tc+=1
             count+=1
@@ -199,5 +208,5 @@ outtable=dtable_c+1
 f.write('@out dtable%d\n'%outtable)
 f.write('@end MergeOperationsColumns\n')
 
-f.write('@end SPOriginalOR2\n')
+f.write('@end SPXOR2\n')
 f.close()
