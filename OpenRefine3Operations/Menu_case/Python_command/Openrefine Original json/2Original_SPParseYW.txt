@@ -1,63 +1,86 @@
-@begin 2SPOriginalOR@desc Workflow of Linear original openrefine history
-@param expression:value.toLowercase()
+@begin SPOriginalOR2@desc Workflow of Linear original openrefine history
+@param col-name:call_number
+@param oldColumnName:sponsor
 @param separator:" "
+@param col-name:call_number 1
 @param oldColumnName:currency
 @param expression:value.toDate()
-@param col-name:sponsor
-@param expression:value.trim()
-@param col-name:call_number
+@param expression:value.toLowercase()
+@param col-name:call_number 2
+@param col-name:Sponsor
+@param col-name:date
+@param newColumnName:Sponsor
 @param expression:value.toNumber()
 @param col-name:dish_count
-@param col-name:date
+@param expression:value.trim()
 @param newColumnName:MoneyOrder
 @in dtable0
-@out dtable-cleaned
-@begin core/column-rename0@desc Rename column currency to MoneyOrder
-@param oldColumnName:currency
-@param newColumnName:MoneyOrder
+@out dtable4
+@begin core/column-rename0@desc Rename column sponsor to Sponsor
+@param oldColumnName:sponsor
+@param newColumnName:Sponsor
 @in dtable0
 @out dtable1
 @end core/column-rename0
-@begin core/column-split0@desc Split column call_number by separator
-@param col-name:call_number
-@param separator:" "
+@begin core/column-rename1@desc Rename column currency to MoneyOrder
+@param oldColumnName:currency
+@param newColumnName:MoneyOrder
 @in dtable1
-@out dtablecall_number
-@end core/column-split0
-@begin core/text-transform0@desc Text transform on cells in column date using expression value.toDate()
+@out dtable2
+@end core/column-rename1
+@begin core/text-transform0@desc Text transform on cells in column Sponsor using expression value.toLowercase()
+@param col-name:Sponsor
+@param expression:value.toLowercase()
+@in dtable2
+@out col_Sponsor0
+@end core/text-transform0
+@begin core/text-transform1@desc Text transform on cells in column Sponsor using expression value.trim()
+@param col-name:Sponsor
+@param expression:value.trim()
+@in col_Sponsor0
+@out col_Sponsor1
+@end core/text-transform1
+@begin core/mass-edit0@desc Mass edit cells in column Sponsor
+@param col-name:Sponsor
+@in col_Sponsor1
+@out col_Sponsor2
+@end core/mass-edit0
+@begin core/text-transform2@desc Text transform on cells in column date using expression value.toDate()
 @param col-name:date
 @param expression:value.toDate()
-@in dtable1
-@out dtabledate
-@end core/text-transform0
-@begin core/text-transform1@desc Text transform on cells in column dish_count using expression value.toNumber()
+@in dtable2
+@out col_date0
+@end core/text-transform2
+@begin core/text-transform3@desc Text transform on cells in column dish_count using expression value.toNumber()
 @param col-name:dish_count
 @param expression:value.toNumber()
-@in dtable1
-@out dtabledish_count
-@end core/text-transform1
-@begin core/mass-edit0@desc Mass edit cells in column sponsor
-@param col-name:sponsor
-@in dtable1
-@out dt0
-@end core/mass-edit0
-@begin core/text-transform2@desc Text transform on cells in column sponsor using expression value.trim()
-@param col-name:sponsor
-@param expression:value.trim()
-@in dt0
-@out dt1
-@end core/text-transform2
-@begin core/text-transform3@desc Text transform on cells in column sponsor using expression value.toLowercase()
-@param col-name:sponsor
-@param expression:value.toLowercase()
-@in dt1
-@out dtablesponsor
+@in dtable2
+@out col_dish_count0
 @end core/text-transform3
+@begin core/column-split0@desc Split column call_number by separator
+
+@param separator:" "
+@in call_number
+@in dtable2
+@out dtable3
+@end core/column-split0
+@begin core/text-transform4@desc Text transform on cells in column call_number 1 using expression value.toLowercase()
+@param col-name:call_number 1
+@param expression:value.toLowercase()
+@in dtable3
+@out col_call_number0
+@end core/text-transform4
+@begin core/text-transform5@desc Text transform on cells in column call_number 2 using expression value.toNumber()
+@param col-name:call_number 2
+@param expression:value.toNumber()
+@in col_call_number0
+@out col_call_number1
+@end core/text-transform5
 @begin MergeOperationsColumns @desc Merge the Parallel Column operations
-@in dtablecall_number
-@in dtabledate
-@in dtabledish_count
-@in dtablesponsor
-@out dtable-cleaned
+@in col_Sponsor2
+@in col_date0
+@in col_dish_count0
+@in col_call_number1
+@out dtable4
 @end MergeOperationsColumns
-@end 2SPOriginalOR
+@end SPOriginalOR2

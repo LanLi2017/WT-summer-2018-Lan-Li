@@ -3,6 +3,7 @@ from itertools import groupby
 from operator import itemgetter
 
 import itertools
+from pprint import pprint
 
 with open('userScript.json','r')as f:
     data=json.load(f)
@@ -17,13 +18,19 @@ with open('userScript.json','r')as f:
 # groupby the columnName
 list_of_lists=[]
 newdata=data[rename_c:]
-for key,group in groupby(newdata,lambda x:x['columnName']):
+for key,group in groupby(newdata,lambda x:x['columnName'].split()[0]):
     list_of_lists.append(list(group))
+# pprint(list_of_lists)
 
+splitlists=[]
+# separate Split schema operation
+for innerlists in list_of_lists:
+    for innerdicts in innerlists:
+        if innerdicts['op']=='core/column-split':
+           splitlists.append(innerlists)
 
-#
-# with open('newJson.json','w')as f:
-#     f.writelines(json.dumps(data,indent=2))
+# substraction of the list of lists of dicts
+newlist_of_lists=[item for item in list_of_lists if item not in splitlists]
 
 # print all of the @in
 inputdatalist=[]
@@ -52,44 +59,31 @@ for dicts in data:
         inputdatalist.append(separator)
 deinputdatalist=set(inputdatalist)
 
-# inner sub-in for every columnName subworkflow
-subinputlists=[]
-subinnerlist=[]
-# [[{sponsor1,sponsor2,sponsor3}],[event1,event2,event3],[call_number1,call_number2],....]
-#[[sponsor_in],[event_in],[call_number_in],....]
-for subprelist in list_of_lists:
-    for subinpredicts in subprelist:
-        if subinpredicts['op']=='core/mass-edit':
-            colname='col-name:'+subinpredicts['columnName']
-            subinnerlist.append(colname)
-        elif subinpredicts['op']=='core/text-transform':
-            colname='col-name:'+subinpredicts['columnName']
-            expression='expression:'+subinpredicts['expression']
-            subinnerlist.append(colname)
-            subinnerlist.append(expression)
-        elif subinpredicts['op']=='core/column-split':
-            colname='col-name:'+subinpredicts['columnName']
-            separator='separator:'+'"%s"'%(subinpredicts['separator'])
-            subinnerlist.append(colname)
-            subinnerlist.append(separator)
-        subinputlists.append(subinnerlist)
-        subinnerlist=[]
 
-# inner inputs list of list [[],[],...]
-
-list_of_sublists=[
-    [k] + list(itertools.chain(*list(item[1:] for item in g)))
-    for k,g in groupby(subinputlists,itemgetter(0))
-]
+# count how many steps for schema level
+table_counter=0
+i=0
+# rename operations
+for dicts in data[:rename_c]:
+    if dicts['op']=='core/column-rename':
+        table_counter+=1
+# f.write('@end OperationsOn%s\n'%list_of_sublists[a][0])
+for splitlist in splitlists:
+    for splitdicts in splitlist:
+        splitcol=splitdicts['columnName'].split()
+        if len(splitcol)==1:
+            table_counter+=1
+outtable=table_counter+1
 
 
-# parse
+
+# parse into YW model
 f=open('2Original_SPParseYW.txt','w')
-f.write('@begin 2SPOriginalOR@desc Workflow of Linear original openrefine history\n')
+f.write('@begin SPOriginalOR2@desc Workflow of Linear original openrefine history\n')
 for sublist in list(deinputdatalist):
     f.write('@param '+sublist+'\n')
 f.write('@in dtable0\n')
-f.write('@out dtable-cleaned\n')
+f.write('@out dtable%d\n'%outtable)
 table_c=0
 i=0
 # rename operations
@@ -104,92 +98,103 @@ for dicts in data[:rename_c]:
         f.write('@end core/column-rename%d\n'%i)
         i+=1
 
-#operations on column
-#inner operations
+#operations on column (column level)
+# schema level
+def ruleforreturn(ind,tc,colname,table_counter):
+
+    # [{'columnName':Sponsor, 'function':value.toNumber()},{....}]
+    # [{'columnName':event, 'function':value.toDate()},{.....}]
+    if ind==0:
+       f.write('@in dtable%d\n'%table_counter)
+       f.write('@out %s%d\n'%(colname,tc))
+    else:
+        f.write('@in %s%d\n'%(colname,tc-1))
+        f.write('@out %s%d\n'%(colname,tc))
+
+
+
+# Schema level (Rename, Split)
+
+
 
 massedit_c=0
 texttrans_c=0
-colsplit_c=0
 
-
-def ruleforreturn(list1,ind,tc):
-    i=len(list1)
-    # [{'columnName':Sponsor, 'function':value.toNumber()},{....}]
-    # [{'columnName':event, 'function':value.toDate()},{.....}]
-    if i==1:
-        f.write('@in dtable%d\n'%table_c)
-        f.write('@out dtable%s\n'%(list1[ind]['columnName']))
-    else:
-        # for ind in range(i):
-        #     if ind==0:
-        #         f.write('@param dtable%d\n'%table_c)
-        #         f.write('@out dt0\n')
-        #     elif ind==i-1:
-        #         f.write('@in dt%d\n'%indexi)
-        #         f.write('@out dtable%s\n'%(list1[ind]['columnName']))
-        #     else:
-        #         f.write('@in dt%d\n'%indexi)
-        #         indexi+=1
-        #         f.write('@out dt%d\n'%indexi)
-
-        if ind==0:
-           f.write('@in dtable%d\n'%table_c)
-           f.write('@out dt%d\n'%tc)
-        if ind in range(1,i-1):
-            f.write('@in dt%d\n'%(tc-1))
-            f.write('@out dt%d\n'%tc)
-        if ind==i-1:
-            f.write('@in dt%d\n'%(tc-1))
-            f.write('@out dtable%s\n'%(list1[ind]['columnName']))
-
-
-# list_of_sublists
-# [[colname:Sponsor, value.totrim(),value.toLowercase()],[],....]
-# list of lists
-# [[{'columnname':sponsor},{}], [{'columnname':call_number}]]
-for a in range(len(list_of_sublists)):
-    # f.write('@begin OperationsOn%s'%list_of_sublists[a][0]+'@desc Serial column operations on Column %s\n'%list_of_lists[a][0]['columnName'])
-    # for subnewlists in list_of_sublists[a]:
-    #     f.write('@param %s\n'%subnewlists)
-    # f.write('@in dtable%d\n'%table_c)
-    # f.write('@out dtable%s\n'%list_of_lists[a][0]['columnName'])
+for lists in newlist_of_lists:
     count=0
     tc=0
-    for b in range(len(list_of_lists[a])):
-        if list_of_lists[a][b]['op']=='core/mass-edit':
-            f.write('@begin core/mass-edit%d'%massedit_c+'@desc '+list_of_lists[a][b]['description']+'\n')
-            f.write('@param col-name:'+list_of_lists[a][b]['columnName']+'\n')
-            ruleforreturn(list_of_lists[a],count,tc)
+    for dicts in lists:
+        col_name='col_%s'%dicts['columnName']
+        if dicts['op']=='core/mass-edit':
+            f.write('@begin core/mass-edit%d'%massedit_c+'@desc '+dicts['description']+'\n')
+            f.write('@param col-name:'+dicts['columnName']+'\n')
+            ruleforreturn(count,tc,col_name,table_c)
             tc+=1
             count+=1
             f.write('@end core/mass-edit%d\n'%massedit_c)
             massedit_c+=1
-        elif list_of_lists[a][b]['op']=='core/text-transform':
-            f.write('@begin core/text-transform%d'%texttrans_c+'@desc '+list_of_lists[a][b]['description']+'\n')
-            f.write('@param col-name:'+list_of_lists[a][b]['columnName']+'\n')
-            f.write('@param expression:'+list_of_lists[a][b]['expression']+'\n')
-            ruleforreturn(list_of_lists[a],count,tc)
+        elif dicts['op']=='core/text-transform':
+            f.write('@begin core/text-transform%d'%texttrans_c+'@desc '+dicts['description']+'\n')
+            f.write('@param col-name:'+dicts['columnName']+'\n')
+            f.write('@param expression:'+dicts['expression']+'\n')
+            ruleforreturn(count,tc,col_name,table_c)
             tc+=1
             count+=1
             f.write('@end core/text-transform%d\n'%texttrans_c)
             texttrans_c+=1
-        elif list_of_lists[a][b]['op']=='core/column-split':
-            f.write('@begin core/column-split%d'%colsplit_c+'@desc '+list_of_lists[a][b]['description']+'\n')
-            f.write('@param col-name:'+list_of_lists[a][b]['columnName']+'\n')
-            f.write('@param separator:'+'"%s"\n'%(list_of_lists[a][b]['separator']))
-            ruleforreturn(list_of_lists[a],count,tc)
-            tc+=1
-            count+=1
-            f.write('@end core/column-split%d\n'%colsplit_c)
-            colsplit_c+=1
 
     # f.write('@end OperationsOn%s\n'%list_of_sublists[a][0])
+colsplit_c=0
+dtable_c=table_c
+for splitlist in splitlists:
+    splitc=0
+    splitindex=0
+    for splitdicts in splitlist:
+        splitcol=splitdicts['columnName'].split()
+        if len(splitcol)==1:
+            f.write('@begin core/column-split%d'%colsplit_c+'@desc %s\n'%(splitdicts['description'])+'\n')
+            f.write('@param separator:"%s"\n'%(splitdicts['separator']))
+            f.write('@in %s\n'%splitdicts['columnName'])
+            f.write('@in dtable%d\n'%table_c)
+            dtable_c+=1
+            f.write('@out dtable%d\n'%dtable_c)
+            f.write('@end core/column-split%d\n'%colsplit_c)
+            colsplit_c+=1
+        elif len(splitcol)>1:
+            colformsplitname='col_%s'%(splitdicts['columnName'].split()[0])
+            if splitdicts['op']=='core/mass-edit':
+                f.write('@begin core/mass-edit%d'%massedit_c+'@desc '+splitdicts['description']+'\n')
+                f.write('@param col-name:"%s"\n'%splitdicts['columnName'])
+                ruleforreturn(splitindex,splitc,colformsplitname,dtable_c)
+                splitc+=1
+                splitindex+=1
+                f.write('@end core/mass-edit%d\n'%massedit_c)
+                massedit_c+=1
+            elif splitdicts['op']=='core/text-transform':
+                f.write('@begin core/text-transform%d'%texttrans_c+'@desc '+splitdicts['description']+'\n')
+                f.write('@param col-name:'+splitdicts['columnName']+'\n')
+                f.write('@param expression:'+splitdicts['expression']+'\n')
+                ruleforreturn(splitindex,splitc,colformsplitname,dtable_c)
+                splitc+=1
+                splitindex+=1
+                f.write('@end core/text-transform%d\n'%texttrans_c)
+                texttrans_c+=1
+
 
 f.write('@begin MergeOperationsColumns @desc Merge the Parallel Column operations\n')
-for c in range(len(list_of_lists)):
-    f.write('@in dtable%s\n'%list_of_lists[c][0]['columnName'])
-f.write('@out dtable-cleaned\n')
+for a in range(len(newlist_of_lists)):
+    newcol_name='col_%s'%(newlist_of_lists[a][0]['columnName'])
+    colcounter=len(newlist_of_lists[a])-1
+    f.write('@in %s%d\n'%(newcol_name,colcounter))
+
+
+for b in range(len(splitlists)):
+    splitcol_name='col_%s'%(splitlists[b][0]['columnName'])
+    splitcounter=len(splitlists[b])-2
+    f.write('@in %s%d\n'%(splitcol_name,splitcounter))
+outtable=dtable_c+1
+f.write('@out dtable%d\n'%outtable)
 f.write('@end MergeOperationsColumns\n')
 
-f.write('@end 2SPOriginalOR\n')
+f.write('@end SPOriginalOR2\n')
 f.close()
