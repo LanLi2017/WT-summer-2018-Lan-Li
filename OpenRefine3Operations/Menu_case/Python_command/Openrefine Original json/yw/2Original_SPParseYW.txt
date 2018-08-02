@@ -4,6 +4,7 @@
 @param separator:" "
 @param col-name:call_number 1
 @param oldColumnName:currency
+@param removeOriginalColumn:True
 @param expression:value.toDate()
 @param expression:value.toLowercase()
 @param col-name:call_number 2
@@ -60,6 +61,7 @@
 @begin core/column-split0@desc Split column call_number by separator
 
 @param separator:" "
+@param removeOriginalColumn:True
 @in call_number
 @in table2
 @out table3

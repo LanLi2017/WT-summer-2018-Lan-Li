@@ -7,7 +7,7 @@ inputdatalist=[]
 
 with open('userScript.json','r')as f:
     data=json.load(f)
-    outputfinal='dtable'+str(len(data))
+    outputfinal='table'+str(len(data))
     for dicts in data:
         # print('@begin '+dicts['op']+'@desc '+dicts['description']+'\n')
         if dicts['op']=='core/column-rename':
@@ -29,8 +29,10 @@ with open('userScript.json','r')as f:
         elif dicts['op']=='core/column-split':
             colname='col-name:'+dicts['columnName']
             separator='separator:'+'"%s"'%(dicts['separator'])
+            remove='removeOriginalColumn:%s'%dicts['removeOriginalColumn']
             inputdatalist.append(colname)
             inputdatalist.append(separator)
+            inputdatalist.append(remove)
 
 
 deinputdatalist=set(inputdatalist)
@@ -45,7 +47,7 @@ f=open('../yw/Original_LinearParseYW.txt','w')
 f.write('@begin LinearOriginalOR@desc Workflow of Linear original openrefine history\n')
 for sublist in list(deinputdatalist):
     f.write('@param '+sublist+'\n')
-f.write('@in dtable0\n')
+f.write('@in table0\n')
 f.write('@out '+outputfinal+'\n')
 rename_c=0
 massedit_c=0
@@ -57,9 +59,9 @@ for dicts in data:
         f.write('@begin core/column-rename%d'%rename_c+'@desc '+dicts['description']+'\n')
         f.write('@param oldColumnName:'+dicts['oldColumnName']+'\n')
         f.write('@param newColumnName:'+dicts['newColumnName']+'\n')
-        f.write('@param dtable%d\n'%table_c)
+        f.write('@in table%d\n'%table_c)
         table_c+=1
-        f.write('@out dtable%d\n'%table_c)
+        f.write('@out table%d\n'%table_c)
         f.write('@end core/column-rename%d\n'%rename_c)
 
         rename_c+=1
@@ -67,27 +69,28 @@ for dicts in data:
     elif dicts['op']=='core/mass-edit':
         f.write('@begin core/mass-edit%d'%massedit_c+'@desc '+dicts['description']+'\n')
         f.write('@param col-name:'+dicts['columnName']+'\n')
-        f.write('@in dtable%d\n'%table_c)
+        f.write('@in table%d\n'%table_c)
         table_c+=1
-        f.write('@out dtable%d\n'%table_c)
+        f.write('@out table%d\n'%table_c)
         f.write('@end core/mass-edit%d\n'%massedit_c)
         massedit_c+=1
     elif dicts['op']=='core/text-transform':
         f.write('@begin core/text-transform%d'%texttrans_c+'@desc '+dicts['description']+'\n')
         f.write('@param col-name:'+dicts['columnName']+'\n')
         f.write('@param expression:'+dicts['expression']+'\n')
-        f.write('@in dtable%d\n'%table_c)
+        f.write('@in table%d\n'%table_c)
         table_c+=1
-        f.write('@out dtable%d\n'%table_c)
+        f.write('@out table%d\n'%table_c)
         f.write('@end core/text-transform%d\n'%texttrans_c)
         texttrans_c+=1
     elif dicts['op']=='core/column-split':
         f.write('@begin core/column-split%d'%colsplit_c+'@desc '+dicts['description']+'\n')
         f.write('@param col-name:'+dicts['columnName']+'\n')
         f.write('@param separator:'+'"%s"'%(dicts['separator'])+'\n')
-        f.write('@in dtable%d\n'%table_c)
+        f.write('@param removeOriginalColumn:%s\n'%dicts['removeOriginalColumn'])
+        f.write('@in table%d\n'%table_c)
         table_c+=1
-        f.write('@out dtable%d\n'%table_c)
+        f.write('@out table%d\n'%table_c)
         f.write('@end core/column-split%d\n'%colsplit_c)
         colsplit_c+=1
 

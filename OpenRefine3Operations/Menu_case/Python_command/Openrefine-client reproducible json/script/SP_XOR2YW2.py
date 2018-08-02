@@ -61,8 +61,10 @@ for dicts in data:
     elif dicts['op']=='core/column-split':
         colname='col-name:'+dicts['columnName']
         separator='separator:'+'"%s"'%(dicts['separator'])
+        remove='removeOriginalColumn:%s'%dicts['removeOriginalColumn']
         inputdatalist.append(colname)
         inputdatalist.append(separator)
+        inputdatalist.append(remove)
 deinputdatalist=set(inputdatalist)
 
 
@@ -163,6 +165,7 @@ for splitlist in splitlists:
         if len(splitcol)==1:
             f.write('@begin core/column-split%d'%colsplit_c+'@desc %s\n'%(splitdicts['description'])+'\n')
             f.write('@param separator:"%s"\n'%(splitdicts['separator']))
+            f.write('@param removeOriginalColumn:%s\n'%splitdicts['removeOriginalColumn'])
             f.write('@in %s\n'%splitdicts['columnName'])
             f.write('@in table%d\n'%table_c)
             dtable_c+=1

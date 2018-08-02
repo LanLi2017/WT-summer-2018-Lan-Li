@@ -34,8 +34,10 @@ with open('ExtendedWF.json','r')as f:
         elif dicts['op']=='core/column-split':
             colname='col-name:'+dicts['columnName']
             separator='separator:'+'"%s"'%(dicts['separator'])
+            remove='removeOriginalColumn:%s'%dicts['removeOriginalColumn']
             inputdatalist.append(colname)
             inputdatalist.append(separator)
+            inputdatalist.append(remove)
 
 
 deinputdatalist=set(inputdatalist)
@@ -93,6 +95,7 @@ for dicts in data:
         f.write('@begin core/column-split%d'%colsplit_c+'@desc '+dicts['description']+'\n')
         f.write('@param col-name:'+dicts['columnName']+'\n')
         f.write('@param separator:'+'"%s"'%(dicts['separator'])+'\n')
+        f.write('@param removeOriginalColumn:%s\n'%dicts['removeOriginalColumn'])
         f.write('@in table%d\n'%table_c)
         table_c+=1
         f.write('@out table%d\n'%table_c)

@@ -1,8 +1,9 @@
 @begin SPXOR2@desc Workflow of Linear original openrefine history
 @param expression:value.toLowercase()
-@param separator:" "
 @param oldColumnName:currency
+@param removeOriginalColumn:true
 @param expression:value.toDate()
+@param separator:","
 @param col-name:sponsor
 @param expression:value.trim()
 @param col-name:call_number
@@ -55,7 +56,8 @@
 @end core/text-transform3
 @begin core/column-split0@desc Split column call_number by separator
 
-@param separator:" "
+@param separator:","
+@param removeOriginalColumn:true
 @in call_number
 @in table1
 @out table2

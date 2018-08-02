@@ -2,6 +2,7 @@
 @param col-name:call_number
 @param separator:" "
 @param oldColumnName:currency
+@param removeOriginalColumn:true
 @param expression:value.toDate()
 @param col-name:sponsor
 @param col-name:date
@@ -56,6 +57,7 @@
 @begin core/column-split0@desc Split column call_number by separator
 @param col-name:call_number
 @param separator:" "
+@param removeOriginalColumn:true
 @in table6
 @out table7
 @end core/column-split0
