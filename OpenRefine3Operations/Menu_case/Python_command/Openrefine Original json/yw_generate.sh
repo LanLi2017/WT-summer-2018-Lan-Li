@@ -10,6 +10,6 @@ dot -Tpdf gv/Linear.gv -o pdf/Linear.pdf
 dot -Tpdf gv/Serial-Parallel.gv -o pdf/Serial-Parallel.pdf
 
 
-dot -Tpng gv/Serial-Parallel.gv -o png/Linear.png
+dot -Tpng gv/Linear.gv -o png/Linear.png
 
 dot -Tpng gv/Serial-Parallel.gv -o png/Serial-Parallel.png
