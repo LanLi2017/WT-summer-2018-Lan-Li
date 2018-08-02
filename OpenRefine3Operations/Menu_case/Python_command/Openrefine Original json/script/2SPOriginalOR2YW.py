@@ -213,6 +213,9 @@ for b in range(len(splitlists)):
     lenthdicts=len(splitlists[b])
     if splitlists[b][lenthdicts-1]['op']=='core/column-split':
         f.write('#@in table%d\n'%dtable_c)
+    else:
+        col_c=lenthdicts-1
+        f.write('#@in %s%d\n'%(splitlists[b][0]['columnName'],col_c))
 
 outtable=dtable_c+1
 f.write('#@out table%d\n'%outtable)
