@@ -1,24 +1,40 @@
 [
   {
     "description": "create a new project", 
-    "projectName": "Menuparttest", 
-    "projectPath": "Menupart.csv", 
-    "projectID": "1541884982550", 
+    "projectName": "Hopeeverythinggonnabefine", 
+    "projectPath": "dataset/Menupart.csv", 
+    "projectID": "2164992352617", 
     "opname": "create", 
     "op": "createProject"
-  },
+  }, 
   {
-    "op": "core/column-rename",
-    "description": "Rename column currency to MoneyOrder",
-    "oldColumnName": "currency",
-    "newColumnName": "MoneyOrder",
-    "opname":"rename"
-  },
+    "newColumnName": "Sponsor", 
+    "oldColumnName": "sponsor", 
+    "opname": "rename", 
+    "description": "Rename column sponsor to Sponsor", 
+    "op": "core/column-rename"
+  }, 
   {
     "Cluster-function": "fingerprint", 
-    "description": "Mass edit cells in column sponsor", 
+    "description": "Mass edit cells in column Sponsor", 
     "Cluster-params": "20", 
-    "columnName": "sponsor", 
+    "columnName": "Sponsor", 
+    "edits": [
+      {
+        "to": "NORDDEUTSCHER LLOYD BREMEN", 
+        "from": [
+          "NORDDEUTSCHER LLOYD BREMEN", 
+          "NORDDEUTSCHER LLOYD  BREMEN"
+        ]
+      }, 
+      {
+        "to": "Waldorf Astoria", 
+        "from": [
+          "Waldorf Astoria", 
+          "Waldorf-Astoria"
+        ]
+      }
+    ], 
     "engineConfig": {
       "facets": "[]", 
       "mode": "row-based"
@@ -27,13 +43,13 @@
     "Cluster-type": "binning", 
     "expression": "value", 
     "op": "core/mass-edit"
-  },
+  }, 
   {
     "repeat": "false", 
-    "description": "Text transform on cells in column sponsor using expression value.trim()", 
+    "description": "Text transform on cells in column Sponsor using expression value.trim()", 
     "onError": "set-to-blank", 
     "repeatCount": 10, 
-    "columnName": "sponsor", 
+    "columnName": "Sponsor", 
     "engineConfig": {
       "facets": "[]", 
       "mode": "row-based"
@@ -41,13 +57,13 @@
     "opname": "TrimwhiteSpace", 
     "expression": "value.trim()", 
     "op": "core/text-transform"
-  },
+  }, 
   {
     "repeat": "false", 
-    "description": "Text transform on cells in column sponsor using expression value.toLowercase()", 
+    "description": "Text transform on cells in column Sponsor using expression value.toLowercase()", 
     "onError": "set-to-blank", 
     "repeatCount": 10, 
-    "columnName": "sponsor", 
+    "columnName": "Sponsor", 
     "engineConfig": {
       "facets": "[]", 
       "mode": "row-based"
@@ -55,21 +71,37 @@
     "opname": "toLowercase", 
     "expression": "value.toLowercase()", 
     "op": "core/text-transform"
-  },
+  }, 
   {
-    "repeat": "false", 
-    "description": "Text transform on cells in column date using expression value.toDate()", 
-    "onError": "set-to-blank", 
-    "repeatCount": 10, 
-    "columnName": "date", 
+    "regex": "false", 
+    "description": "Split column call_number by separator", 
+    "maxColumns": 0, 
+    "columnName": "call_number", 
+    "guessCellType": "true", 
+    "removeOriginalColumn": "true", 
+    "separator": ",", 
+    "mode": "separator", 
     "engineConfig": {
       "facets": "[]", 
       "mode": "row-based"
     }, 
-    "opname": "ToDate", 
-    "expression": "value.toDate()", 
+    "opname": "Splitcolumn", 
+    "op": "core/column-split"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column call_number 1 using expression value.toNumber()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "call_number 1", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "toNumber", 
+    "expression": "value.toNumber()", 
     "op": "core/text-transform"
-  },
+  }, 
   {
     "repeat": "false", 
     "description": "Text transform on cells in column dish_count using expression value.toNumber()", 
@@ -83,21 +115,70 @@
     "opname": "toNumber", 
     "expression": "value.toNumber()", 
     "op": "core/text-transform"
-  },
+  }, 
   {
-    "regex": "false", 
-    "description": "Split column call_number by separator", 
-    "maxColumns": 0, 
-    "columnName": "call_number", 
-    "guessCellType": "true", 
-    "removeOriginalColumn": "true", 
-    "separator": " ", 
-    "mode": "separator", 
+    "repeat": "false", 
+    "description": "Text transform on cells in column date using expression value.toDate()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "date", 
     "engineConfig": {
       "facets": "[]", 
       "mode": "row-based"
     }, 
-    "opname": "Splitcolumn", 
-    "op": "core/column-split"
+    "opname": "ToDate", 
+    "expression": "value.toDate()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "Cluster-function": "PPM", 
+    "description": "Mass edit cells in column event", 
+    "Cluster-params": "{\"radius\":1.000000, \"blocking-ngram-size\":5}", 
+    "columnName": "event", 
+    "edits": [
+      {
+        "to": "THANKSGIVING DINNER", 
+        "from": [
+          "THANKSGIVING DINNER", 
+          "THANKSGIVING DAY DINNER"
+        ]
+      }
+    ], 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "Cluster_and_Relabel", 
+    "Cluster-type": "knn", 
+    "expression": "value", 
+    "op": "core/mass-edit"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column event using expression value.toLowercase()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "event", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "toLowercase", 
+    "expression": "value.toLowercase()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column event using expression value.trim()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "event", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "TrimwhiteSpace", 
+    "expression": "value.trim()", 
+    "op": "core/text-transform"
   }
 ]
