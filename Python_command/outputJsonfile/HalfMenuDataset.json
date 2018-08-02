@@ -1,0 +1,178 @@
+[
+  {
+    "op": "core/column-rename",
+    "description": "Rename column notes to commands",
+    "oldColumnName": "notes",
+    "newColumnName": "commands"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column sponsor using expression value.trim()",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "sponsor",
+    "expression": "value.trim()",
+    "onError": "set-to-blank",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column sponsor using expression value.toLowercase()",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "sponsor",
+    "expression": "value.toLowercase()",
+    "onError": "set-to-blank",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column sponsor",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "sponsor",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "norddeutscher lloyd bremen",
+          "norddeutscher lloyd  bremen"
+        ],
+        "to": "norddeutscher lloyd bremen"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "waldorf astoria",
+          "waldorf-astoria"
+        ],
+        "to": "waldorf astoria"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column event",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "event",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "THANKSGIVING DINNER",
+          "THANKSGIVING DAY DINNER"
+        ],
+        "to": "THANKSGIVING DINNER"
+      }
+    ]
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column event using expression value.toLowercase()",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "event",
+    "expression": "value.toLowercase()",
+    "onError": "set-to-blank",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column event using expression value.trim()",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "event",
+    "expression": "value.trim()",
+    "onError": "set-to-blank",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-split",
+    "description": "Split column call_number by separator",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "call_number",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "-",
+    "regex": false,
+    "maxColumns": 0
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column dish_count using expression value.toNumber()",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "dish_count",
+    "expression": "value.toNumber()",
+    "onError": "set-to-blank",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column place",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "place",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Waldorf Astoria",
+          "Waldorf-Astoria"
+        ],
+        "to": "Waldorf Astoria"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Hamburg Amerika Line",
+          "Hamburg Amerika Linie"
+        ],
+        "to": "Hamburg Amerika Line"
+      },
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "Norddeutscher Lloyd Bremen",
+          "Norddeutscher Lloyd  Bremen"
+        ],
+        "to": "Norddeutscher Lloyd Bremen"
+      }
+    ]
+  }
+]

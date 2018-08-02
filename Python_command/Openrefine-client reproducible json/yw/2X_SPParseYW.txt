@@ -1,0 +1,104 @@
+#@begin SPXOR2#@desc Workflow of Linear original openrefine history
+#@param col-name:call_number
+#@param oldColumnName:sponsor
+#@param col-name:call_number 1
+#@param removeOriginalColumn:true
+#@param separator:","
+#@param expression:value.toDate()
+#@param expression:value.toLowercase()
+#@param col-name:event
+#@param cluster-params:{"radius":1.000000, "blocking-ngram-size":5}
+#@param col-name:Sponsor
+#@param col-name:date
+#@param newColumnName:Sponsor
+#@param cluster-params:20
+#@param cluster-type:binning
+#@param expression:value.toNumber()
+#@param cluster-function:PPM
+#@param col-name:dish_count
+#@param cluster-function:fingerprint
+#@param cluster-type:knn
+#@param expression:value.trim()
+#@in table0
+#@out table3
+#@begin core/column-rename0#@desc Rename column sponsor to Sponsor
+#@param oldColumnName:sponsor
+#@param newColumnName:Sponsor
+#@in table0
+#@out table1
+#@end core/column-rename0
+#@begin core/mass-edit0#@desc Mass edit cells in column Sponsor
+#@param col-name:Sponsor
+#@param cluster-type:binning
+#@param cluster-function:fingerprint
+#@param cluster-params:20
+#@in table1
+#@out col:Sponsor0
+#@end core/mass-edit0
+#@begin core/text-transform0#@desc Text transform on cells in column Sponsor using expression value.trim()
+#@param col-name:Sponsor
+#@param expression:value.trim()
+#@in col:Sponsor0
+#@out col:Sponsor1
+#@end core/text-transform0
+#@begin core/text-transform1#@desc Text transform on cells in column Sponsor using expression value.toLowercase()
+#@param col-name:Sponsor
+#@param expression:value.toLowercase()
+#@in col:Sponsor1
+#@out col:Sponsor2
+#@end core/text-transform1
+#@begin core/text-transform2#@desc Text transform on cells in column date using expression value.toDate()
+#@param col-name:date
+#@param expression:value.toDate()
+#@in table1
+#@out col:date0
+#@end core/text-transform2
+#@begin core/text-transform3#@desc Text transform on cells in column dish_count using expression value.toNumber()
+#@param col-name:dish_count
+#@param expression:value.toNumber()
+#@in table1
+#@out col:dish_count0
+#@end core/text-transform3
+#@begin core/mass-edit1#@desc Mass edit cells in column event
+#@param col-name:event
+#@param cluster-type:knn
+#@param cluster-function:PPM
+#@param cluster-params:{"radius":1.000000, "blocking-ngram-size":5}
+#@in table1
+#@out col:event0
+#@end core/mass-edit1
+#@begin core/text-transform4#@desc Text transform on cells in column event using expression value.toLowercase()
+#@param col-name:event
+#@param expression:value.toLowercase()
+#@in col:event0
+#@out col:event1
+#@end core/text-transform4
+#@begin core/text-transform5#@desc Text transform on cells in column event using expression value.trim()
+#@param col-name:event
+#@param expression:value.trim()
+#@in col:event1
+#@out col:event2
+#@end core/text-transform5
+#@begin core/column-split0#@desc Split column call_number by separator
+
+#@param separator:","
+#@param removeOriginalColumn:true
+#@in call_number
+#@in table1
+#@out table2
+#@end core/column-split0
+#@begin core/text-transform6#@desc Text transform on cells in column call_number 1 using expression value.toNumber()
+#@param col-name:call_number 1
+#@param expression:value.toNumber()
+#@in table2
+#@out col:call_number0
+#@end core/text-transform6
+#@begin MergeOperationsColumns #@desc Merge the Parallel Column operations
+#@in col:Sponsor2
+#@in col:date0
+#@in col:dish_count0
+#@in col:event2
+#@in col:call_number0
+#@out table3
+#@end MergeOperationsColumns
+#@end SPXOR2

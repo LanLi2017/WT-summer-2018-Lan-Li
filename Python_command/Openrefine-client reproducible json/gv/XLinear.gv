@@ -1,0 +1,91 @@
+digraph Workflow {
+rankdir=LR
+fontname=Helvetica; fontsize=18; labelloc=t
+label="LinearXOR#"
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; penwidth=0
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Helvetica]
+"core/column-rename0#" [shape=record rankdir=LR label="{{<f0> core/column-rename0# |<f1> Rename column sponsor to Sponsor}}"];
+"core/mass-edit0#" [shape=record rankdir=LR label="{{<f0> core/mass-edit0# |<f1> Mass edit cells in column Sponsor}}"];
+"core/text-transform0#" [shape=record rankdir=LR label="{{<f0> core/text-transform0# |<f1> Text transform on cells in column Sponsor using expression value.trim()}}"];
+"core/text-transform1#" [shape=record rankdir=LR label="{{<f0> core/text-transform1# |<f1> Text transform on cells in column Sponsor using expression value.toLowercase()}}"];
+"core/column-split0#" [shape=record rankdir=LR label="{{<f0> core/column-split0# |<f1> Split column call_number by separator}}"];
+"core/text-transform2#" [shape=record rankdir=LR label="{{<f0> core/text-transform2# |<f1> Text transform on cells in column call_number 1 using expression value.toNumber()}}"];
+"core/text-transform3#" [shape=record rankdir=LR label="{{<f0> core/text-transform3# |<f1> Text transform on cells in column dish_count using expression value.toNumber()}}"];
+"core/text-transform4#" [shape=record rankdir=LR label="{{<f0> core/text-transform4# |<f1> Text transform on cells in column date using expression value.toDate()}}"];
+"core/mass-edit1#" [shape=record rankdir=LR label="{{<f0> core/mass-edit1# |<f1> Mass edit cells in column event}}"];
+"core/text-transform5#" [shape=record rankdir=LR label="{{<f0> core/text-transform5# |<f1> Text transform on cells in column event using expression value.toLowercase()}}"];
+"core/text-transform6#" [shape=record rankdir=LR label="{{<f0> core/text-transform6# |<f1> Text transform on cells in column event using expression value.trim()}}"];
+edge[fontname=Helvetica]
+"core/column-rename0#" -> "core/mass-edit0#" [label=table1]
+"core/mass-edit0#" -> "core/text-transform0#" [label=table2]
+"core/text-transform0#" -> "core/text-transform1#" [label=table3]
+"core/text-transform1#" -> "core/column-split0#" [label=table4]
+"core/column-split0#" -> "core/text-transform2#" [label=table5]
+"core/text-transform2#" -> "core/text-transform3#" [label=table6]
+"core/text-transform3#" -> "core/text-transform4#" [label=table7]
+"core/text-transform4#" -> "core/mass-edit1#" [label=table8]
+"core/mass-edit1#" -> "core/text-transform5#" [label=table9]
+"core/text-transform5#" -> "core/text-transform6#" [label=table10]
+}}
+subgraph cluster_input_ports_group_outer { label=""; penwidth=0
+subgraph cluster_input_ports_group_inner { label=""; penwidth=0
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+"col-name:call_number_input_port" [label=""]
+"oldColumnName:sponsor_input_port" [label=""]
+"removeOriginalColumn:true_input_port" [label=""]
+"separator:\",\"_input_port" [label=""]
+"expression:value.toDate()_input_port" [label=""]
+"expression:value.toLowercase()_input_port" [label=""]
+"col-name:event_input_port" [label=""]
+"cluster-params:{\"radius\":1.000000,_input_port" [label=""]
+"col-name:Sponsor_input_port" [label=""]
+"col-name:date_input_port" [label=""]
+"newColumnName:Sponsor_input_port" [label=""]
+"cluster-params:20_input_port" [label=""]
+"cluster-type:binning_input_port" [label=""]
+"expression:value.toNumber()_input_port" [label=""]
+"cluster-function:PPM_input_port" [label=""]
+"col-name:dish_count_input_port" [label=""]
+"cluster-function:fingerprint_input_port" [label=""]
+"cluster-type:knn_input_port" [label=""]
+"expression:value.trim()_input_port" [label=""]
+table0_input_port [label=""]
+}}
+subgraph cluster_output_ports_group_outer { label=""; penwidth=0
+subgraph cluster_output_ports_group_inner { label=""; penwidth=0
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+table11_output_port [label=""]
+}}
+edge[fontname=Helvetica]
+"oldColumnName:sponsor_input_port" -> "core/column-rename0#" [label="oldColumnName:sponsor"]
+"newColumnName:Sponsor_input_port" -> "core/column-rename0#" [label="newColumnName:Sponsor"]
+table0_input_port -> "core/column-rename0#" [label=table0]
+"col-name:Sponsor_input_port" -> "core/mass-edit0#" [label="col-name:Sponsor"]
+"col-name:Sponsor_input_port" -> "core/text-transform0#" [label="col-name:Sponsor"]
+"col-name:Sponsor_input_port" -> "core/text-transform1#" [label="col-name:Sponsor"]
+"cluster-type:binning_input_port" -> "core/mass-edit0#" [label="cluster-type:binning"]
+"cluster-params:20_input_port" -> "core/mass-edit0#" [label="cluster-params:20"]
+"cluster-function:fingerprint_input_port" -> "core/mass-edit0#" [label="cluster-function:fingerprint"]
+"expression:value.trim()_input_port" -> "core/text-transform0#" [label="expression:value.trim()"]
+"expression:value.trim()_input_port" -> "core/text-transform6#" [label="expression:value.trim()"]
+"expression:value.toLowercase()_input_port" -> "core/text-transform1#" [label="expression:value.toLowercase()"]
+"expression:value.toLowercase()_input_port" -> "core/text-transform5#" [label="expression:value.toLowercase()"]
+"col-name:call_number_input_port" -> "core/column-split0#" [label="col-name:call_number"]
+"col-name:call_number_input_port" -> "core/text-transform2#" [label="col-name:call_number"]
+"separator:\",\"_input_port" -> "core/column-split0#" [label="separator:\",\""]
+"removeOriginalColumn:true_input_port" -> "core/column-split0#" [label="removeOriginalColumn:true"]
+"expression:value.toNumber()_input_port" -> "core/text-transform2#" [label="expression:value.toNumber()"]
+"expression:value.toNumber()_input_port" -> "core/text-transform3#" [label="expression:value.toNumber()"]
+"col-name:dish_count_input_port" -> "core/text-transform3#" [label="col-name:dish_count"]
+"col-name:date_input_port" -> "core/text-transform4#" [label="col-name:date"]
+"expression:value.toDate()_input_port" -> "core/text-transform4#" [label="expression:value.toDate()"]
+"col-name:event_input_port" -> "core/mass-edit1#" [label="col-name:event"]
+"col-name:event_input_port" -> "core/text-transform5#" [label="col-name:event"]
+"col-name:event_input_port" -> "core/text-transform6#" [label="col-name:event"]
+"cluster-type:knn_input_port" -> "core/mass-edit1#" [label="cluster-type:knn"]
+"cluster-params:{\"radius\":1.000000,_input_port" -> "core/mass-edit1#" [label="cluster-params:{\"radius\":1.000000,"]
+"cluster-function:PPM_input_port" -> "core/mass-edit1#" [label="cluster-function:PPM"]
+edge[fontname=Helvetica]
+"core/text-transform6#" -> table11_output_port [label=table11]
+}

@@ -1,0 +1,172 @@
+[
+  {
+    "description": "create a new project", 
+    "projectName": "Portal_demo", 
+    "projectPath": "dataset/Portal_rodents_19772002_scinameUUIDs.csv", 
+    "projectID": "1654901735406", 
+    "opname": "create", 
+    "op": "createProject"
+  }, 
+  {
+    "newColumnName": "month", 
+    "oldColumnName": "mo", 
+    "opname": "rename", 
+    "description": "Rename column mo to month", 
+    "op": "core/column-rename"
+  }, 
+  {
+    "newColumnName": "day", 
+    "oldColumnName": "dy", 
+    "opname": "rename", 
+    "description": "Rename column dy to day", 
+    "op": "core/column-rename"
+  }, 
+  {
+    "newColumnName": "year", 
+    "oldColumnName": "yr", 
+    "opname": "rename", 
+    "description": "Rename column yr to year", 
+    "op": "core/column-rename"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column country using expression value.toUppercase()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "country", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "toUppercase", 
+    "expression": "value.toUppercase()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column year using expression value.toDate()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "year", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "ToDate", 
+    "expression": "value.toDate()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column recordID using expression value.toNumber()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "recordID", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "toNumber", 
+    "expression": "value.toNumber()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "Cluster-function": "fingerprint", 
+    "description": "Mass edit cells in column country", 
+    "Cluster-params": "20", 
+    "columnName": "country", 
+    "edits": [], 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "Cluster_and_Relabel", 
+    "Cluster-type": "binning", 
+    "expression": "value", 
+    "op": "core/mass-edit"
+  }, 
+  {
+    "Cluster-function": "metaphone3", 
+    "description": "Mass edit cells in column scientificName", 
+    "columnName": "scientificName", 
+    "edits": [
+      {
+        "to": "Amphispiza bilineata", 
+        "from": [
+          "Amphispiza bilineata", 
+          "Amphespiza bilineata", 
+          "Emphispiza bilinata", 
+          "Amphispiza bilineatus", 
+          "Amphispizo bilineata"
+        ]
+      }, 
+      {
+        "to": "Ammospermophilus harrisi", 
+        "from": [
+          "Ammospermophilus harrisi", 
+          "Ammospermophilis harrisi", 
+          "Ammospermophilus harrisii"
+        ]
+      }, 
+      {
+        "to": "  Amphispiza bilineata", 
+        "from": [
+          "  Amphispiza bilineata", 
+          "  Amphispiza bilineata  "
+        ]
+      }
+    ], 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "Cluster_and_Relabel", 
+    "Cluster-type": "binning", 
+    "expression": "value", 
+    "op": "core/mass-edit"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column scientificName using expression value.trim()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "scientificName", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "TrimwhiteSpace", 
+    "expression": "value.trim()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column scientificName using expression value.toLowercase()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "scientificName", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "toLowercase", 
+    "expression": "value.toLowercase()", 
+    "op": "core/text-transform"
+  }, 
+  {
+    "regex": "false", 
+    "description": "Split column scientificName by separator", 
+    "maxColumns": 0, 
+    "columnName": "scientificName", 
+    "guessCellType": "true", 
+    "removeOriginalColumn": "false", 
+    "separator": ",", 
+    "mode": "separator", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "Splitcolumn", 
+    "op": "core/column-split"
+  }
+]

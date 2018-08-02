@@ -1,3 +1,0 @@
-q(operation_target).
-q(operation_method_name).
-q(operation_name).
