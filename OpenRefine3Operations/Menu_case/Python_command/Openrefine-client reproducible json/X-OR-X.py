@@ -468,7 +468,7 @@ def main():
                 usercolumn=raw_input("Continue Enter the column name, if no other steps, Enter N: ")
         elif choice==5:
             if Confirm("Are you sure to exit?",default=False):
-                with open('HybridWF.json','wt')as f:
+                with open('script/ExtendedWF.json','wt')as f:
                     json.dump(result,f,indent=2)
                 break
 
