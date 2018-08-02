@@ -3,7 +3,6 @@ import csv
 import json
 
 import OpenRefinerecipe
-from OpenRefine3Operations.Menu_case.Python_command.google import refine
 
 import subprocess
 

@@ -1,123 +1,48 @@
 [
   {
     "op": "core/column-rename",
-    "description": "Rename column mo to month",
-    "oldColumnName": "mo",
-    "newColumnName": "month"
-  },
-  {
-    "op": "core/column-rename",
-    "description": "Rename column dy to day",
-    "oldColumnName": "dy",
-    "newColumnName": "day"
-  },
-  {
-    "op": "core/column-rename",
-    "description": "Rename column yr to year",
-    "oldColumnName": "yr",
-    "newColumnName": "year"
-  },
-  {
-    "op": "core/text-transform",
-    "description": "Text transform on cells in column country using expression value.toUppercase()",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "country",
-    "expression": "value.toUppercase()",
-    "onError": "set-to-blank",
-    "repeat": false,
-    "repeatCount": 10
-  },
-  {
-    "op": "core/text-transform",
-    "description": "Text transform on cells in column year using expression value.toDate()",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "year",
-    "expression": "value.toDate()",
-    "onError": "set-to-blank",
-    "repeat": false,
-    "repeatCount": 10
-  },
-  {
-    "op": "core/text-transform",
-    "description": "Text transform on cells in column recordID using expression value.toNumber()",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "recordID",
-    "expression": "value.toNumber()",
-    "onError": "set-to-blank",
-    "repeat": false,
-    "repeatCount": 10
+    "description": "Rename column sponsor to Sponsor",
+    "oldColumnName": "sponsor",
+    "newColumnName": "Sponsor"
   },
   {
     "op": "core/mass-edit",
-    "description": "Mass edit cells in column country",
+    "description": "Mass edit cells in column Sponsor",
     "engineConfig": {
       "mode": "row-based",
       "facets": []
     },
-    "columnName": "country",
-    "expression": "value",
-    "edits": []
-  },
-  {
-    "op": "core/mass-edit",
-    "description": "Mass edit cells in column scientificName",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "scientificName",
+    "columnName": "Sponsor",
     "expression": "value",
     "edits": [
       {
         "fromBlank": false,
         "fromError": false,
         "from": [
-          "Amphispiza bilineata",
-          "Amphespiza bilineata",
-          "Emphispiza bilinata",
-          "Amphispiza bilineatus",
-          "Amphispizo bilineata"
+          "NORDDEUTSCHER LLOYD BREMEN",
+          "NORDDEUTSCHER LLOYD  BREMEN"
         ],
-        "to": "Amphispiza bilineata"
+        "to": "NORDDEUTSCHER LLOYD BREMEN"
       },
       {
         "fromBlank": false,
         "fromError": false,
         "from": [
-          "Ammospermophilus harrisi",
-          "Ammospermophilis harrisi",
-          "Ammospermophilus harrisii"
+          "Waldorf Astoria",
+          "Waldorf-Astoria"
         ],
-        "to": "Ammospermophilus harrisi"
-      },
-      {
-        "fromBlank": false,
-        "fromError": false,
-        "from": [
-          "  Amphispiza bilineata",
-          "  Amphispiza bilineata  "
-        ],
-        "to": "  Amphispiza bilineata"
+        "to": "Waldorf Astoria"
       }
     ]
   },
   {
     "op": "core/text-transform",
-    "description": "Text transform on cells in column scientificName using expression value.trim()",
+    "description": "Text transform on cells in column Sponsor using expression value.trim()",
     "engineConfig": {
       "mode": "row-based",
       "facets": []
     },
-    "columnName": "scientificName",
+    "columnName": "Sponsor",
     "expression": "value.trim()",
     "onError": "set-to-blank",
     "repeat": false,
@@ -125,30 +50,69 @@
   },
   {
     "op": "core/text-transform",
-    "description": "Text transform on cells in column scientificName using expression value.toLowercase()",
+    "description": "Text transform on cells in column Sponsor using expression value.toLowercase()",
     "engineConfig": {
       "mode": "row-based",
       "facets": []
     },
-    "columnName": "scientificName",
+    "columnName": "Sponsor",
     "expression": "value.toLowercase()",
     "onError": "set-to-blank",
     "repeat": false,
     "repeatCount": 10
   },
   {
-    "op": "core/column-split",
-    "description": "Split column scientificName by separator",
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column date using expression value.toDate()",
     "engineConfig": {
       "mode": "row-based",
       "facets": []
     },
-    "columnName": "scientificName",
+    "columnName": "date",
+    "expression": "value.toDate()",
+    "onError": "set-to-blank",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column dish_count using expression value.toNumber()",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "dish_count",
+    "expression": "value.toNumber()",
+    "onError": "set-to-blank",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-split",
+    "description": "Split column call_number by separator",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "call_number",
     "guessCellType": true,
     "removeOriginalColumn": false,
     "mode": "separator",
     "separator": ",",
     "regex": false,
     "maxColumns": 0
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column call_number 1 using expression value.toNumber()",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "call_number 1",
+    "expression": "value.toNumber()",
+    "onError": "set-to-blank",
+    "repeat": false,
+    "repeatCount": 10
   }
 ]

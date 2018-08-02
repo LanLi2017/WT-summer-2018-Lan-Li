@@ -139,67 +139,40 @@ for lists in newlist_of_lists:
     # f.write('#@end OperationsOn%s\n'%list_of_sublists[a][0])
 colsplit_c=0
 dtable_c=table_c
-
-
-
-def ruleforsplitreturn(ind,opname,tablecounter,columnName,columnCounter,splitlit):
-    if ind==0 and opname=='core/column-split':
-        f.write('#@in table%d\n'%tablecounter)
-        tablecounter+=1
-        f.write('#@out table%d\n'%tablecounter)
-    if ind==0 and opname!='core/column-split':
-        f.write('#@in table%d\n'%tablecounter)
-        columnCounter+=1
-        f.write('#@out %s%d\n'%(columnName,columnCounter))
-    if ind!=0 and opname=='core/column-split':
-        f.write('#@in %s%d\n'%(columnName,columnCounter))
-        tablecounter+=1
-        f.write('#@out table%d\n'%tablecounter)
-    if ind!=0 and opname!='core/column-split':
-        f.write('#@in %s%d\n'%(columnName,columnCounter))
-        columnCounter+=1
-        f.write('#@out %s%d\n'%(columnName,columnCounter))
-
-
 for splitlist in splitlists:
-    indexsplit=0
-    col_counter=0
+    splitc=1
+    splitindex=0
     for splitdicts in splitlist:
         splitcol=splitdicts['columnName'].split()
-        opname=splitdicts['op']
-        col_namesplit='col:%s'%splitdicts['columnName']
-        if opname=='core/column-split':
+        if len(splitcol)==1:
             f.write('#@begin core/column-split%d'%colsplit_c+'#@desc %s\n'%(splitdicts['description'])+'\n')
             f.write('#@param separator:"%s"\n'%(splitdicts['separator']))
             f.write('#@param removeOriginalColumn:%s\n'%splitdicts['removeOriginalColumn'])
             f.write('#@param col-name:%s\n'%splitdicts['columnName'])
-            ruleforsplitreturn(indexsplit,opname,dtable_c,col_namesplit,col_counter,splitlist)
-            indexsplit+=1
+            f.write('#@in table%d\n'%table_c)
             dtable_c+=1
-            # f.write('#@in table%d\n'%table_c)
-            # dtable_c+=1
-            # f.write('#@out table%d\n'%dtable_c)
+            f.write('#@out table%d\n'%dtable_c)
             f.write('#@end core/column-split%d\n'%colsplit_c)
             colsplit_c+=1
-        elif opname=='core/mass-edit':
-            f.write('#@begin core/mass-edit%d'%massedit_c+'#@desc '+splitdicts['description']+'\n')
-            f.write('#@param col-name:"%s"\n'%splitdicts['columnName'])
-            ruleforsplitreturn(indexsplit,opname,dtable_c,col_namesplit,col_counter,splitlist)
-            indexsplit+=1
-            col_counter+=1
-            print(col_counter)
-            f.write('#@end core/mass-edit%d\n'%massedit_c)
-            massedit_c+=1
-        elif opname=='core/text-transform':
-            f.write('#@begin core/text-transform%d'%texttrans_c+'#@desc '+splitdicts['description']+'\n')
-            f.write('#@param col-name:'+splitdicts['columnName']+'\n')
-            f.write('#@param expression:'+splitdicts['expression']+'\n')
-            ruleforsplitreturn(indexsplit,opname,dtable_c,col_namesplit,col_counter,splitlist)
-            indexsplit+=1
-            col_counter+=1
-            print(col_counter)
-            f.write('#@end core/text-transform%d\n'%texttrans_c)
-            texttrans_c+=1
+        elif len(splitcol)>1:
+            colformsplitname='col:%s'%(splitdicts['columnName'].split()[0])
+            if splitdicts['op']=='core/mass-edit':
+                f.write('#@begin core/mass-edit%d'%massedit_c+'#@desc '+splitdicts['description']+'\n')
+                f.write('#@param col-name:"%s"\n'%splitdicts['columnName'])
+                ruleforreturn(splitindex,splitc,colformsplitname,dtable_c)
+                splitc+=1
+                splitindex+=1
+                f.write('#@end core/mass-edit%d\n'%massedit_c)
+                massedit_c+=1
+            elif splitdicts['op']=='core/text-transform':
+                f.write('#@begin core/text-transform%d'%texttrans_c+'#@desc '+splitdicts['description']+'\n')
+                f.write('#@param col-name:'+splitdicts['columnName']+'\n')
+                f.write('#@param expression:'+splitdicts['expression']+'\n')
+                ruleforreturn(splitindex,splitc,colformsplitname,dtable_c)
+                splitc+=1
+                splitindex+=1
+                f.write('#@end core/text-transform%d\n'%texttrans_c)
+                texttrans_c+=1
 
 
 f.write('#@begin MergeOperationsColumns #@desc Merge the Parallel Column operations\n')
@@ -210,12 +183,12 @@ for a in range(len(newlist_of_lists)):
 
 
 for b in range(len(splitlists)):
-    lenthdicts=len(splitlists[b])
-    if splitlists[b][lenthdicts-1]['op']=='core/column-split':
-        f.write('#@in table%d\n'%dtable_c)
-    else:
-        col_c=lenthdicts-1
-        f.write('#@in %s%d\n'%(splitlists[b][0]['columnName'],col_c))
+    if len(splitlists[b])==1:
+        f.write('#@in table%d'%dtable_c)
+    elif len(splitlists[b])>1:
+        splitcol_name='col:%s'%(splitlists[b][0]['columnName'])
+        splitcounter=len(splitlists[b])-1
+        f.write('#@in %s%d\n'%(splitcol_name,splitcounter))
 
 outtable=dtable_c+1
 f.write('#@out table%d\n'%outtable)

@@ -1,4 +1,4 @@
-from OpenRefine3Operations.Menu_case.Python_command.google.refine import refine
+from Python_command.google.refine import refine
 
 
 def list_objects():
