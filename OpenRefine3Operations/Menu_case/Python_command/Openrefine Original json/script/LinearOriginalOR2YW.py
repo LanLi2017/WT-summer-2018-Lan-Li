@@ -41,7 +41,7 @@ deinputdatalist=set(inputdatalist)
 # for the subset of the procedure
 
 # parse and print it out
-f=open('Original_LinearParseYW.txt','w')
+f=open('../yw/Original_LinearParseYW.txt','w')
 f.write('@begin LinearOriginalOR@desc Workflow of Linear original openrefine history\n')
 for sublist in list(deinputdatalist):
     f.write('@param '+sublist+'\n')

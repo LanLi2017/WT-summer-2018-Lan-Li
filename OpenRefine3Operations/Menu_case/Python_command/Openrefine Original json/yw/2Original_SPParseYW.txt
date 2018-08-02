@@ -1,0 +1,86 @@
+@begin SPOriginalOR2@desc Workflow of Linear original openrefine history
+@param col-name:call_number
+@param oldColumnName:sponsor
+@param separator:" "
+@param col-name:call_number 1
+@param oldColumnName:currency
+@param expression:value.toDate()
+@param expression:value.toLowercase()
+@param col-name:call_number 2
+@param col-name:Sponsor
+@param col-name:date
+@param newColumnName:Sponsor
+@param expression:value.toNumber()
+@param col-name:dish_count
+@param expression:value.trim()
+@param newColumnName:MoneyOrder
+@in table0
+@out table4
+@begin core/column-rename0@desc Rename column sponsor to Sponsor
+@param oldColumnName:sponsor
+@param newColumnName:Sponsor
+@in table0
+@out table1
+@end core/column-rename0
+@begin core/column-rename1@desc Rename column currency to MoneyOrder
+@param oldColumnName:currency
+@param newColumnName:MoneyOrder
+@in table1
+@out table2
+@end core/column-rename1
+@begin core/text-transform0@desc Text transform on cells in column Sponsor using expression value.toLowercase()
+@param col-name:Sponsor
+@param expression:value.toLowercase()
+@in table2
+@out col:Sponsor0
+@end core/text-transform0
+@begin core/text-transform1@desc Text transform on cells in column Sponsor using expression value.trim()
+@param col-name:Sponsor
+@param expression:value.trim()
+@in col:Sponsor0
+@out col:Sponsor1
+@end core/text-transform1
+@begin core/mass-edit0@desc Mass edit cells in column Sponsor
+@param col-name:Sponsor
+@in col:Sponsor1
+@out col:Sponsor2
+@end core/mass-edit0
+@begin core/text-transform2@desc Text transform on cells in column date using expression value.toDate()
+@param col-name:date
+@param expression:value.toDate()
+@in table2
+@out col:date0
+@end core/text-transform2
+@begin core/text-transform3@desc Text transform on cells in column dish_count using expression value.toNumber()
+@param col-name:dish_count
+@param expression:value.toNumber()
+@in table2
+@out col:dish_count0
+@end core/text-transform3
+@begin core/column-split0@desc Split column call_number by separator
+
+@param separator:" "
+@in call_number
+@in table2
+@out table3
+@end core/column-split0
+@begin core/text-transform4@desc Text transform on cells in column call_number 1 using expression value.toLowercase()
+@param col-name:call_number 1
+@param expression:value.toLowercase()
+@in table3
+@out col:call_number0
+@end core/text-transform4
+@begin core/text-transform5@desc Text transform on cells in column call_number 2 using expression value.toNumber()
+@param col-name:call_number 2
+@param expression:value.toNumber()
+@in col:call_number0
+@out col:call_number1
+@end core/text-transform5
+@begin MergeOperationsColumns @desc Merge the Parallel Column operations
+@in col:Sponsor2
+@in col:date0
+@in col:dish_count0
+@in col:call_number1
+@out table4
+@end MergeOperationsColumns
+@end SPOriginalOR2

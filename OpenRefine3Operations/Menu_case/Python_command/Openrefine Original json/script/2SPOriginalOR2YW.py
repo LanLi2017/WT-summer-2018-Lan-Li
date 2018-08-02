@@ -1,9 +1,6 @@
 import json
 from itertools import groupby
-from operator import itemgetter
 
-import itertools
-from pprint import pprint
 
 with open('userScript.json','r')as f:
     data=json.load(f)
@@ -78,12 +75,12 @@ outtable=table_counter+1
 
 
 # parse into YW model
-f=open('2Original_SPParseYW.txt','w')
+f=open('../yw/2Original_SPParseYW.txt','w')
 f.write('@begin SPOriginalOR2@desc Workflow of Linear original openrefine history\n')
 for sublist in list(deinputdatalist):
     f.write('@param '+sublist+'\n')
-f.write('@in dtable0\n')
-f.write('@out dtable%d\n'%outtable)
+f.write('@in table0\n')
+f.write('@out table%d\n'%outtable)
 table_c=0
 i=0
 # rename operations
@@ -92,9 +89,9 @@ for dicts in data[:rename_c]:
         f.write('@begin core/column-rename%d'%i+'@desc '+dicts['description']+'\n')
         f.write('@param oldColumnName:'+dicts['oldColumnName']+'\n')
         f.write('@param newColumnName:'+dicts['newColumnName']+'\n')
-        f.write('@in dtable%d\n'%table_c)
+        f.write('@in table%d\n'%table_c)
         table_c+=1
-        f.write('@out dtable%d\n'%table_c)
+        f.write('@out table%d\n'%table_c)
         f.write('@end core/column-rename%d\n'%i)
         i+=1
 
@@ -105,7 +102,7 @@ def ruleforreturn(ind,tc,colname,table_counter):
     # [{'columnName':Sponsor, 'function':value.toNumber()},{....}]
     # [{'columnName':event, 'function':value.toDate()},{.....}]
     if ind==0:
-       f.write('@in dtable%d\n'%table_counter)
+       f.write('@in table%d\n'%table_counter)
        f.write('@out %s%d\n'%(colname,tc))
     else:
         f.write('@in %s%d\n'%(colname,tc-1))
@@ -124,7 +121,7 @@ for lists in newlist_of_lists:
     count=0
     tc=0
     for dicts in lists:
-        col_name='col_%s'%dicts['columnName']
+        col_name='col:%s'%dicts['columnName']
         if dicts['op']=='core/mass-edit':
             f.write('@begin core/mass-edit%d'%massedit_c+'@desc '+dicts['description']+'\n')
             f.write('@param col-name:'+dicts['columnName']+'\n')
@@ -155,13 +152,13 @@ for splitlist in splitlists:
             f.write('@begin core/column-split%d'%colsplit_c+'@desc %s\n'%(splitdicts['description'])+'\n')
             f.write('@param separator:"%s"\n'%(splitdicts['separator']))
             f.write('@in %s\n'%splitdicts['columnName'])
-            f.write('@in dtable%d\n'%table_c)
+            f.write('@in table%d\n'%table_c)
             dtable_c+=1
-            f.write('@out dtable%d\n'%dtable_c)
+            f.write('@out table%d\n'%dtable_c)
             f.write('@end core/column-split%d\n'%colsplit_c)
             colsplit_c+=1
         elif len(splitcol)>1:
-            colformsplitname='col_%s'%(splitdicts['columnName'].split()[0])
+            colformsplitname='col:%s'%(splitdicts['columnName'].split()[0])
             if splitdicts['op']=='core/mass-edit':
                 f.write('@begin core/mass-edit%d'%massedit_c+'@desc '+splitdicts['description']+'\n')
                 f.write('@param col-name:"%s"\n'%splitdicts['columnName'])
@@ -183,20 +180,20 @@ for splitlist in splitlists:
 
 f.write('@begin MergeOperationsColumns @desc Merge the Parallel Column operations\n')
 for a in range(len(newlist_of_lists)):
-    newcol_name='col_%s'%(newlist_of_lists[a][0]['columnName'])
+    newcol_name='col:%s'%(newlist_of_lists[a][0]['columnName'])
     colcounter=len(newlist_of_lists[a])-1
     f.write('@in %s%d\n'%(newcol_name,colcounter))
 
 
 for b in range(len(splitlists)):
     if len(splitlists[b])==1:
-        f.write('@in dtable%d'%dtable_c)
+        f.write('@in table%d'%dtable_c)
     elif len(splitlists[b])>1:
-        splitcol_name='col_%s'%(splitlists[b][0]['columnName'])
+        splitcol_name='col:%s'%(splitlists[b][0]['columnName'])
         splitcounter=len(splitlists[b])-2
         f.write('@in %s%d\n'%(splitcol_name,splitcounter))
 outtable=dtable_c+1
-f.write('@out dtable%d\n'%outtable)
+f.write('@out table%d\n'%outtable)
 f.write('@end MergeOperationsColumns\n')
 
 f.write('@end SPOriginalOR2\n')
