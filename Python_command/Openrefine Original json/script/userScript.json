@@ -111,6 +111,21 @@
     ]
   },
   {
+    "op": "core/column-split",
+    "description": "Split column scientificName by separator",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "scientificName",
+    "guessCellType": true,
+    "removeOriginalColumn": false,
+    "mode": "separator",
+    "separator": ",",
+    "regex": false,
+    "maxColumns": 0
+  },
+  {
     "op": "core/text-transform",
     "description": "Text transform on cells in column scientificName using expression value.trim()",
     "engineConfig": {
@@ -135,20 +150,6 @@
     "onError": "set-to-blank",
     "repeat": false,
     "repeatCount": 10
-  },
-  {
-    "op": "core/column-split",
-    "description": "Split column scientificName by separator",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "columnName": "scientificName",
-    "guessCellType": true,
-    "removeOriginalColumn": false,
-    "mode": "separator",
-    "separator": ",",
-    "regex": false,
-    "maxColumns": 0
   }
+
 ]
