@@ -13,3 +13,7 @@ dot -Tpdf gv/Serial-Parallel.gv -o pdf/Serial-Parallel.pdf
 dot -Tpng gv/Linear.gv -o png/Linear.png
 
 dot -Tpng gv/Serial-Parallel.gv -o png/Serial-Parallel.png
+
+#----------graph the workflow as the yw.properties
+yw graph yw/Original_LinearParseYW.txt | dot -Tpng -o png/Linear.png && open png/Linear.png
+yw graph yw/Original_LinearParseYW.txt | dot -Tpdf -o pdf/Linear.pdf && open pdf/Linear.pdf
