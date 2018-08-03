@@ -141,65 +141,171 @@ colsplit_c=0
 dtable_c=table_c
 
 
-
-def ruleforsplitreturn(ind,opname,tablecounter,columnName,columnCounter,splitlit):
-    if ind==0 and opname=='core/column-split':
-        f.write('#@in table%d\n'%tablecounter)
-        tablecounter+=1
-        f.write('#@out table%d\n'%tablecounter)
-    if ind==0 and opname!='core/column-split':
-        f.write('#@in table%d\n'%tablecounter)
-        columnCounter+=1
-        f.write('#@out %s%d\n'%(columnName,columnCounter))
-    if ind!=0 and opname=='core/column-split':
-        f.write('#@in %s%d\n'%(columnName,columnCounter))
-        tablecounter+=1
-        f.write('#@out table%d\n'%tablecounter)
-    if ind!=0 and opname!='core/column-split':
-        f.write('#@in %s%d\n'%(columnName,columnCounter))
-        columnCounter+=1
-        f.write('#@out %s%d\n'%(columnName,columnCounter))
+def ruleforsplitreturn(index, tc, columnName, column_counter):
+    if index == 0:
+        f.write('#@in table%d\n' % tc)
+        column_counter+=1
+        f.write('#@out %s%d\n' % (columnName, column_counter))
+    else:
+        f.write('#@in %s%d\n' % (columnName, column_counter))
+        column_counter += 1
+        f.write('#@out %s%d\n' % (columnName, column_counter))
 
 
-for splitlist in splitlists:
-    indexsplit=0
-    col_counter=0
-    for splitdicts in splitlist:
-        splitcol=splitdicts['columnName'].split()
-        opname=splitdicts['op']
-        col_namesplit='col:%s'%splitdicts['columnName']
-        if opname=='core/column-split':
-            f.write('#@begin core/column-split%d'%colsplit_c+'#@desc %s\n'%(splitdicts['description'])+'\n')
-            f.write('#@param separator:"%s"\n'%(splitdicts['separator']))
-            f.write('#@param removeOriginalColumn:%s\n'%splitdicts['removeOriginalColumn'])
-            f.write('#@param col-name:%s\n'%splitdicts['columnName'])
-            ruleforsplitreturn(indexsplit,opname,dtable_c,col_namesplit,col_counter,splitlist)
-            indexsplit+=1
-            dtable_c+=1
-            # f.write('#@in table%d\n'%table_c)
-            # dtable_c+=1
-            # f.write('#@out table%d\n'%dtable_c)
-            f.write('#@end core/column-split%d\n'%colsplit_c)
-            colsplit_c+=1
-        elif opname=='core/mass-edit':
-            f.write('#@begin core/mass-edit%d'%massedit_c+'#@desc '+splitdicts['description']+'\n')
-            f.write('#@param col-name:"%s"\n'%splitdicts['columnName'])
-            ruleforsplitreturn(indexsplit,opname,dtable_c,col_namesplit,col_counter,splitlist)
-            indexsplit+=1
-            col_counter+=1
-            print(col_counter)
-            f.write('#@end core/mass-edit%d\n'%massedit_c)
-            massedit_c+=1
-        elif opname=='core/text-transform':
-            f.write('#@begin core/text-transform%d'%texttrans_c+'#@desc '+splitdicts['description']+'\n')
-            f.write('#@param col-name:'+splitdicts['columnName']+'\n')
-            f.write('#@param expression:'+splitdicts['expression']+'\n')
-            ruleforsplitreturn(indexsplit,opname,dtable_c,col_namesplit,col_counter,splitlist)
-            indexsplit+=1
-            col_counter+=1
-            print(col_counter)
-            f.write('#@end core/text-transform%d\n'%texttrans_c)
-            texttrans_c+=1
+outerlenth = len(splitlists)
+
+for a in range(outerlenth):
+    innerlenth = len(splitlists[a])
+    if splitlists[a][0]['op'] == 'core/column-split':
+        f.write('#@begin core/column-split%d' % colsplit_c + '#@desc %s\n' % (splitlists[a][0]['description']) + '\n')
+        f.write('#@param separator:"%s"\n' % (splitlists[a][0]['separator']))
+        f.write('#@param removeOriginalColumn:%s\n' % splitlists[a][0]['removeOriginalColumn'])
+        f.write('#@param col-name:%s\n' % splitlists[a][0]['columnName'])
+        f.write('#@in table%d\n' % dtable_c)
+        dtable_c += 1
+        f.write('#@out table%d\n' % dtable_c)
+        f.write('#@end core/column-split%d\n' % colsplit_c)
+        colsplit_c += 1
+        ind = 0
+        col_counter = 0
+        columnName = splitlists[a][0]['columnName']
+        for b in range(1, innerlenth):
+            opname = splitlists[a][b]['op']
+            if opname == 'core/mass-edit':
+                f.write('#@begin core/mass-edit%d' % massedit_c + '#@desc ' + splitlists[a][b]['description'] + '\n')
+                f.write('#@param col-name:"%s"\n' % splitlists[a][b]['columnName'])
+                ruleforsplitreturn(ind, dtable_c, columnName, col_counter)
+                col_counter+=1
+                ind += 1
+                f.write('#@end core/mass-edit%d\n' % massedit_c)
+                massedit_c += 1
+            elif opname == 'core/text-transform':
+                f.write('#@begin core/text-transform%d' % texttrans_c + '#@desc ' + splitlists[a][b]['description'] + '\n')
+                f.write('#@param col-name:' + splitlists[a][b]['columnName'] + '\n')
+                f.write('#@param expression:' + splitlists[a][b]['expression'] + '\n')
+                ruleforsplitreturn(ind, dtable_c, columnName, col_counter)
+                col_counter+=1
+                ind += 1
+                f.write('#@end core/text-transform%d\n' % texttrans_c)
+                texttrans_c += 1
+    elif splitlists[a][0]['op'] == 'core/mass-edit':
+        columnName = splitlists[a][0]['columnName']
+        col_counter = 1
+        f.write('#@begin core/mass-edit%d' % massedit_c + '#@desc ' + splitlists[a][0]['description'] + '\n')
+        f.write('#@param col-name:"%s"\n' % splitlists[a][0]['columnName'])
+        f.write('#@in table%d\n' % dtable_c)
+        f.write('#@out %s%d\n' % (columnName, col_counter))
+        massedit_c += 1
+        f.write('#@end core/mass-edit%d\n' % massedit_c)
+        for b in range(1, innerlenth):
+            if splitlists[a][b]['op'] == 'core/column-split':
+                innerindex=0
+                for j in range(1, b):
+                    if splitlists[a][j]['op'] == 'core/mass-edit':
+                        f.write('#@begin core/mass-edit%d' % massedit_c + '#@desc ' + splitlists[a][j]['description'] + '\n')
+                        f.write('#@param col-name:"%s"\n' % splitlists[a][j]['columnName'])
+                        f.write('#@in %s%d\n' % (columnName, col_counter))
+                        col_counter += 1
+                        f.write('#@out %s%d\n' % (columnName, col_counter))
+                        f.write('#@end core/mass-edit%d\n' % massedit_c)
+                        massedit_c += 1
+                    elif splitlists[a][j]['op'] == 'core/text-transform':
+                        f.write('#@begin core/text-transform%d' % texttrans_c + '#@desc ' + splitlists[a][j][
+                            'description'] + '\n')
+                        f.write('#@param col-name:' + splitlists[a][j]['columnName'] + '\n')
+                        f.write('#@param expression:' + splitlists[a][j]['expression'] + '\n')
+                        f.write('#@in %s%d\n' % (columnName, col_counter))
+                        col_counter += 1
+                        f.write('#@out %s%d\n' % (columnName, col_counter))
+                        f.write('#@end core/text-transform%d\n' % texttrans_c)
+                        texttrans_c += 1
+                f.write('#@begin core/column-split%d' % colsplit_c + '#@desc %s\n' % (
+                splitlists[a][b]['description']) + '\n')
+                f.write('#@param separator:"%s"\n' % (splitlists[a][b]['separator']))
+                f.write('#@param removeOriginalColumn:%s\n' % splitlists[a][b]['removeOriginalColumn'])
+                f.write('#@param col-name:%s\n' % splitlists[a][b]['columnName'])
+                f.write('#@in %s%d\n' % (columnName, b))
+                dtable_c += 1
+                f.write('#@out table%d\n' % dtable_c)
+                f.write('#@end core/column-split%d\n' % colsplit_c)
+                colsplit_c += 1
+                for k in range(b + 1, innerlenth):
+                    if splitlists[a][k]['op'] == 'core/mass-edit':
+                        f.write('#@begin core/mass-edit%d' % massedit_c + '#@desc ' + splitlists[a][k]['description'] + '\n')
+                        f.write('#@param col-name:"%s"\n' % splitlists[a][k]['columnName'])
+                        ruleforsplitreturn(innerindex, dtable_c, columnName, col_counter)
+                        innerindex += 1
+                        col_counter += 1
+                        f.write('#@end core/mass-edit%d\n' % massedit_c)
+                        massedit_c += 1
+                    elif splitlists[a][k]['op'] == 'core/text-transform':
+                        f.write('#@begin core/text-transform%d' % texttrans_c + '#@desc ' + splitlists[a][k]['description'] + '\n')
+                        f.write('#@param col-name:' + splitlists[a][k]['columnName'] + '\n')
+                        f.write('#@param expression:' + splitlists[a][k]['expression'] + '\n')
+                        ruleforsplitreturn(innerindex, dtable_c, columnName, col_counter)
+                        innerindex += 1
+                        col_counter += 1
+                        f.write('#@end core/text-transform%d\n' % texttrans_c)
+                        texttrans_c += 1
+    elif splitlists[a][0]['op'] == 'core/text-transform':
+        columnName = splitlists[a][0]['columnName']
+        col_counter = 1
+        f.write('#@begin core/text-transform%d' % texttrans_c + '#@desc ' + splitlists[a][0]['description'] + '\n')
+        f.write('#@param col-name:' + splitlists[a][0]['columnName'] + '\n')
+        f.write('#@param expression:' + splitlists[a][0]['expression'] + '\n')
+        f.write('#@in table%d\n' % dtable_c)
+        f.write('#@out %s%d\n' % (columnName, col_counter))
+        texttrans_c += 1
+        f.write('#@end core/text-transform%d\n' % texttrans_c)
+        for b in range(1, innerlenth):
+            if splitlists[a][b]['op'] == 'core/column-split':
+                innerindex=0
+                for j in range(1, b):
+                    if splitlists[a][j]['op'] == 'core/mass-edit':
+                        f.write('#@begin core/mass-edit%d' % massedit_c + '#@desc ' + splitlists[a][j]['description'] + '\n')
+                        f.write('#@param col-name:"%s"\n' % splitlists[a][j]['columnName'])
+                        f.write('#@in %s%d\n' % (columnName, col_counter))
+                        col_counter += 1
+                        f.write('#@out %s%d\n' % (columnName, col_counter))
+                        f.write('#@end core/mass-edit%d\n' % massedit_c)
+                        massedit_c += 1
+                    elif splitlists[a][j]['op'] == 'core/text-transform':
+                        f.write('#@begin core/text-transform%d' % texttrans_c + '#@desc ' + splitlists[a][j]['description'] + '\n')
+                        f.write('#@param col-name:' + splitlists[a][j]['columnName'] + '\n')
+                        f.write('#@param expression:' + splitlists[a][j]['expression'] + '\n')
+                        f.write('#@in %s%d\n' % (columnName, col_counter))
+                        col_counter += 1
+                        f.write('#@out %s%d\n' % (columnName, col_counter))
+                        f.write('#@end core/text-transform%d\n' % texttrans_c)
+                        texttrans_c += 1
+                f.write('#@begin core/column-split%d' % colsplit_c + '#@desc %s\n' % (
+                splitlists[a][b]['description']) + '\n')
+                f.write('#@param separator:"%s"\n' % (splitlists[a][b]['separator']))
+                f.write('#@param removeOriginalColumn:%s\n' % splitlists[a][b]['removeOriginalColumn'])
+                f.write('#@param col-name:%s\n' % splitlists[a][b]['columnName'])
+                f.write('#@in %s%d\n' % (columnName, b))
+                dtable_c += 1
+                f.write('#@out table%d\n' % dtable_c)
+                f.write('#@end core/column-split%d\n' % colsplit_c)
+                colsplit_c += 1
+                for k in range(b + 1, innerlenth):
+                    if splitlists[a][k]['op'] == 'core/mass-edit':
+                        f.write('#@begin core/mass-edit%d' % massedit_c + '#@desc ' + splitlists[a][k]['description'] + '\n')
+                        f.write('#@param col-name:"%s"\n' % splitlists[a][k]['columnName'])
+                        ruleforsplitreturn(innerindex, dtable_c, columnName, col_counter)
+                        innerindex += 1
+                        col_counter += 1
+                        f.write('#@end core/mass-edit%d\n' % massedit_c)
+                        massedit_c += 1
+                    elif splitlists[a][k]['op'] == 'core/text-transform':
+                        f.write('#@begin core/text-transform%d' % texttrans_c + '#@desc ' + splitlists[a][k]['description'] + '\n')
+                        f.write('#@param col-name:' + splitlists[a][k]['columnName'] + '\n')
+                        f.write('#@param expression:' + splitlists[a][k]['expression'] + '\n')
+                        ruleforsplitreturn(innerindex, dtable_c, columnName, col_counter)
+                        innerindex += 1
+                        col_counter += 1
+                        f.write('#@end core/text-transform%d\n' % texttrans_c)
+                        texttrans_c += 1
 
 
 f.write('#@begin MergeOperationsColumns #@desc Merge the Parallel Column operations\n')
