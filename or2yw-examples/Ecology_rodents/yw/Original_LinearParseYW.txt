@@ -1,21 +1,21 @@
 #@begin LinearOriginalOR#@desc Workflow of Linear original openrefine history
-#@param col-name:country
+#@param expression:value.toLowercase()
+#@param expression:value.toUppercase()
+#@param oldColumnName:yr
 #@param oldColumnName:dy
+#@param newColumnName:month
+#@param col-name:year
+#@param expression:value.toNumber()
+#@param col-name:scientificName
+#@param col-name:recordID
+#@param removeOriginalColumn:False
+#@param expression:value.toDate()
+#@param expression:value.trim()
+#@param col-name:country
+#@param oldColumnName:mo
 #@param separator:","
 #@param newColumnName:day
-#@param col-name:scientificName
-#@param oldColumnName:mo
-#@param col-name:recordID
-#@param expression:value.trim()
-#@param expression:value.toLowercase()
-#@param expression:value.toDate()
-#@param expression:value.toUppercase()
-#@param expression:value.toNumber()
-#@param removeOriginalColumn:False
-#@param newColumnName:month
-#@param oldColumnName:yr
 #@param newColumnName:year
-#@param col-name:year
 #@in table0
 #@out table11
 #@begin core/column-rename0#@desc Rename column mo to month

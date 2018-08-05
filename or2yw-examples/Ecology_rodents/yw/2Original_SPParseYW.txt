@@ -1,21 +1,21 @@
 #@begin SPOriginalOR2#@desc Workflow of Linear original openrefine history
-#@param col-name:country
 #@param oldColumnName:dy
-#@param separator:","
 #@param newColumnName:day
-#@param col-name:scientificName
-#@param oldColumnName:mo
-#@param col-name:recordID
 #@param expression:value.toLowercase()
 #@param expression:value.toDate()
-#@param expression:value.toUppercase()
-#@param expression:value.toNumber()
+#@param col-name:scientificName
 #@param removeOriginalColumn:False
-#@param col-name:year
 #@param newColumnName:month
+#@param oldColumnName:mo
+#@param col-name:country
+#@param expression:value.toUppercase()
+#@param col-name:recordID
+#@param separator:","
+#@param col-name:year
 #@param oldColumnName:yr
-#@param newColumnName:year
 #@param expression:value.trim()
+#@param expression:value.toNumber()
+#@param newColumnName:year
 #@in table0
 #@out table5
 #@begin core/column-rename0#@desc Rename column mo to month
@@ -62,26 +62,26 @@
 #@begin core/mass-edit1#@desc Mass edit cells in column scientificName
 #@param col-name:"scientificName"
 #@in table3
-#@out col:scientificName1
-#@end core/mass-edit1
+#@out scientificName1
+#@end core/mass-edit2
 #@begin core/text-transform3#@desc Text transform on cells in column scientificName using expression value.trim()
 #@param col-name:scientificName
 #@param expression:value.trim()
-#@in col:scientificName1
-#@out col:scientificName2
+#@in scientificName1
+#@out scientificName2
 #@end core/text-transform3
 #@begin core/text-transform4#@desc Text transform on cells in column scientificName using expression value.toLowercase()
 #@param col-name:scientificName
 #@param expression:value.toLowercase()
-#@in col:scientificName2
-#@out col:scientificName3
+#@in scientificName2
+#@out scientificName3
 #@end core/text-transform4
 #@begin core/column-split0#@desc Split column scientificName by separator
 
 #@param separator:","
 #@param removeOriginalColumn:False
 #@param col-name:scientificName
-#@in col:scientificName3
+#@in scientificName3
 #@out table4
 #@end core/column-split0
 #@begin MergeOperationsColumns #@desc Merge the Parallel Column operations
