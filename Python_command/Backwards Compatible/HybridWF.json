@@ -1,13 +1,5 @@
 [
   {
-    "description": "create a new project", 
-    "projectName": "hopeeverythingisbest", 
-    "projectPath": "Menupart.csv", 
-    "projectID": "1714142448627", 
-    "opname": "create", 
-    "op": "createProject"
-  }, 
-  {
     "newColumnName": "Sponsor", 
     "oldColumnName": "sponsor", 
     "opname": "rename", 
@@ -73,17 +65,33 @@
     "op": "core/text-transform"
   }, 
   {
-    "repeat": "false", 
-    "description": "Text transform on cells in column event using expression value.toLowercase()", 
-    "onError": "set-to-blank", 
-    "repeatCount": 10, 
-    "columnName": "event", 
+    "regex": "false", 
+    "description": "Split column call_number by separator", 
+    "maxColumns": 0, 
+    "columnName": "call_number", 
+    "guessCellType": "true", 
+    "removeOriginalColumn": "true", 
+    "separator": "-", 
+    "mode": "separator", 
     "engineConfig": {
       "facets": "[]", 
       "mode": "row-based"
     }, 
-    "opname": "toLowercase", 
-    "expression": "value.toLowercase()", 
+    "opname": "Splitcolumn", 
+    "op": "core/column-split"
+  }, 
+  {
+    "repeat": "false", 
+    "description": "Text transform on cells in column dish_count using expression value.toNumber()", 
+    "onError": "set-to-blank", 
+    "repeatCount": 10, 
+    "columnName": "dish_count", 
+    "engineConfig": {
+      "facets": "[]", 
+      "mode": "row-based"
+    }, 
+    "opname": "toNumber", 
+    "expression": "value.toNumber()", 
     "op": "core/text-transform"
   }, 
   {

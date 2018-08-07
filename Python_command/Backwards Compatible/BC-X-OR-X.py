@@ -5,7 +5,6 @@ import json
 # import sys
 # sys.path.append('/Users/barbaralee/WT-summer-2018-Lan-Li/OpenRefine3Operations/Menu_case/Python_command/Openrefine-client reproducible json/script')
 import OpenRefinerecipe
-from OpenRefine3Operations.Menu_case.Python_command.google import refine
 
 import subprocess
 
@@ -111,17 +110,17 @@ def main():
             userinputpath=checkpath()
             userinputName=raw_input("input the project Name:")
 
-            createdicts ={}
-            createdicts['op']='createProject'
-            createdicts['opname']='create'
-            createdicts['description']='create a new project'
-            createdicts['projectName']='%s'%userinputName
-            createdicts['projectPath']='%s'%userinputpath
+            # createdicts ={}
+            # createdicts['op']='createProject'
+            # createdicts['opname']='create'
+            # createdicts['description']='create a new project'
+            # createdicts['projectName']='%s'%userinputName
+            # createdicts['projectPath']='%s'%userinputpath
             # f.write('@IN file path: %s'%userinputpath)
             # f.write('@IN project Name: %s'%userinputName)
             projectID=OpenRefinerecipe.create_project(userinputpath,userinputName)
-            createdicts['projectID']='%s'%projectID
-            result.append(createdicts)
+            # createdicts['projectID']='%s'%projectID
+            # result.append(createdicts)
             # f.write('@OUT New Project ID : %s'%projectID)
 
             number_rows=raw_input("Display some number of rows: You can choose 5/10/25/50")
