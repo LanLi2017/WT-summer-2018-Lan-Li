@@ -448,7 +448,8 @@ def main():
                                     Splitdicts['engineConfig']['facets']='[]'
                                     Splitdicts['columnName']='%s'%usercolumn
                                     Splitdicts['guessCellType']='true'
-                                    Splitdicts['removeOriginalColumn']='true'
+                                    usersetremove=raw_input("Remove the original column or not,set true or false")
+                                    Splitdicts['removeOriginalColumn']='%s'%usersetremove
                                     Splitdicts['mode']='separator'
 
                                     userSeparator=raw_input("input the separator: ")
@@ -456,7 +457,7 @@ def main():
                                     Splitdicts['regex']='false'
                                     Splitdicts['maxColumns']=0
                                     result.append(Splitdicts)
-                                    OpenRefinerecipe.split_column(projectID,usercolumn,userSeparator)
+                                    OpenRefinerecipe.split_column(projectID,usercolumn,userSeparator,remove_original_column=usersetremove)
                                     # something special here
                                     # if split into several columns, then usercolumn will change
                                 elif userOperates==8:
