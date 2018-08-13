@@ -19,3 +19,4 @@ yw graph yw/BC_LinearParseYW.txt | dot -Tpng -o png/Linear.png && open png/Linea
 yw graph yw/BC_LinearParseYW.txt | dot -Tpdf -o pdf/Linear.pdf && open pdf/Linear.pdf
 
 yw graph yw/BC_SPParseYW.txt | dot -Tpdf -o pdf/Serial-Parallel.pdf && open pdf/Serial-Parallel.pdf
+yw graph yw/BC_SPParseYW.txt | dot -Tpng -o png/Serial-Parallel.png && open png/Serial-Parallel.png
