@@ -17,9 +17,9 @@ User Story 1...
 
 - when the user use OH to do past auditing, find some operation in OH is opaque.
     
-    Ex Q. where did all these mass-edits come from? How did they come about? 
+    - Ex Q. where did all these mass-edits come from? How did they come about? 
     
-    Ex Ans. cluster type: key collision/ nearest neighbor ;  cluster method: fingerprint/n-gram fingerprint n=/ metaphone3…
+    - Ex Ans. cluster type: key collision/ nearest neighbor ;  cluster method: fingerprint/n-gram fingerprint n=/ metaphone3…
 user will choose these parameters to do deduplicate. 
 
 - Solution: review & revise (extend) the OR-OH model to allow for execution, eg. add new “op-name” such “cluster_and_relabel”; add new cluster infos for the cluster_and_relabel parameters.
