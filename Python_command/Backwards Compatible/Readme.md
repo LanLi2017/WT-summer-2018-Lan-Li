@@ -1,11 +1,18 @@
 Backwards Compatible Extended System  with Yesworkflow Model
 =====================================
 
+#### Reference
+- [Openrefine-Client Library ](https://github.com/opencultureconsulting/openrefine-client)
+- [Yesworkflow](https://github.com/yesworkflow-org/yw-prototypes)
+
+
+
 #### Problem of the Original Openrefine 
 
 1. Limited transparency
 
-User story1:
+#### User Story 1...
+
 - OH(operation history) as retrospective prov is not complete enough
 
 - when the user use OH to do past auditing, find some operation in OH is opaque.
@@ -19,6 +26,8 @@ user will choose these parameters to do deduplicate.
 
 2. Limited reusability
 
+#### User Story 2...
+
 - OH as prospective prov is not complete enough
 
 - when users apply the OH to the new dataset, mass-edit re-applied might not “get the job done” (eg. new vocabulary has no matched clusters!) The missing part need to be captured and added to OH, which we called it “Extended OH”
@@ -29,6 +38,8 @@ user will choose these parameters to do deduplicate.
 
 
 3. Limited structure 
+
+#### User Story 3...
 
 OH in OR is linear pipeline, which can not stand for the actual structure of the Data wrangling workflow. User uses Yesworkflow model to refine the workflow into Serial-Parallel model. 
 
