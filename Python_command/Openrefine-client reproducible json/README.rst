@@ -1,5 +1,5 @@
 ===================================
-OpenRefine Python Client Library
+Openrefine-client Extended System
 ===================================
 
 The OpenRefine Python Client Library provides an interface to
