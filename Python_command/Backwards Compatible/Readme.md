@@ -11,7 +11,7 @@ Backwards Compatible Extended System  with Yesworkflow Model
 
 1. Limited transparency
 
-#### User Story 1...
+User Story 1...
 
 - OH(operation history) as retrospective prov is not complete enough
 
@@ -26,7 +26,7 @@ user will choose these parameters to do deduplicate.
 
 2. Limited reusability
 
-#### User Story 2...
+User Story 2...
 
 - OH as prospective prov is not complete enough
 
@@ -39,17 +39,17 @@ user will choose these parameters to do deduplicate.
 
 3. Limited structure 
 
-#### User Story 3...
+User Story 3...
 
-OH in OR is linear pipeline, which can not stand for the actual structure of the Data wrangling workflow. User uses Yesworkflow model to refine the workflow into Serial-Parallel model. 
+- OH in OR is linear pipeline, which can not stand for the actual structure of the Data wrangling workflow. User uses Yesworkflow model to refine the workflow into Serial-Parallel model. 
 
-Q: How can we get the actual structure of the Data wrangling workflow?
+- Q: How can we get the actual structure of the Data wrangling workflow?
 
-Steps:
+- Steps:
 
-1. Auto transfer the workflow into Yesworkflow outline file (--purpose ==)
+   - 1. Auto transfer the workflow into Yesworkflow outline file (--purpose ==)
 
-2. Using yw configure file to graph the Serial-Parallel model.
+   - 2. Using yw configure file to graph the Serial-Parallel model.
 
 
 #### Main Software
