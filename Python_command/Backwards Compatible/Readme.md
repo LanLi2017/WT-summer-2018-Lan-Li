@@ -1,13 +1,13 @@
 Backwards Compatible Extended System  with Yesworkflow Model
 =====================================
 
-#### Reference
+#### 1. Reference
 - [Openrefine-Client Library ](https://github.com/opencultureconsulting/openrefine-client)
 - [Yesworkflow](https://github.com/yesworkflow-org/yw-prototypes)
 
 
 
-#### Problem of the Original Openrefine 
+#### 2. Problem of the Original Openrefine 
 
 1. Limited transparency
 
@@ -52,7 +52,7 @@ User Story 3...
    - 2. Using yw configure file to graph the Serial-Parallel model.
 
 
-#### Main Software
+#### 3. Main Software
 
 1. Using BC-X-OR-X system (Backwards Compatible Extended OpenRefine Execute) to generate the Hybrid workflow (Add missing cluster info to the mass-edit operation)
 
@@ -62,7 +62,7 @@ User Story 3...
 
 
 
-#### Structure of the Repo
+#### 4. Structure of the Repo
 
 Directory            | Description
 ---------------------|-----------
