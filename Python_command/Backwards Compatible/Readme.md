@@ -9,7 +9,7 @@ Backwards Compatible Extended System  with Yesworkflow Model
 
 #### 2. Problem of the Original Openrefine 
 
-1. Limited transparency
+a. Limited transparency
 
 User Story 1...
 
@@ -24,7 +24,7 @@ user will choose these parameters to do deduplicate.
 
 - Solution: review & revise (extend) the OR-OH model to allow for execution, eg. add new “op-name” such “cluster_and_relabel”; add new cluster infos for the cluster_and_relabel parameters.
 
-2. Limited reusability
+b. Limited reusability
 
 User Story 2...
 
@@ -37,7 +37,7 @@ User Story 2...
      - Ex Ans. Use Openrefine-client library to generate the Extended workflow, which includes “missing prospective” part. And then use Trans&Reproduce system to re-execute the workflow.
 
 
-3. Limited structure 
+c. Limited structure 
 
 User Story 3...
 
@@ -54,11 +54,11 @@ User Story 3...
 
 #### 3. Main Software
 
-1. Using BC-X-OR-X system (Backwards Compatible Extended OpenRefine Execute) to generate the Hybrid workflow (Add missing cluster info to the mass-edit operation)
+i. Using BC-X-OR-X system (Backwards Compatible Extended OpenRefine Execute) to generate the Hybrid workflow (Add missing cluster info to the mass-edit operation)
 
-2. Using BC_trans&reproduce to transfer the hybrid workflow into Original OR workflow through Openrefine server
+ii. Using BC_trans&reproduce to transfer the hybrid workflow into Original OR workflow through Openrefine server
 
-3. Using Yesworkflow model to generate the original Linear pipeline workflow into Linear and Serial-Parallel structure
+iii. Using Yesworkflow model to generate the original Linear pipeline workflow into Linear and Serial-Parallel structure
 
 
 
